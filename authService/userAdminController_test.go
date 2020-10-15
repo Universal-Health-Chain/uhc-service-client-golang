@@ -1,4 +1,4 @@
-package services
+package authService
 
 import (
 	"github.com/joho/godotenv"
@@ -10,36 +10,32 @@ import (
 var backendUrl string
 var usernameTesting string
 var userPwTesting string
-var authService AuthService
+var userAdminCon UserAdminController
 
 func init() {
 	godotenv.Load()
 	backendUrl = os.Getenv("BACKENDURL")
 	usernameTesting = os.Getenv("USERNAMETEST")
 	userPwTesting = os.Getenv("PASSWORDTEST")
-	authService = AuthService{Service{BackendUrl: backendUrl}}
-
+	userAdminCon = UserAdminController{Service{BackendUrl: backendUrl}}
 }
 
 func TestAuthService_Login(t *testing.T) {
-	userResp, err := authService.Login(usernameTesting, userPwTesting)
+	userResp, err := userAdminCon.Login(usernameTesting, userPwTesting)
 	assert.Nil(t, err, "error should be nil")
 	assert.Equal(t, userResp.Data[0].Username, usernameTesting)
-
 }
 
 func TestAuthService_FindUserById(t *testing.T) {
-	loginResp, err := authService.Login(usernameTesting, userPwTesting)
+	loginResp, err := userAdminCon.Login(usernameTesting, userPwTesting)
 	assert.Nil(t, err, "error should be nil")
 
 	id := loginResp.Data[0].ID
 	token := loginResp.Data[0].Token
 
-	authService.Token = token
+	userAdminCon.Token = token
 
-
-	userResp, err := authService.FindUserById(id)
+	userResp, err := userAdminCon.FindUserById(id)
 	assert.Nil(t, err, "error should be nil")
 	assert.Equal(t, userResp.Data[0].Username, usernameTesting)
-
 }

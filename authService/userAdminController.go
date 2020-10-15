@@ -1,31 +1,30 @@
-package services
+package authService
 
 import (
 	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 	"io/ioutil"
 	"net/http"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 )
 
-type AuthService struct {
+type UserAdminController struct {
 	Service
 }
 
 const authRoute = "/auth"
 
-func (authService *AuthService) FindUserById(id string) (*models.UserResponse, error) {
+func (userAdminController *UserAdminController) FindUserById(id string) (*models.UserResponse, error) {
 	var userResponse *models.UserResponse
 
-
-	url := authService.BackendUrl + authRoute + FindUser + "?id=" + id
+	url := userAdminController.BackendUrl + authRoute + FindUser + "?id=" + id
 	request, _ := http.NewRequest("GET", url, nil)
 	request.Header.Set("Content-Type", "application/json")
-	request.Header.Set("Authorization", "Bearer " + authService.Token)
+	request.Header.Set("Authorization", "Bearer "+userAdminController.Token)
 
-	request.Header.Set("x-service-uhc", "authService")
+	request.Header.Set("x-service-uhc", "userAdminController")
 
 	client := &http.Client{}
 	response, err := client.Do(request)
@@ -43,22 +42,20 @@ func (authService *AuthService) FindUserById(id string) (*models.UserResponse, e
 
 	_ = json.Unmarshal(body, &userResponse)
 
-return userResponse, nil
-
+	return userResponse, nil
 }
 
-
-func (authService *AuthService) Login(username string, password string) (*models.UserResponse, error) {
+func (userAdminController *UserAdminController) Login(username string, password string) (*models.UserResponse, error) {
 	var userResponse *models.UserResponse
 	var user *models.User = &models.User{Username: username, Password: password}
 	jsonValue, _ := json.Marshal(user)
 
-	url := authService.BackendUrl + authRoute + Login
+	url := userAdminController.BackendUrl + authRoute + Login
 	request, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
 	request.Header.Set("Content-Type", "application/json")
-	//request.Header.Set("Authorization", authService.Token)
+	//request.Header.Set("Authorization", userAdminController.Token)
 
-	request.Header.Set("x-service-uhc", "authService")
+	request.Header.Set("x-service-uhc", "userAdminController")
 
 	client := &http.Client{}
 	response, err := client.Do(request)
