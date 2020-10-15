@@ -20,8 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/userConfigUHC.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usersService/paths.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usersService/userConfigUHCController.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usersService/userConfigUHCController_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/cryptoController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/cryptoController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/userAdminController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/userAdminController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/authService/userAdminController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/userAdminController_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +64,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/authService" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -68,13 +74,17 @@
     <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/service" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/authService" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/models" />
+      <recent name="$PROJECT_DIR$/authService" />
       <recent name="$PROJECT_DIR$/services" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestAuthService_Login in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)">
+  <component name="RunManager" selected="Go Test.TestConfigUHCController_GetUserConfigUHCByUhcId in github.com/Universal-Health-Chain/uhc-service-client-golang/usersService">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$" />
@@ -128,15 +138,15 @@
       <pattern value="^\QTestAuthService_Login\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestAuthService_Login in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestConfigUHCController_GetUserConfigUHCByUhcId in github.com/Universal-Health-Chain/uhc-service-client-golang/usersService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
-      <working_directory value="$PROJECT_DIR$/authService" />
+      <working_directory value="$PROJECT_DIR$/usersService" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/usersService" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestAuthService_Login\E$" />
+      <pattern value="^\QTestConfigUHCController_GetUserConfigUHCByUhcId\E$" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
@@ -151,11 +161,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestConfigUHCController_GetUserConfigUHCByUhcId in github.com/Universal-Health-Chain/uhc-service-client-golang/usersService" />
         <item itemvalue="Go Test.TestAuthService_Login in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)" />
         <item itemvalue="Go Test.TestAuthService_FindUserById in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" />
         <item itemvalue="Go Test.TestAuthService_Login in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" />
         <item itemvalue="Go Test.TestAuthService_FindUserById in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
-        <item itemvalue="Go Test.TestAuthService_Login in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
       </list>
     </recent_temporary>
   </component>
@@ -187,45 +197,49 @@
       <screen x="0" y="23" width="1680" height="954" />
     </state>
     <state width="684" height="446" key="DebuggerActiveHint/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602753869691" />
-    <state width="692" height="167" key="GridCell.Tab.0.bottom" timestamp="1602760637285">
+    <state width="692" height="208" key="GridCell.Tab.0.bottom" timestamp="1602762469311">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
-    <state width="692" height="167" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602760637285" />
+    <state width="692" height="208" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469311" />
     <state width="692" height="167" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079612" />
     <state width="692" height="167" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957175" />
-    <state width="692" height="167" key="GridCell.Tab.0.center" timestamp="1602760637284">
+    <state width="692" height="208" key="GridCell.Tab.0.center" timestamp="1602762469310">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
-    <state width="692" height="167" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602760637284" />
+    <state width="692" height="208" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469310" />
     <state width="692" height="167" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079612" />
     <state width="692" height="167" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957174" />
-    <state width="692" height="167" key="GridCell.Tab.0.left" timestamp="1602760637284">
+    <state width="692" height="208" key="GridCell.Tab.0.left" timestamp="1602762469309">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
-    <state width="692" height="167" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602760637284" />
+    <state width="692" height="208" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469309" />
     <state width="692" height="167" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079611" />
     <state width="692" height="167" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957173" />
-    <state width="692" height="167" key="GridCell.Tab.0.right" timestamp="1602760637285">
+    <state width="692" height="208" key="GridCell.Tab.0.right" timestamp="1602762469310">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
-    <state width="692" height="167" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602760637285" />
+    <state width="692" height="208" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469310" />
     <state width="692" height="167" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079612" />
     <state width="692" height="167" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957174" />
-    <state width="692" height="208" key="GridCell.Tab.1.bottom" timestamp="1602754054438">
-      <screen x="0" y="23" width="1680" height="954" />
+    <state width="692" height="208" key="GridCell.Tab.1.bottom" timestamp="1602762469313">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
+    <state width="692" height="208" key="GridCell.Tab.1.bottom/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469313" />
     <state width="692" height="208" key="GridCell.Tab.1.bottom/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754054438" />
-    <state width="692" height="208" key="GridCell.Tab.1.center" timestamp="1602754054437">
-      <screen x="0" y="23" width="1680" height="954" />
+    <state width="692" height="208" key="GridCell.Tab.1.center" timestamp="1602762469312">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
+    <state width="692" height="208" key="GridCell.Tab.1.center/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469312" />
     <state width="692" height="208" key="GridCell.Tab.1.center/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754054437" />
-    <state width="692" height="208" key="GridCell.Tab.1.left" timestamp="1602754054437">
-      <screen x="0" y="23" width="1680" height="954" />
+    <state width="692" height="208" key="GridCell.Tab.1.left" timestamp="1602762469312">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
+    <state width="692" height="208" key="GridCell.Tab.1.left/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469312" />
     <state width="692" height="208" key="GridCell.Tab.1.left/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754054437" />
-    <state width="692" height="208" key="GridCell.Tab.1.right" timestamp="1602754054437">
-      <screen x="0" y="23" width="1680" height="954" />
+    <state width="692" height="208" key="GridCell.Tab.1.right" timestamp="1602762469312">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
+    <state width="692" height="208" key="GridCell.Tab.1.right/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469312" />
     <state width="692" height="208" key="GridCell.Tab.1.right/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754054437" />
     <state x="295" y="202" key="SettingsEditor" timestamp="1602750889579">
       <screen x="0" y="23" width="1680" height="954" />
