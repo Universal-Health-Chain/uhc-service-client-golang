@@ -13,7 +13,7 @@ var userPwTesting string
 var userAdminCon UserAdminController
 
 func init() {
-	godotenv.Load()
+	godotenv.Load("../.env")
 	backendUrl = os.Getenv("BACKENDURL")
 	usernameTesting = os.Getenv("USERNAMETEST")
 	userPwTesting = os.Getenv("PASSWORDTEST")
