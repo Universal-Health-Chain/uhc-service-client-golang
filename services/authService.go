@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"uhc-service-client-golang/models"
+	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 )
 
 type AuthService struct {

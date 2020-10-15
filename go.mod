@@ -1,4 +1,4 @@
-module uhc-service-client-golang
+module github.com/Universal-Health-Chain/uhc-service-client-golang
 
 go 1.15
 
