@@ -1,4 +1,4 @@
-package authService
+package service
 
 type Service struct {
 	BackendUrl   string

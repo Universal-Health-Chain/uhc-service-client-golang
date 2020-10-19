@@ -20,8 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/models/userConfigUHC.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usersService/paths.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usersService/userConfigUHCController.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usersService/userConfigUHCController_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/cryptoController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/cryptoController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/authService/userAdminController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/userAdminController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/userAdminController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/userAdminController_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +42,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="/usr/local/Cellar/go/1.13.4/libexec" />
+  <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -50,7 +57,6 @@
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="true" />
@@ -68,13 +74,17 @@
     <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/service" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/authService" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/models" />
+      <recent name="$PROJECT_DIR$/authService" />
       <recent name="$PROJECT_DIR$/services" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestAuthService_Login in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)">
+  <component name="RunManager" selected="Go Test.TestConfigUHCController_GetUserConfigUHCByUhcId in github.com/Universal-Health-Chain/uhc-service-client-golang/usersService">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$" />
@@ -128,15 +138,15 @@
       <pattern value="^\QTestAuthService_Login\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestAuthService_Login in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestConfigUHCController_GetUserConfigUHCByUhcId in github.com/Universal-Health-Chain/uhc-service-client-golang/usersService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
-      <working_directory value="$PROJECT_DIR$/authService" />
+      <working_directory value="$PROJECT_DIR$/usersService" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/usersService" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestAuthService_Login\E$" />
+      <pattern value="^\QTestConfigUHCController_GetUserConfigUHCByUhcId\E$" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
@@ -151,61 +161,34 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestConfigUHCController_GetUserConfigUHCByUhcId in github.com/Universal-Health-Chain/uhc-service-client-golang/usersService" />
         <item itemvalue="Go Test.TestAuthService_Login in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)" />
         <item itemvalue="Go Test.TestAuthService_FindUserById in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" />
         <item itemvalue="Go Test.TestAuthService_Login in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" />
         <item itemvalue="Go Test.TestAuthService_FindUserById in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
-        <item itemvalue="Go Test.TestAuthService_Login in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
       </list>
     </recent_temporary>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
-  <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="" />
-      <created>1603107330035</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1603107330035</updated>
-    </task>
-    <servers />
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="431" y="153" key="#GOROOT" timestamp="1603107554938">
-      <screen x="0" y="23" width="1680" height="941" />
-    </state>
-    <state x="431" y="153" key="#GOROOT/0.23.1680.941@0.23.1680.941" timestamp="1603107554938" />
     <state x="637" y="392" key="#Go_Modules" timestamp="1602749490418">
       <screen x="0" y="23" width="1680" height="954" />
     </state>
@@ -214,45 +197,49 @@
       <screen x="0" y="23" width="1680" height="954" />
     </state>
     <state width="684" height="446" key="DebuggerActiveHint/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602753869691" />
-    <state width="692" height="167" key="GridCell.Tab.0.bottom" timestamp="1602760637285">
+    <state width="692" height="208" key="GridCell.Tab.0.bottom" timestamp="1602762469311">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
-    <state width="692" height="167" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602760637285" />
+    <state width="692" height="208" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469311" />
     <state width="692" height="167" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079612" />
     <state width="692" height="167" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957175" />
-    <state width="692" height="167" key="GridCell.Tab.0.center" timestamp="1602760637284">
+    <state width="692" height="208" key="GridCell.Tab.0.center" timestamp="1602762469310">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
-    <state width="692" height="167" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602760637284" />
+    <state width="692" height="208" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469310" />
     <state width="692" height="167" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079612" />
     <state width="692" height="167" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957174" />
-    <state width="692" height="167" key="GridCell.Tab.0.left" timestamp="1602760637284">
+    <state width="692" height="208" key="GridCell.Tab.0.left" timestamp="1602762469309">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
-    <state width="692" height="167" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602760637284" />
+    <state width="692" height="208" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469309" />
     <state width="692" height="167" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079611" />
     <state width="692" height="167" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957173" />
-    <state width="692" height="167" key="GridCell.Tab.0.right" timestamp="1602760637285">
+    <state width="692" height="208" key="GridCell.Tab.0.right" timestamp="1602762469310">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
-    <state width="692" height="167" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602760637285" />
+    <state width="692" height="208" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469310" />
     <state width="692" height="167" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079612" />
     <state width="692" height="167" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957174" />
-    <state width="692" height="208" key="GridCell.Tab.1.bottom" timestamp="1602754054438">
-      <screen x="0" y="23" width="1680" height="954" />
+    <state width="692" height="208" key="GridCell.Tab.1.bottom" timestamp="1602762469313">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
+    <state width="692" height="208" key="GridCell.Tab.1.bottom/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469313" />
     <state width="692" height="208" key="GridCell.Tab.1.bottom/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754054438" />
-    <state width="692" height="208" key="GridCell.Tab.1.center" timestamp="1602754054437">
-      <screen x="0" y="23" width="1680" height="954" />
+    <state width="692" height="208" key="GridCell.Tab.1.center" timestamp="1602762469312">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
+    <state width="692" height="208" key="GridCell.Tab.1.center/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469312" />
     <state width="692" height="208" key="GridCell.Tab.1.center/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754054437" />
-    <state width="692" height="208" key="GridCell.Tab.1.left" timestamp="1602754054437">
-      <screen x="0" y="23" width="1680" height="954" />
+    <state width="692" height="208" key="GridCell.Tab.1.left" timestamp="1602762469312">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
+    <state width="692" height="208" key="GridCell.Tab.1.left/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469312" />
     <state width="692" height="208" key="GridCell.Tab.1.left/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754054437" />
-    <state width="692" height="208" key="GridCell.Tab.1.right" timestamp="1602754054437">
-      <screen x="0" y="23" width="1680" height="954" />
+    <state width="692" height="208" key="GridCell.Tab.1.right" timestamp="1602762469312">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
+    <state width="692" height="208" key="GridCell.Tab.1.right/-995.-2137.3840.2137/0.23.1680.952@0.23.1680.952" timestamp="1602762469312" />
     <state width="692" height="208" key="GridCell.Tab.1.right/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754054437" />
     <state x="295" y="202" key="SettingsEditor" timestamp="1602750889579">
       <screen x="0" y="23" width="1680" height="954" />
@@ -273,7 +260,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/authService/userAdminController.go</url>
-          <line>56</line>
+          <line>22</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/authService/userAdminController.go</url>
+          <line>51</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

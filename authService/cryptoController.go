@@ -5,13 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
+	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
 	"io/ioutil"
 	"net/http"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 )
 
 type CryptoController struct {
-	Service
+	service.Service
 }
 
 func (cryptoController *CryptoController) DecryptPayloadUsingDecryptionRequest(decryptionRequest models.DecryptionRequest) (*models.EncryptedResultResponse, error) {

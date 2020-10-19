@@ -6,12 +6,13 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
+	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
 	"io/ioutil"
 	"net/http"
 )
 
 type UserAdminController struct {
-	Service
+	service.Service
 }
 
 const authRoute = "/auth"
