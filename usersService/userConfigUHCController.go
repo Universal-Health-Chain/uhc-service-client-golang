@@ -30,6 +30,11 @@ func (userConfigController *ConfigUHCController) GetUserConfigUHCByUhcId(uhcId s
 	client := &http.Client{}
 	response, err := client.Do(request)
 
+	if err != nil {
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return nil, err
+	}
+
 	if response.StatusCode != 200 {
 		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
 		return nil, errors.New(message)

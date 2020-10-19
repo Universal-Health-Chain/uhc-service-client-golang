@@ -20,15 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/models/userConfigUHC.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/usersService/paths.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/usersService/userConfigUHCController.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/usersService/userConfigUHCController_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/cryptoController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/cryptoController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/userAdminController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/userAdminController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/userAdminController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/userAdminController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usersService/userConfigUHCController.go" beforeDir="false" afterPath="$PROJECT_DIR$/usersService/userConfigUHCController.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +35,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="/usr/local/go" />
+  <component name="GOROOT" path="/usr/local/Cellar/go/1.13.4/libexec" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -169,7 +162,22 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="TaskManager">
+    <servers />
+  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
@@ -178,17 +186,22 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
+    <state x="431" y="153" key="#GOROOT" timestamp="1603108236940">
+      <screen x="0" y="23" width="1680" height="941" />
+    </state>
+    <state x="431" y="153" key="#GOROOT/0.23.1680.941@0.23.1680.941" timestamp="1603108236940" />
     <state x="637" y="392" key="#Go_Modules" timestamp="1602749490418">
       <screen x="0" y="23" width="1680" height="954" />
     </state>
