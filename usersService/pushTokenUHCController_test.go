@@ -12,7 +12,7 @@ import (
 var backendUrl string
 var usernameTesting string
 var userPwTesting string
-var configUHCController ConfigUHCController
+var pushTokenController PushTokenUHCController
 var userAdminCon authService.UserAdminController
 
 func init() {
@@ -20,19 +20,19 @@ func init() {
 	backendUrl = os.Getenv("BACKENDURL")
 	usernameTesting = os.Getenv("USERNAMETEST")
 	userPwTesting = os.Getenv("PASSWORDTEST")
-	configUHCController = ConfigUHCController{service.Service{BackendUrl: backendUrl}}
+	pushTokenController = PushTokenUHCController{service.Service{BackendUrl: backendUrl}}
 	userAdminCon = authService.UserAdminController{service.Service{BackendUrl: backendUrl}}
 }
 
-func TestConfigUHCController_GetUserConfigUHCByUhcId(t *testing.T) {
+func TestPushTokenUHCController_GetPushTokensByUHCId(t *testing.T) {
 	loginResp, err := userAdminCon.Login(usernameTesting, userPwTesting)
 	assert.Nil(t, err, "error should be nil")
 	assert.Equal(t, loginResp.Data[0].Username, usernameTesting)
 
-	configUHCController.Token = loginResp.Data[0].Token
+	pushTokenController.Token = loginResp.Data[0].Token
 	id := loginResp.Data[0].ID
 
-	configResp, err := configUHCController.GetUserConfigUHCByUhcId(id)
-	assert.NotNil(t, configResp.DataResponse[0])
+	pushTokenResponse, err := pushTokenController.GetPushTokensByUHCId(id)
+	assert.NotNil(t, pushTokenResponse.DataResponse[0])
 
 }

@@ -12,7 +12,6 @@ type UserConfigUHC struct {
 	FavoriteLocationUHCIDs     []string                    `json:"favoriteLocationUhcIds,omitempty" bson:"favoriteLocationUhcIds,omitempty"`
 	AcceptedTermsAndConditions []AcceptedTermsAndCondition `json:"acceptedTermsAndConditions,omitempty" bson:"acceptedTermsAndConditions,omitempty"`
 	Ratings                    []Rate                      `json:"ratings,omitempty" bson:"ratings,omitempty"`
-	PushTokens                 []PushToken                 `json:"pushTokens,omitempty" bson:"pushTokens,omitempty"`
 	UserContacts               []UserContact               `json:"userContacts,omitempty" bson:"userContacts,omitempty"`
 }
 
@@ -24,12 +23,6 @@ type UserContact struct {
 type UserContactComplete struct {
 	User User   `bson:"user,omitempty" json:"user,omitempty"`
 	Tag  string `bson:"tag,omitempty" json:"tag,omitempty"`
-}
-
-type PushToken struct {
-	Token        string    `json:"token,omitempty" bson:"token,omitempty"`
-	Os           string    `json:"os,omitempty" bson:"os,omitempty"`
-	RegisterDate time.Time `json:"registerDate,omitempty" bson:"registerDate,omitempty"`
 }
 
 type Rate struct {

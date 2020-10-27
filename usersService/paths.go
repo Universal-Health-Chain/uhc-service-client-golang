@@ -1,5 +1,5 @@
 package usersService
 
 const (
-	GetUserConfigUHCByUhcId                                = "/api/v1/user/config/uhc/id"
+	GetPushTokensByUHCId = "/api/v1/user/push/token/uhc/id"
 )

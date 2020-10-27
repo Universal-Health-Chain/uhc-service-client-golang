@@ -6,26 +6,25 @@ import (
 	"fmt"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
-
 	"io/ioutil"
 	"net/http"
+	_ "os"
 )
 
-type ConfigUHCController struct {
+type PushTokenUHCController struct {
 	service.Service
 }
 
 const usersRoute = "/users-service"
 
-func (userConfigController *ConfigUHCController) GetUserConfigUHCByUhcId(uhcId string) (*models.UserConfigUHCResponse, error) {
-	var userResponse *models.UserConfigUHCResponse
+func (pushTokenController *PushTokenUHCController) GetPushTokensByUHCId(uhcId string) (pushTokenResponse *models.PushTokensUHCResponse, err error) {
 
-	url := userConfigController.BackendUrl + usersRoute + GetUserConfigUHCByUhcId + "/" + uhcId
+	url := pushTokenController.BackendUrl + usersRoute + GetPushTokensByUHCId + "/" + uhcId
 	request, _ := http.NewRequest("GET", url, nil)
 	request.Header.Set("Content-Type", "application/json")
-	request.Header.Set("Authorization", "Bearer "+ userConfigController.Token)
+	request.Header.Set("Authorization", "Bearer "+pushTokenController.Token)
 
-	request.Header.Set("x-service-uhc", "userConfigController")
+	request.Header.Set("x-service-uhc", "pushTokenController")
 
 	client := &http.Client{}
 	response, err := client.Do(request)
@@ -46,7 +45,8 @@ func (userConfigController *ConfigUHCController) GetUserConfigUHCByUhcId(uhcId s
 		return nil, err
 	}
 
-	_ = json.Unmarshal(body, &userResponse)
+	_ = json.Unmarshal(body, &pushTokenResponse)
 
-	return userResponse, nil
+	return pushTokenResponse, nil
+
 }
