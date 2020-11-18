@@ -15,6 +15,8 @@ type CryptoController struct {
 	service.Service
 }
 
+// crear encryption key
+
 func (cryptoController *CryptoController) DecryptPayloadUsingDecryptionRequest(decryptionRequest models.DecryptionRequest) (*models.EncryptedResultResponse, error) {
 
 	var encryptedResultResponse *models.EncryptedResultResponse
@@ -43,5 +45,69 @@ func (cryptoController *CryptoController) DecryptPayloadUsingDecryptionRequest(d
 
 	_ = json.Unmarshal(body, &encryptedResultResponse)
 	return encryptedResultResponse, nil
+
+}
+
+
+////////////
+func (cryptoController *CryptoController) GetSharedEncryptionKeyRequest(sharedKeyRequest models.SharedKeyCreationRequest) (*models.SharedKeyResponse, error) {
+
+	var sharedKeyResponse *models.SharedKeyResponse
+	jsonValue, _ := json.Marshal(sharedKeyRequest)
+
+	url := cryptoController.BackendUrl + authRoute + GetSharedEncryptionKey
+	request, _ := http.NewRequest("PUT", url, bytes.NewBuffer(jsonValue))
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Authorization", "Bearer " + cryptoController.Token)
+
+	request.Header.Set("x-service-uhc", "connectionsService")
+
+	client := &http.Client{}
+	response, err := client.Do(request)
+
+	if response.StatusCode != 200 {
+		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
+		return nil, errors.New(message)
+	}
+
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return nil, err
+	}
+
+	_ = json.Unmarshal(body, &sharedKeyResponse)
+	return sharedKeyResponse, nil
+
+}
+////////////
+func (cryptoController *CryptoController) EncryptionKeyCreationController (encryptionKeyRequest models.EncryptionKeyCreationRequest) (*models.EncryptionKeyResponse, error) {
+
+	var encryptionKeyResponse *models.EncryptionKeyResponse
+	jsonValue, _ := json.Marshal(encryptionKeyRequest)
+
+	url := cryptoController.BackendUrl + authRoute + CreateEncryptionKey
+	request, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Authorization", "Bearer " + cryptoController.Token)
+
+	request.Header.Set("x-service-uhc", "connectionsService")
+
+	client := &http.Client{}
+	response, err := client.Do(request)
+
+	if response.StatusCode != 200 {
+		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
+		return nil, errors.New(message)
+	}
+
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return nil, err
+	}
+
+	_ = json.Unmarshal(body, &encryptionKeyResponse)
+	return encryptionKeyResponse, nil
 
 }

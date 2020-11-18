@@ -32,3 +32,4 @@ type EncryptionKeyResponse struct {
 	Message string          `bson:"message,omitempty" json:"message,omitempty"`
 	Data    []EncryptionKey `bson:"data,omitempty" json:"data,omitempty"`
 }
+
