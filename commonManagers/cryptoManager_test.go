@@ -104,3 +104,33 @@ func TestCryptoManager_GetSharedEncryptionKey(t *testing.T) {
 
 	assert.Equal(t, sharedKeyResult, ConnectionSharedKeyForTesting)
 }
+
+
+func TestCryptoManager_EncryptBytesWithSharedKey(t *testing.T) {
+	keySender := encryptionKeys[0]
+	public, private, _ := encryptionManager.GenerateKeyPair()
+	keySender.PublicKeyBase64 = public
+	keySender.PrivateKeyBase64 = private
+
+	keyRecipient := encryptionKeys[0]
+	publicRecipient, privateRecipient, _ := encryptionManager.GenerateKeyPair()
+	keyRecipient.PublicKeyBase64 = publicRecipient
+	keyRecipient.PrivateKeyBase64 = privateRecipient
+
+	sharedKeyResult, err := encryptionManager.GetSharedEncryptionKey(publicRecipient, private)
+
+	message:="message test"
+
+	resultEncrypted, err:= encryptionManager.EncryptToBase64WithSharedKeyInBase64(&message, &sharedKeyResult)
+
+	assert.NotEqual(t, resultEncrypted, nil)
+	assert.Equal(t, err, nil)
+
+	resultDecrypted, err:= encryptionManager.DecryptBase64WithSharedKeyInBase64(&resultEncrypted, &sharedKeyResult)
+
+	assert.NotEqual(t, resultDecrypted, nil)
+	assert.Equal(t, err, nil)
+	assert.Equal(t, message, resultDecrypted)
+
+
+}

@@ -22,19 +22,16 @@ func (manager *CryptoManager) GenerateKeyPair() (publicKeyBase64 string, private
 	return BytesToBase64String(publicKeyBytes[:]), BytesToBase64String(privateKeysBytes[:]), nil
 }
 
-func stringToBytes32 (str string) ([32]byte){
-	n := []byte(str)
-	var bytes [32]byte
-	copy(bytes[:], n)
-	return bytes
-}
-
 func BytesToBase64String(b []byte) string {
 	return b64.StdEncoding.EncodeToString(b)
 }
 
 func Base64StringToBytes(str string) ([]byte, error) {
 	return b64.StdEncoding.DecodeString(str)
+}
+
+func BytesToStringUTF8(b []byte) string {
+	return string(b[:])
 }
 
 func base64StringToBytes32(str string) ([32]byte, error) {
@@ -130,4 +127,75 @@ func (manager *CryptoManager) GetSharedEncryptionKey (recipientPublicKey, sender
 	box.Precompute(&sharedKey, &recipientPublicKeyBytes,&senderPrivateKeyBytes)
 
 	return BytesToBase64String(sharedKey[:]), nil
+}
+
+
+func (manager *CryptoManager) GetSharedKeyInBytesByBase64Keys(recipientPublicKey, senderSecretKey *string) (sharedKey [32]byte, err error){
+	var sharedKeyBytes [32]byte
+	recipientPublicKeyBytes, err := base64StringToBytes32(*recipientPublicKey)
+	if err != nil {return sharedKeyBytes, err}	// empty and error
+	senderPrivateKeyBytes, err := base64StringToBytes32(*senderSecretKey)
+	if err != nil {return sharedKeyBytes, err}	// empty and error
+	box.Precompute(&sharedKeyBytes, &recipientPublicKeyBytes, &senderPrivateKeyBytes)
+	return sharedKeyBytes, nil
+}
+
+
+
+
+func (manager *CryptoManager) EncryptToBase64WithSharedKeyInBase64(message, sharedKey *string) (encryptedMessage string, err error) {
+	messageBytes := []byte(*message)
+	sharedKeyBytes, err := base64StringToBytes32(*sharedKey)
+	if err != nil {
+		return "", err
+	}
+
+	encryptedBytes,err := manager.EncryptBytesWithSharedKey(&messageBytes, &sharedKeyBytes)
+	return BytesToBase64String(encryptedBytes), err
+}
+
+func (manager *CryptoManager) EncryptBytesWithSharedKey(messageBytes *[]byte, sharedKeyBytes *[32]byte) (encryptedMessage []byte, err error) {
+	var nonce [24]byte
+	if _, err := io.ReadFull(rand.Reader, nonce[:]); err != nil {
+		return nil, err
+	}
+
+	encryptedBytes := box.SealAfterPrecomputation(nonce[:], *messageBytes, &nonce, sharedKeyBytes)
+	return encryptedBytes, err	// nonce error
+}
+
+func (manager *CryptoManager) EncryptToStringUTF8(recipientPublicKey, senderSecretKey, message string) (encryptedMessage string, err error) {
+	sharedKeyBytes, _ := manager.GetSharedKeyInBytesByBase64Keys(&recipientPublicKey, &senderSecretKey)
+	messageBytes := []byte(message)
+	encryptedBytes, err := manager.EncryptBytesWithSharedKey(&messageBytes, &sharedKeyBytes)
+	return BytesToStringUTF8(encryptedBytes), err
+}
+
+func (manager *CryptoManager) DecryptBase64WithSharedKeyInBase64(encryptedMessage, sharedKey *string) (decryptedMessage string, err error) {
+	encryptedMessageBytes, _ := Base64StringToBytes(*encryptedMessage)
+	sharedKeyBytes, _ := base64StringToBytes32(*sharedKey)
+
+	decryptedBytes, err := manager.DecryptBytesWithSharedKey(encryptedMessageBytes, &sharedKeyBytes)
+	if err != nil {
+		return "", err
+	}
+	return BytesToStringUTF8(decryptedBytes), nil
+}
+
+func (manager *CryptoManager) DecryptBytesWithSharedKey(messageBytes []byte, sharedKeyBytes *[32]byte) (decryptedMessage []byte, err error) {
+	var decryptNonce [24]byte
+	copy(decryptNonce[:], messageBytes[:24])
+
+	decryptedBytes, ok := box.OpenAfterPrecomputation(nil, messageBytes[24:], &decryptNonce, sharedKeyBytes)
+	if !ok {
+		return nil, errors.New("error decrypting")
+	}
+	return decryptedBytes, nil
+}
+
+func (manager *CryptoManager) DecryptStringUTF8(senderPublicKey, recipientPrivateKey, encryptedMessage string) (decryptedMessage string, err error) {
+	sharedKeyBytes, _ := manager.GetSharedKeyInBytesByBase64Keys(&senderPublicKey, &recipientPrivateKey)
+	encryptedMessageBytes := []byte(encryptedMessage)
+	decryptedBytes, err := manager.DecryptBytesWithSharedKey(encryptedMessageBytes, &sharedKeyBytes)
+	return BytesToStringUTF8(decryptedBytes), err
 }
