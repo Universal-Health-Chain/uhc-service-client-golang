@@ -1,4 +1,4 @@
-package managers
+package commonManagers
 
 import (
 	"crypto/rand"
