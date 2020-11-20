@@ -4,14 +4,14 @@ type EncryptionRequest struct {
 	Payload                  string `bson:"payload,omitempty" json:"payload,omitempty"`
 	EncryptionKeyId          string `bson:"encryptionKeyId,omitempty" json:"encryptionKeyId,omitempty"`
 	AccessPassword           string `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
-	RecipientPublicKeyBase64 string `bson:"recipientPublicKeyBase64,omitempty" json:"recipientPublicKeyBase64,omitempty"`
+	OtherPartPublicKeyBase64 string `bson:"otherPartPublicKeyBase64,omitempty" json:"otherPartPublicKeyBase64,omitempty"`
 }
 
 type DecryptionRequest struct {
-	Payload               string `bson:"payload,omitempty" json:"payload,omitempty"`
-	EncryptionKeyId       string `bson:"encryptionKeyId,omitempty" json:"encryptionKeyId,omitempty"`
-	AccessPassword        string `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
-	SenderPublicKeyBase64 string `bson:"senderPublicKeyBase64,omitempty" json:"senderPublicKeyBase64,omitempty"`
+	Payload                  string `bson:"payload,omitempty" json:"payload,omitempty"`
+	EncryptionKeyId          string `bson:"encryptionKeyId,omitempty" json:"encryptionKeyId,omitempty"`
+	AccessPassword           string `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
+	OtherPartPublicKeyBase64 string `bson:"otherPartPublicKeyBase64,omitempty" json:"otherPartPublicKeyBase64,omitempty"`
 }
 
 type EncryptedResult struct {

@@ -53,8 +53,6 @@ func TestCryptoManager_EncryptUsingEncryptionKey_Decrypt(t *testing.T) {
 	assert.Equal(t, err, nil)
 
 	assert.Equal(t, decryptionResult.DecryptedMessage, message)
-	_=keyReciever.Delete()
-	_=keySender.Delete()
 
 }
 func TestEncryptionManager_Decrypt(t *testing.T) {
@@ -78,7 +76,7 @@ func TestEncryptionManager_Decrypt(t *testing.T) {
 	assert.Equal(t, decrypted2, message)
 
 }
-////
+
 func TestCryptoManager_GetSharedEncryptionKey(t *testing.T) {
 	keySender := encryptionKeys[0]
 	public, private, _ := encryptionManager.GenerateKeyPair()
@@ -98,11 +96,6 @@ func TestCryptoManager_GetSharedEncryptionKey(t *testing.T) {
 	assert.NotEqual(t, sharedKeyResult, nil)
 	assert.Equal(t, err, nil)
 
-
-	_=keyRecipient.Delete()
-	_=keySender.Delete()
-
-	///
 	MySecretKeyForTesting := "lFO8hOSodEKssy6fezSpH6IPBtRoPVFPizoDkOvZcnw="
 	TheirPublicKeyForTesting := "17Ibb48t+Qs2e+S1s6o5YIdE6xY/sF5BefXxzut5Wn0="
 	ConnectionSharedKeyForTesting :=  "okH9Y2fFD0I6pfZliinOpZ+rEV7/bWW92wdUMuV8iC4=" // "dyn2O2sdUqnMvpxTySya2JHww+48keyQD9RoGrXEtY0="
@@ -110,5 +103,4 @@ func TestCryptoManager_GetSharedEncryptionKey(t *testing.T) {
 	sharedKeyResult, err = encryptionManager.GetSharedEncryptionKey(TheirPublicKeyForTesting, MySecretKeyForTesting)
 
 	assert.Equal(t, sharedKeyResult, ConnectionSharedKeyForTesting)
-
 }
