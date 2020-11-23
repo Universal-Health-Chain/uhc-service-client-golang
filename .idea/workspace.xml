@@ -19,17 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/authController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/authController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/authController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/authController_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/cryptoController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/cryptoController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/encryptionKeyController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/userAdminController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/userAdminController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/connectionsService/connectionUhcController.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/connectionUhcController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usersService/pushTokenUHCController.go" beforeDir="false" afterPath="$PROJECT_DIR$/usersService/pushTokenUHCController.go" afterDir="false" />
-    </list>
+    <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
