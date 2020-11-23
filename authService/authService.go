@@ -17,3 +17,10 @@ func (authService *AuthService) Initialize(backendUrl string) {
 	authService.EncryptionKeyController = EncryptionKeyController{models.Service{BackendUrl: backendUrl}}
 	authService.UserAdminController = UserAdminController{models.Service{BackendUrl: backendUrl}}
 }
+
+func (authService *AuthService) SetToken(token string) {
+	authService.AuthController.Token = token
+	authService.CryptoController.Token = token
+	authService.EncryptionKeyController.Token = token
+	authService.UserAdminController.Token = token
+}

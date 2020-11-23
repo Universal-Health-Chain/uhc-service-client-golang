@@ -11,3 +11,7 @@ type UsersService  struct {
 func (connectionsService *UsersService) Initialize(backendUrl string) {
 	connectionsService.PushTokenUHCController = PushTokenUHCController{models.Service{BackendUrl: backendUrl}}
 }
+
+func (connectionsService *UsersService) SetToken(token string) {
+	connectionsService.PushTokenUHCController.Token = token
+}

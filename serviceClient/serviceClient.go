@@ -18,3 +18,8 @@ func (serviceClient *ServiceClient) Initialize(backendUrl string) {
 	serviceClient.UsersService.Initialize(backendUrl)
 }
 
+func (serviceClient *ServiceClient) SetToken(token string) {
+	serviceClient.AuthService.SetToken(token)
+	serviceClient.ConnectionsService.SetToken(token)
+	serviceClient.UsersService.SetToken(token)
+}
