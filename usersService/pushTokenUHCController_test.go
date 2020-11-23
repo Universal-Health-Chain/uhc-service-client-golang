@@ -13,7 +13,7 @@ var backendUrl string
 var usernameTesting string
 var userPwTesting string
 var pushTokenController PushTokenUHCController
-var userAdminCon authService.UserAdminController
+var authController authService.AuthController
 
 func init() {
 	godotenv.Load("../.env")
@@ -21,11 +21,12 @@ func init() {
 	usernameTesting = os.Getenv("USERNAMETEST")
 	userPwTesting = os.Getenv("PASSWORDTEST")
 	pushTokenController = PushTokenUHCController{service.Service{BackendUrl: backendUrl}}
-	userAdminCon = authService.UserAdminController{service.Service{BackendUrl: backendUrl}}
+	authController = authService.AuthController{service.Service{BackendUrl: backendUrl}}
+
 }
 
 func TestPushTokenUHCController_GetPushTokensByUHCId(t *testing.T) {
-	loginResp, err := userAdminCon.Login(usernameTesting, userPwTesting)
+	loginResp, err := authController.Login(usernameTesting, userPwTesting)
 	assert.Nil(t, err, "error should be nil")
 	assert.Equal(t, loginResp.Data[0].Username, usernameTesting)
 
