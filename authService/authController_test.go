@@ -50,7 +50,7 @@ func TestAuthController_RegisterDeletingForTesting(t *testing.T) {
 
 	userResp, _ := authController.RegisterDeletingForTesting(newUser.Username,  newUser.Email,newUser.Password)
 
-	assert.Equal(t, userResp.Data[0].Username, newUser.Username)
+	assert.Equal(t, userResp.Username, newUser.Username)
 
 
 

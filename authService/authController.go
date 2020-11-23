@@ -113,7 +113,7 @@ func (authController *AuthController) RegisterUser(user models.User) (*models.Us
 }
 
 
-func (authController *AuthController) RegisterDeletingForTesting(username, email, password string) (*models.UserResponse, error) {
+func (authController *AuthController) RegisterDeletingForTesting(username, email, password string) (*models.User, error) {
 	userResp, err := authController.Login(username,password)
 	log.Println("login in")
 	if err != nil {
@@ -136,6 +136,11 @@ func (authController *AuthController) RegisterDeletingForTesting(username, email
 
 	userResp, err = authController.RegisterUser(newUser)
 
-	return userResp, err
+	if err != nil || userResp == nil || len(userResp.Data)==0 {
+		log.Println("error deleting " + err.Error())
+		return nil, err
+	}
+
+	return &userResp.Data[0], err
 
 }
