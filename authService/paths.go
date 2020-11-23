@@ -9,4 +9,6 @@ const (
 	GetSelfPublicInfoOfActiveKey         = "/api/v1/key/public/me"
 	GetUserPublicInfoOfActiveKey         = "/api/v1/key/public/user/{userId}"
 	RegisterUser                         = "/api/v1/user/register"
+	DeleteUser                       = "/api/v1/user/me/remove/account"
+
 )

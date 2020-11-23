@@ -48,6 +48,37 @@ func (authController *AuthController) Login(username string, password string) (*
 }
 
 
+func (authController *AuthController) DeleteUser(deletionRequest models.UserDeletionRequest) (*models.UserResponse, error) {
+	var userResponse *models.UserResponse
+	jsonValue, _ := json.Marshal(deletionRequest)
+
+	url := authController.BackendUrl + authRoute + DeleteUser
+	request, _ := http.NewRequest("DELETE", url, bytes.NewBuffer(jsonValue))
+	request.Header.Set("Content-Type", "application/json")
+	//request.Header.Set("Authorization", userAdminController.Token)
+
+	request.Header.Set("x-service-uhc", "userAdminController")
+
+	client := &http.Client{}
+	response, err := client.Do(request)
+
+	if response.StatusCode != 200 {
+		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
+		return nil, errors.New(message)
+	}
+
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return nil, err
+	}
+
+	_ = json.Unmarshal(body, &userResponse)
+
+	return userResponse, nil
+
+}
+
 
 func (authController *AuthController) RegisterUser(user models.User) (*models.UserResponse, error) {
 	var userResponse *models.UserResponse

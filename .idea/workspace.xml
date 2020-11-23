@@ -20,10 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/authService/authService.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/connectionsService/connectionsService.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/serviceClient.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/serviceClient_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usersService/usersService.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/cryptoController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/cryptoController_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/encryptionKeyController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/encryptionKeyController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/authController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/authController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/paths.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/paths.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
