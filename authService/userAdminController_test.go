@@ -30,7 +30,7 @@ func TestAuthService_FindUserById(t *testing.T) {
 
 	userAdminCon.Token = token
 
-	userResp, err := userAdminCon.FindUserById(id)
+	userResp, err := userAdminCon.FindUserById(id, "token")
 	assert.Nil(t, err, "error should be nil")
 	assert.Equal(t, userResp.Data[0].Username, usernameTesting)
 }
