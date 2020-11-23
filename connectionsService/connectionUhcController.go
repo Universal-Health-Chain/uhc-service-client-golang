@@ -19,7 +19,8 @@ type ConnectionUhcController struct {
 
 const connectionsRoute = "/connections-service"
 
-func (connectionUhcController *ConnectionUhcController) GetConnectionUHCById(connectionId string) (connectionUhcResponse *models.ConnectionUHCResponse, err error) {
+func (connectionUhcController *ConnectionUhcController) GetConnectionUHCById(connectionId string) (*models.ConnectionUHCResponse, error) {
+	connectionUhcResponse := models.ConnectionUHCResponse{}
 	url := strings.ReplaceAll(connectionUhcController.BackendUrl + connectionsRoute + GetConnectionUHCById, "{connectionId}", connectionId)
 
 	request, _ := http.NewRequest("GET", url, nil)
@@ -48,8 +49,7 @@ func (connectionUhcController *ConnectionUhcController) GetConnectionUHCById(con
 
 	_ = json.Unmarshal(body, &connectionUhcResponse)
 
-	return connectionUhcResponse, nil
-
+	return &connectionUhcResponse, nil
 }
 
 func (connectionUhcController *ConnectionUhcController) CreateConnectionUHCImplicitInvitation(connectionCreationRequest models.ConnectionCreationImplicitRequest) (*models.ConnectionUHCResponse, error) {

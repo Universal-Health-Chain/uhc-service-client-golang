@@ -49,7 +49,8 @@ func (encryptionKeyController *EncryptionKeyController) EncryptionKeyCreationCon
 }
 
 
-func (encryptionKeyController *EncryptionKeyController) GetUserPublicInfoOfActiveKey(uhcId string) (publicInfoResponse *models.PublicInfoFromKeyResponse, err error) {
+func (encryptionKeyController *EncryptionKeyController) GetUserPublicInfoOfActiveKey(uhcId string) (*models.PublicInfoFromKeyResponse, error) {
+	publicInfoResponse := models.PublicInfoFromKeyResponse{}
 	url := strings.ReplaceAll(encryptionKeyController.BackendUrl + authRoute + GetUserPublicInfoOfActiveKey, "{userId}", uhcId)
 
 	request, _ := http.NewRequest("GET", url, nil)
@@ -78,6 +79,6 @@ func (encryptionKeyController *EncryptionKeyController) GetUserPublicInfoOfActiv
 
 	_ = json.Unmarshal(body, &publicInfoResponse)
 
-	return publicInfoResponse, nil
+	return &publicInfoResponse, nil
 
 }
