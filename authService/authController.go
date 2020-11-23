@@ -115,24 +115,21 @@ func (authController *AuthController) RegisterUser(user models.User) (*models.Us
 
 func (authController *AuthController) RegisterDeletingForTesting(username, email, password string) (*models.User, error) {
 	userResp, err := authController.Login(username,password)
-	log.Println("login in")
+	log.Println("login in to attempt deleting of user")
 	if err != nil {
 		log.Println("error login in " + err.Error())
-		return nil, err
+	} else {
+		deletionReq := models.UserDeletionRequest{Username: username, Password: password, Email: email, DeletionToken: "test"}
+		token := userResp.Data[0].Token
+		authController.Token = token
+		_, err = authController.DeleteUser(deletionReq)
+		log.Println("deleting user  if exists")
+		if err != nil {
+			log.Println("error deleting " + err.Error())
+		}
 	}
 
-	deletionReq := models.UserDeletionRequest{Username: username, Password: password, Email: email, DeletionToken: "test"}
-	token := userResp.Data[0].Token
-	authController.Token = token
-	_, err = authController.DeleteUser(deletionReq)
-	log.Println("deleting user ")
-
-	if err != nil {
-		log.Println("error deleting " + err.Error())
-		return nil, err
-	}
-
-	log.Println("registering ")
+	log.Println("registering to create new user")
 	newUser := models.User{Username:username, Password: password, Email: email}
 
 	userResp, err = authController.RegisterUser(newUser)
@@ -142,7 +139,9 @@ func (authController *AuthController) RegisterDeletingForTesting(username, email
 		return nil, err
 	}
 
-	userResp.Data[0].Token = token
+	log.Println("Loging in again to refresh tokens ")
+	userResp, err = authController.Login(username,password)
+
 	return &userResp.Data[0], err
 
 }

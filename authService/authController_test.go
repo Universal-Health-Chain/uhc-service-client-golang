@@ -46,7 +46,7 @@ func TestAuthController_DeleteUser(t *testing.T) {
 
 func TestAuthController_RegisterDeletingForTesting(t *testing.T) {
 
-	newUser := models.User{Username:"bla4e923la2", Password: "1234", Email: "bla4e393la2@email.com"}
+	newUser := models.User{Username:"b4la4e923la2", Password: "1234", Email: "bla4e3593la2@email.com"}
 
 	userResp, _ := authController.RegisterDeletingForTesting(newUser.Username,  newUser.Email,newUser.Password)
 
