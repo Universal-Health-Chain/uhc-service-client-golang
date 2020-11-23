@@ -17,7 +17,7 @@ type EncryptionKeyController struct {
 }
 
 
-func (encryptionKeyController *EncryptionKeyController) EncryptionKeyCreationController (encryptionKeyRequest models.EncryptionKeyCreationRequest) (*models.EncryptionKeyResponse, error) {
+func (encryptionKeyController *EncryptionKeyController) CreateEncryptionKey(encryptionKeyRequest models.EncryptionKeyCreationRequest) (*models.EncryptionKeyResponse, error) {
 
 	var encryptionKeyResponse *models.EncryptionKeyResponse
 	jsonValue, _ := json.Marshal(encryptionKeyRequest)

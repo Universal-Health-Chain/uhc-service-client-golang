@@ -28,7 +28,7 @@ func Test_EncryptionKeyCreationController(t *testing.T) {
 	encryptionKey.Token = userResp.Data[0].Token
 
 	encryptionKeyRequest := models.EncryptionKeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
-	_, errata := encryptionKey.EncryptionKeyCreationController(encryptionKeyRequest)
+	_, errata := encryptionKey.CreateEncryptionKey(encryptionKeyRequest)
 	assert.Nil(t, errata, "errata should be nil")
 }
 
