@@ -1,4 +1,4 @@
-package service
+package models
 
 type Service struct {
 	BackendUrl   string

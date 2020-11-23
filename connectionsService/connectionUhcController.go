@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
 	"io/ioutil"
 	"net/http"
 	_ "os"
@@ -14,10 +13,10 @@ import (
 )
 
 type ConnectionUhcController struct {
-	service.Service
+	models.Service
 }
 
-const connectionsRoute = "/connections-service"
+const connectionsRoute = "/connections-serviceClient"
 
 func (connectionUhcController *ConnectionUhcController) GetConnectionUHCById(connectionId string) (*models.ConnectionUHCResponse, error) {
 	connectionUhcResponse := models.ConnectionUHCResponse{}
@@ -26,7 +25,7 @@ func (connectionUhcController *ConnectionUhcController) GetConnectionUHCById(con
 	request, _ := http.NewRequest("GET", url, nil)
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer "+connectionUhcController.Token)
-	request.Header.Set("x-service-uhc", "pushTokenController")
+	request.Header.Set("x-serviceClient-uhc", "pushTokenController")
 
 	client := &http.Client{}
 	response, err := client.Do(request)
@@ -62,7 +61,7 @@ func (connectionUhcController *ConnectionUhcController) CreateConnectionUHCImpli
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer " + connectionUhcController.Token)
 
-	request.Header.Set("x-service-uhc", "connectionsService")
+	request.Header.Set("x-serviceClient-uhc", "connectionsService")
 
 	client := &http.Client{}
 	response, err := client.Do(request)

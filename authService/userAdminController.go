@@ -5,13 +5,12 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
 	"io/ioutil"
 	"net/http"
 )
 
 type UserAdminController struct {
-	service.Service
+	models.Service
 }
 
 const authRoute = "/auth"
@@ -24,7 +23,7 @@ func (userAdminController *UserAdminController) FindUserById(id string) (*models
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer "+userAdminController.Token)
 
-	request.Header.Set("x-service-uhc", "userAdminController")
+	request.Header.Set("x-serviceClient-uhc", "userAdminController")
 
 	client := &http.Client{}
 	response, err := client.Do(request)

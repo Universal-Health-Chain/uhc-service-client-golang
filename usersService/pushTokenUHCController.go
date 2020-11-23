@@ -5,17 +5,16 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
 	"io/ioutil"
 	"net/http"
 	_ "os"
 )
 
 type PushTokenUHCController struct {
-	service.Service
+	models.Service
 }
 
-const usersRoute = "/users-service"
+const usersRoute = "/users-serviceClient"
 
 func (pushTokenController *PushTokenUHCController) GetPushTokensByUHCId(uhcId string) (pushTokenResponse *models.PushTokensUHCResponse, err error) {
 
@@ -24,7 +23,7 @@ func (pushTokenController *PushTokenUHCController) GetPushTokensByUHCId(uhcId st
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer "+pushTokenController.Token)
 
-	request.Header.Set("x-service-uhc", "pushTokenController")
+	request.Header.Set("x-serviceClient-uhc", "pushTokenController")
 
 	client := &http.Client{}
 	response, err := client.Do(request)

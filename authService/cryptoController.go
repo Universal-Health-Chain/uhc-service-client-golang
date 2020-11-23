@@ -6,13 +6,12 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
 	"io/ioutil"
 	"net/http"
 )
 
 type CryptoController struct {
-	service.Service
+	models.Service
 }
 
 func (cryptoController *CryptoController) DecryptPayloadUsingDecryptionRequest(decryptionRequest models.DecryptionRequest) (*models.EncryptedResultResponse, error) {
@@ -25,7 +24,7 @@ func (cryptoController *CryptoController) DecryptPayloadUsingDecryptionRequest(d
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer " + cryptoController.Token)
 
-	request.Header.Set("x-service-uhc", "connectionsService")
+	request.Header.Set("x-serviceClient-uhc", "connectionsService")
 
 	client := &http.Client{}
 	response, err := client.Do(request)
@@ -57,7 +56,7 @@ func (cryptoController *CryptoController) GetSharedEncryptionKeyRequest(sharedKe
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer " + cryptoController.Token)
 
-	request.Header.Set("x-service-uhc", "connectionsService")
+	request.Header.Set("x-serviceClient-uhc", "connectionsService")
 
 	client := &http.Client{}
 	response, err := client.Do(request)

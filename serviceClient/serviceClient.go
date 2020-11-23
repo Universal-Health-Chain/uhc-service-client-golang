@@ -1,4 +1,4 @@
-package main
+package serviceClient
 
 import (
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/authService"

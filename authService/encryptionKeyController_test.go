@@ -2,7 +2,6 @@ package authService
 
 import (
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"os"
@@ -14,7 +13,7 @@ var encryptionKey EncryptionKeyController
 func init() {
 	godotenv.Load("../.env")
 	backendUrl = os.Getenv("BACKENDURL")
-	encryptionKey = EncryptionKeyController{service.Service{BackendUrl: backendUrl}}
+	encryptionKey = EncryptionKeyController{models.Service{BackendUrl: backendUrl}}
 	usernameTesting = os.Getenv("USERNAMETEST")
 	userPwTesting = os.Getenv("PASSWORDTEST")
 }

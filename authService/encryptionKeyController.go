@@ -6,14 +6,13 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
 	"io/ioutil"
 	"net/http"
 	"strings"
 )
 
 type EncryptionKeyController struct {
-	service.Service
+	models.Service
 }
 
 
@@ -27,7 +26,7 @@ func (encryptionKeyController *EncryptionKeyController) CreateEncryptionKey(encr
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer " + encryptionKeyController.Token)
 
-	request.Header.Set("x-service-uhc", "connectionsService")
+	request.Header.Set("x-serviceClient-uhc", "connectionsService")
 
 	client := &http.Client{}
 	response, err := client.Do(request)
@@ -56,7 +55,7 @@ func (encryptionKeyController *EncryptionKeyController) GetUserPublicInfoOfActiv
 	request, _ := http.NewRequest("GET", url, nil)
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer "+encryptionKeyController.Token)
-	request.Header.Set("x-service-uhc", "encryptionKeyController")
+	request.Header.Set("x-serviceClient-uhc", "encryptionKeyController")
 
 	client := &http.Client{}
 	response, err := client.Do(request)

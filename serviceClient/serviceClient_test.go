@@ -1,4 +1,4 @@
-package main
+package serviceClient
 
 import (
 	"github.com/stretchr/testify/assert"

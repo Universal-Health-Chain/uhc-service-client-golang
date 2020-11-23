@@ -1,7 +1,7 @@
 package authService
 
 import (
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
+	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"os"
@@ -14,7 +14,7 @@ func init() {
 	backendUrl = os.Getenv("BACKENDURL")
 	usernameTesting = os.Getenv("USERNAMETEST")
 	userPwTesting = os.Getenv("PASSWORDTEST")
-	authController = AuthController{service.Service{BackendUrl: backendUrl}}
+	authController = AuthController{models.Service{BackendUrl: backendUrl}}
 }
 
 func TestAuthController_Login(t *testing.T) {

@@ -2,7 +2,7 @@ package connectionsService
 
 import (
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/authService"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
+	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 	"github.com/joho/godotenv"
 	"os"
 	"testing"
@@ -19,8 +19,8 @@ func init() {
 	backendUrl = os.Getenv("BACKENDURL")
 	usernameTesting = os.Getenv("USERNAMETEST")
 	userPwTesting = os.Getenv("PASSWORDTEST")
-	connectionUhcController = ConnectionUhcController{service.Service{BackendUrl: backendUrl}}
-	userAdminCon = authService.UserAdminController{service.Service{BackendUrl: backendUrl}}
+	connectionUhcController = ConnectionUhcController{models.Service{BackendUrl: backendUrl}}
+	userAdminCon = authService.UserAdminController{models.Service{BackendUrl: backendUrl}}
 }
 
 func TestPushTokenUHCController_GetPushTokensByUHCId(t *testing.T) {

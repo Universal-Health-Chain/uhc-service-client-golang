@@ -10,7 +10,7 @@ type Invitation struct {
 	Label     string        `json:"label,omitempty" bson:"label,omitempty"`
 	Goal      string        `json:"goal,omitempty" bson:"goal,omitempty"`
 	GoalCode  string        `json:"goal-code,omitempty" bson:"goal-code,omitempty"`
-	Service   []interface{} `json:"service" bson:"service"`
+	Service   []interface{} `json:"serviceClient" bson:"serviceClient"`
 	Protocols []string      `json:"protocols" bson:"protocols"`
 }
 

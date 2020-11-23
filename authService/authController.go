@@ -6,13 +6,12 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
 	"io/ioutil"
 	"net/http"
 )
 
 type AuthController struct {
-	service.Service
+	models.Service
 }
 
 func (authController *AuthController) Login(username string, password string) (*models.UserResponse, error) {
@@ -25,7 +24,7 @@ func (authController *AuthController) Login(username string, password string) (*
 	request.Header.Set("Content-Type", "application/json")
 	//request.Header.Set("Authorization", userAdminController.Token)
 
-	request.Header.Set("x-service-uhc", "userAdminController")
+	request.Header.Set("x-serviceClient-uhc", "userAdminController")
 
 	client := &http.Client{}
 	response, err := client.Do(request)
@@ -57,7 +56,7 @@ func (authController *AuthController) DeleteUser(deletionRequest models.UserDele
 	request.Header.Set("Content-Type", "application/json")
 	//request.Header.Set("Authorization", userAdminController.Token)
 
-	request.Header.Set("x-service-uhc", "userAdminController")
+	request.Header.Set("x-serviceClient-uhc", "userAdminController")
 
 	client := &http.Client{}
 	response, err := client.Do(request)
@@ -89,7 +88,7 @@ func (authController *AuthController) RegisterUser(user models.User) (*models.Us
 	request.Header.Set("Content-Type", "application/json")
 	//request.Header.Set("Authorization", userAdminController.Token)
 
-	request.Header.Set("x-service-uhc", "userAdminController")
+	request.Header.Set("x-serviceClient-uhc", "userAdminController")
 
 	client := &http.Client{}
 	response, err := client.Do(request)

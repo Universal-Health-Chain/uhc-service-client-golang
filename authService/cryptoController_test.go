@@ -2,7 +2,6 @@ package authService
 
 import (
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/service"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"os"
@@ -16,7 +15,7 @@ var cryptoController CryptoController
 func init(){
 	godotenv.Load("../.env")
 	backendUrl = os.Getenv("BACKENDURL")
-	cryptoController = CryptoController{service.Service{BackendUrl: backendUrl}}
+	cryptoController = CryptoController{models.Service{BackendUrl: backendUrl}}
 	usernameTesting = os.Getenv("USERNAMETEST")
 	userPwTesting = os.Getenv("PASSWORDTEST")
 }
