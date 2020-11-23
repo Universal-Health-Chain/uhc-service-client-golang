@@ -21,10 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/authService.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/authService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/connectionsService/connectionsService.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/connectionsService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/serviceClient/serviceClient.go" beforeDir="false" afterPath="$PROJECT_DIR$/serviceClient/serviceClient.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usersService/usersService.go" beforeDir="false" afterPath="$PROJECT_DIR$/usersService/usersService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/userAdminController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/userAdminController.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

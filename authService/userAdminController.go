@@ -15,10 +15,10 @@ type UserAdminController struct {
 
 const authRoute = "/auth"
 
-func (userAdminController *UserAdminController) FindUserById(id string) (*models.UserResponse, error) {
+func (userAdminController *UserAdminController) FindUserById(id string, retrievalToken string) (*models.UserResponse, error) {
 	var userResponse *models.UserResponse
 
-	url := userAdminController.BackendUrl + authRoute + FindUser + "?id=" + id
+	url := userAdminController.BackendUrl + authRoute + FindUser + "?id=" + id + "?retrievalToken=" +retrievalToken
 	request, _ := http.NewRequest("GET", url, nil)
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer "+userAdminController.Token)
