@@ -83,7 +83,7 @@
       <recent name="$PROJECT_DIR$/commonMannagers" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestAuthController_RegisterDeletingForTesting in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (3)">
+  <component name="RunManager" selected="Go Test.TestAuthController_RegisterDeletingForTesting in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (4)">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$" />
@@ -91,17 +91,6 @@
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$" />
       <directory value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestAuthController_DeleteUser in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="uhc-service-client-golang" />
-      <working_directory value="$PROJECT_DIR$/authService" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestAuthController_DeleteUser\E$" />
       <method v="2" />
     </configuration>
     <configuration name="TestAuthController_RegisterDeletingForTesting in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -137,6 +126,17 @@
       <pattern value="^\QTestAuthController_RegisterDeletingForTesting\E$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestAuthController_RegisterDeletingForTesting in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (4)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="uhc-service-client-golang" />
+      <working_directory value="$PROJECT_DIR$/authService" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestAuthController_RegisterDeletingForTesting\E$" />
+      <method v="2" />
+    </configuration>
     <configuration name="TestAuthController_RegisterDeletingForTesting in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$/authService" />
@@ -160,11 +160,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestAuthController_RegisterDeletingForTesting in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (4)" />
         <item itemvalue="Go Test.TestAuthController_RegisterDeletingForTesting in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (3)" />
         <item itemvalue="Go Test.TestAuthController_RegisterDeletingForTesting in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)" />
         <item itemvalue="Go Test.TestAuthController_RegisterDeletingForTesting in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" />
         <item itemvalue="Go Test.TestAuthController_RegisterDeletingForTesting in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
-        <item itemvalue="Go Test.TestAuthController_DeleteUser in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)" />
       </list>
     </recent_temporary>
   </component>
