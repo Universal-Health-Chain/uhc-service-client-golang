@@ -122,7 +122,8 @@ func (authController *AuthController) RegisterDeletingForTesting(username, email
 	}
 
 	deletionReq := models.UserDeletionRequest{Username: username, Password: password, Email: email, DeletionToken: "test"}
-	authController.Token = userResp.Data[0].Token
+	token := userResp.Data[0].Token
+	authController.Token = token
 	_, err = authController.DeleteUser(deletionReq)
 	log.Println("deleting user ")
 
@@ -141,6 +142,7 @@ func (authController *AuthController) RegisterDeletingForTesting(username, email
 		return nil, err
 	}
 
+	userResp.Data[0].Token = token
 	return &userResp.Data[0], err
 
 }
