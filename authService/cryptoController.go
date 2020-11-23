@@ -29,11 +29,6 @@ func (cryptoController *CryptoController) DecryptPayloadUsingDecryptionRequest(d
 	client := &http.Client{}
 	response, err := client.Do(request)
 
-	if response.StatusCode != 200 {
-		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
-		return nil, errors.New(message)
-	}
-
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		fmt.Printf("The HTTP request failed with error %s\n", err)
@@ -41,6 +36,12 @@ func (cryptoController *CryptoController) DecryptPayloadUsingDecryptionRequest(d
 	}
 
 	_ = json.Unmarshal(body, &encryptedResultResponse)
+
+	if response.StatusCode != 200 {
+		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
+		return encryptedResultResponse, errors.New(message)
+	}
+
 	return encryptedResultResponse, nil
 
 }
@@ -61,11 +62,6 @@ func (cryptoController *CryptoController) GetSharedEncryptionKeyRequest(sharedKe
 	client := &http.Client{}
 	response, err := client.Do(request)
 
-	if response.StatusCode != 200 {
-		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
-		return nil, errors.New(message)
-	}
-
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		fmt.Printf("The HTTP request failed with error %s\n", err)
@@ -73,6 +69,12 @@ func (cryptoController *CryptoController) GetSharedEncryptionKeyRequest(sharedKe
 	}
 
 	_ = json.Unmarshal(body, &sharedKeyResponse)
+
+	if response.StatusCode != 200 {
+		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
+		return sharedKeyResponse, errors.New(message)
+	}
+
 	return sharedKeyResponse, nil
 
 }

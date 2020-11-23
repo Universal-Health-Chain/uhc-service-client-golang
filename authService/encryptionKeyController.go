@@ -31,11 +31,6 @@ func (encryptionKeyController *EncryptionKeyController) CreateEncryptionKey(encr
 	client := &http.Client{}
 	response, err := client.Do(request)
 
-	if response.StatusCode != 200 {
-		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
-		return nil, errors.New(message)
-	}
-
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		fmt.Printf("The HTTP request failed with error %s\n", err)
@@ -43,6 +38,12 @@ func (encryptionKeyController *EncryptionKeyController) CreateEncryptionKey(encr
 	}
 
 	_ = json.Unmarshal(body, &encryptionKeyResponse)
+
+	if response.StatusCode != 200 {
+		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
+		return encryptionKeyResponse, errors.New(message)
+	}
+
 	return encryptionKeyResponse, nil
 
 }
@@ -65,11 +66,6 @@ func (encryptionKeyController *EncryptionKeyController) GetUserPublicInfoOfActiv
 		return nil, err
 	}
 
-	if response.StatusCode != 200 {
-		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
-		return nil, errors.New(message)
-	}
-
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		fmt.Printf("The HTTP request failed with error %s\n", err)
@@ -78,6 +74,10 @@ func (encryptionKeyController *EncryptionKeyController) GetUserPublicInfoOfActiv
 
 	_ = json.Unmarshal(body, &publicInfoResponse)
 
+	if response.StatusCode != 200 {
+		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
+		return &publicInfoResponse, errors.New(message)
+	}
 	return &publicInfoResponse, nil
 
 }

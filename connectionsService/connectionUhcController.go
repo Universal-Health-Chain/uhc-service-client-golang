@@ -66,11 +66,6 @@ func (connectionUhcController *ConnectionUhcController) CreateConnectionUHCImpli
 	client := &http.Client{}
 	response, err := client.Do(request)
 
-	if response.StatusCode != 200 {
-		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
-		return nil, errors.New(message)
-	}
-
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		fmt.Printf("The HTTP request failed with error %s\n", err)
@@ -78,6 +73,12 @@ func (connectionUhcController *ConnectionUhcController) CreateConnectionUHCImpli
 	}
 
 	_ = json.Unmarshal(body, &connectionUhcResponse)
+
+	if response.StatusCode != 200 {
+		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
+		return connectionUhcResponse, errors.New(message)
+	}
+
 	return connectionUhcResponse, nil
 
 }

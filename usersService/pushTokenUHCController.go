@@ -33,10 +33,6 @@ func (pushTokenController *PushTokenUHCController) GetPushTokensByUHCId(uhcId st
 		return nil, err
 	}
 
-	if response.StatusCode != 200 {
-		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
-		return nil, errors.New(message)
-	}
 
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
@@ -45,6 +41,12 @@ func (pushTokenController *PushTokenUHCController) GetPushTokensByUHCId(uhcId st
 	}
 
 	_ = json.Unmarshal(body, &pushTokenResponse)
+
+	if response.StatusCode != 200 {
+		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
+		return pushTokenResponse, errors.New(message)
+	}
+
 
 	return pushTokenResponse, nil
 

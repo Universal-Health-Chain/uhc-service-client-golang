@@ -31,10 +31,11 @@ type User struct {
 }
 
 type UserDeletionRequest struct {
-	ID       string `bson:"id,omitempty" json:"id,omitempty"`
-	Username string `bson:"username,omitempty" json:"username,omitempty"`
-	Password string `bson:"password,omitempty" json:"password,omitempty"`
-	Email    string `bson:"email,omitempty" json:"email,omitempty"`
+	ID            string `bson:"id,omitempty" json:"id,omitempty"`
+	Username      string `bson:"username,omitempty" json:"username,omitempty"`
+	DeletionToken string `bson:"deletionToken,omitempty" json:"deletionToken,omitempty"`
+	Password      string `bson:"password,omitempty" json:"password,omitempty"`
+	Email         string `bson:"email,omitempty" json:"email,omitempty"`
 }
 
 // Practitioner can be: administrative, driver, director, techoperator, researcher, pharmacist, doctor, nurse, paramedic, fireman, policeman ...

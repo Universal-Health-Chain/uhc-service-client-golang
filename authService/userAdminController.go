@@ -33,11 +33,6 @@ func (userAdminController *UserAdminController) FindUserById(id string) (*models
 		return nil, err
 	}
 
-	if response.StatusCode != 200 {
-		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
-		return nil, errors.New(message)
-	}
-
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		fmt.Printf("The HTTP request failed with error %s\n", err)
@@ -45,6 +40,11 @@ func (userAdminController *UserAdminController) FindUserById(id string) (*models
 	}
 
 	_ = json.Unmarshal(body, &userResponse)
+
+	if response.StatusCode != 200 {
+		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
+		return userResponse, errors.New(message)
+	}
 
 	return userResponse, nil
 }
