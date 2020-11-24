@@ -81,3 +81,37 @@ func (encryptionKeyController *EncryptionKeyController) GetUserPublicInfoOfActiv
 	return &publicInfoResponse, nil
 
 }
+
+
+func (encryptionKeyController *EncryptionKeyController) GetPublicInfoOfEncryptionKey(encryptionKey string) (*models.PublicInfoFromKeyResponse, error) {
+	publicInfoResponse := models.PublicInfoFromKeyResponse{}
+	url := strings.ReplaceAll(encryptionKeyController.BackendUrl + authRoute + GetPublicInfoOfEncryptionKey, "{encryptionKey}", encryptionKey)
+
+	request, _ := http.NewRequest("GET", url, nil)
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Authorization", "Bearer "+encryptionKeyController.Token)
+	request.Header.Set("x-serviceClient-uhc", "encryptionKeyController")
+
+	client := &http.Client{}
+	response, err := client.Do(request)
+
+	if err != nil {
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return nil, err
+	}
+
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return nil, err
+	}
+
+	_ = json.Unmarshal(body, &publicInfoResponse)
+
+	if response.StatusCode != 200 {
+		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
+		return &publicInfoResponse, errors.New(message)
+	}
+	return &publicInfoResponse, nil
+
+}
