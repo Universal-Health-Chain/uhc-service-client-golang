@@ -16,7 +16,7 @@ type ConnectionUhcController struct {
 	models.Service
 }
 
-const connectionsRoute = "/connections-serviceClient"
+const connectionsRoute = "/connections"
 
 func (connectionUhcController *ConnectionUhcController) GetConnectionUHCById(connectionId string) (*models.ConnectionUHCResponse, error) {
 	connectionUhcResponse := models.ConnectionUHCResponse{}
@@ -56,8 +56,9 @@ func (connectionUhcController *ConnectionUhcController) CreateConnectionUHCImpli
 	var connectionUhcResponse *models.ConnectionUHCResponse
 	jsonValue, _ := json.Marshal(connectionCreationRequest)
 
+	//url := "http://localhost:8000"+ CreateConnectionUHCImplicitInvitation
 	url := connectionUhcController.BackendUrl + connectionsRoute + CreateConnectionUHCImplicitInvitation
-	request, _ := http.NewRequest("PUT", url, bytes.NewBuffer(jsonValue))
+	request, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer " + connectionUhcController.Token)
 

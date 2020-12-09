@@ -126,6 +126,7 @@ func (authController *AuthController) RegisterDeletingForTesting(username, email
 		log.Println("deleting user  if exists")
 		if err != nil {
 			log.Println("error deleting " + err.Error())
+			return &userResp.Data[0], err
 		}
 	}
 
