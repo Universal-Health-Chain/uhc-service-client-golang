@@ -20,13 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/connectionsService/messageUhcController.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/connectionsService/messageUhcController_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/authController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/authController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/connectionsService/connectionUhcController.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/connectionUhcController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/connectionsService/connectionUhcController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/connectionUhcController_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/connectionsService/paths.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/paths.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectionsService/connectionsService.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/connectionsService.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,18 +82,7 @@
       <recent name="$PROJECT_DIR$/utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestConnectionUhcController_SendMessageUhc in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService (2)">
-    <configuration name="TestAuthController_DeleteUser in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="uhc-service-client-golang" />
-      <working_directory value="$PROJECT_DIR$/authService" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestAuthController_DeleteUser\E$" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Go Test.TestConnectionUhcController_SendMessageUhc in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService (3)">
     <configuration name="TestAuthController_DeleteUser in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$/authService" />
@@ -132,6 +116,17 @@
       <pattern value="^\QTestConnectionUhcController_SendMessageUhc\E$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestConnectionUhcController_SendMessageUhc in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService (3)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="uhc-service-client-golang" />
+      <working_directory value="$PROJECT_DIR$/connectionsService" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestConnectionUhcController_SendMessageUhc\E$" />
+      <method v="2" />
+    </configuration>
     <configuration name="TestConnectionUhcController_SendMessageUhc in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$/connectionsService" />
@@ -145,11 +140,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestConnectionUhcController_SendMessageUhc in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService (3)" />
         <item itemvalue="Go Test.TestConnectionUhcController_SendMessageUhc in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService (2)" />
         <item itemvalue="Go Test.TestConnectionUhcController_SendMessageUhc in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService (1)" />
         <item itemvalue="Go Test.TestConnectionUhcController_SendMessageUhc in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService" />
         <item itemvalue="Go Test.TestAuthController_DeleteUser in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)" />
-        <item itemvalue="Go Test.TestAuthController_DeleteUser in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -198,7 +193,7 @@
     <state width="1040" height="443" key="DebuggerActiveHint/-995.-2137.3840.2137/0.23.1680.947@0.23.1680.947" timestamp="1606131153867" />
     <state width="684" height="446" key="DebuggerActiveHint/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602753869691" />
     <state width="1043" height="448" key="DebuggerActiveHint/0.23.1680.956@0.23.1680.956" timestamp="1607539976007" />
-    <state width="810" height="210" key="GridCell.Tab.0.bottom" timestamp="1607541501893">
+    <state width="810" height="210" key="GridCell.Tab.0.bottom" timestamp="1607541834218">
       <screen x="0" y="23" width="1680" height="956" />
     </state>
     <state width="1161" height="208" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.947@-995.-2137.3840.2137" timestamp="1606139782236" />
@@ -208,9 +203,9 @@
     <state width="692" height="167" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079612" />
     <state width="692" height="167" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957175" />
     <state width="812" height="210" key="GridCell.Tab.0.bottom/0.23.1680.947@0.23.1680.947" timestamp="1606756182783" />
-    <state width="810" height="210" key="GridCell.Tab.0.bottom/0.23.1680.956@0.23.1680.956" timestamp="1607541501893" />
+    <state width="810" height="210" key="GridCell.Tab.0.bottom/0.23.1680.956@0.23.1680.956" timestamp="1607541834218" />
     <state width="1878" height="243" key="GridCell.Tab.0.bottom/0.23.1920.1004@0.23.1920.1004" timestamp="1605701069447" />
-    <state width="810" height="210" key="GridCell.Tab.0.center" timestamp="1607541501893">
+    <state width="810" height="210" key="GridCell.Tab.0.center" timestamp="1607541834217">
       <screen x="0" y="23" width="1680" height="956" />
     </state>
     <state width="1161" height="208" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.947@-995.-2137.3840.2137" timestamp="1606139782235" />
@@ -220,9 +215,9 @@
     <state width="692" height="167" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079612" />
     <state width="692" height="167" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957174" />
     <state width="812" height="210" key="GridCell.Tab.0.center/0.23.1680.947@0.23.1680.947" timestamp="1606756182783" />
-    <state width="810" height="210" key="GridCell.Tab.0.center/0.23.1680.956@0.23.1680.956" timestamp="1607541501893" />
+    <state width="810" height="210" key="GridCell.Tab.0.center/0.23.1680.956@0.23.1680.956" timestamp="1607541834217" />
     <state width="1878" height="243" key="GridCell.Tab.0.center/0.23.1920.1004@0.23.1920.1004" timestamp="1605701069446" />
-    <state width="810" height="210" key="GridCell.Tab.0.left" timestamp="1607541501892">
+    <state width="810" height="210" key="GridCell.Tab.0.left" timestamp="1607541834216">
       <screen x="0" y="23" width="1680" height="956" />
     </state>
     <state width="1161" height="208" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.947@-995.-2137.3840.2137" timestamp="1606139782234" />
@@ -232,9 +227,9 @@
     <state width="692" height="167" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079611" />
     <state width="692" height="167" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957173" />
     <state width="812" height="210" key="GridCell.Tab.0.left/0.23.1680.947@0.23.1680.947" timestamp="1606756182782" />
-    <state width="810" height="210" key="GridCell.Tab.0.left/0.23.1680.956@0.23.1680.956" timestamp="1607541501892" />
+    <state width="810" height="210" key="GridCell.Tab.0.left/0.23.1680.956@0.23.1680.956" timestamp="1607541834216" />
     <state width="1878" height="243" key="GridCell.Tab.0.left/0.23.1920.1004@0.23.1920.1004" timestamp="1605701069446" />
-    <state width="810" height="210" key="GridCell.Tab.0.right" timestamp="1607541501893">
+    <state width="810" height="210" key="GridCell.Tab.0.right" timestamp="1607541834217">
       <screen x="0" y="23" width="1680" height="956" />
     </state>
     <state width="1161" height="208" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.947@-995.-2137.3840.2137" timestamp="1606139782235" />
@@ -244,7 +239,7 @@
     <state width="692" height="167" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079612" />
     <state width="692" height="167" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957174" />
     <state width="812" height="210" key="GridCell.Tab.0.right/0.23.1680.947@0.23.1680.947" timestamp="1606756182783" />
-    <state width="810" height="210" key="GridCell.Tab.0.right/0.23.1680.956@0.23.1680.956" timestamp="1607541501893" />
+    <state width="810" height="210" key="GridCell.Tab.0.right/0.23.1680.956@0.23.1680.956" timestamp="1607541834217" />
     <state width="1878" height="243" key="GridCell.Tab.0.right/0.23.1920.1004@0.23.1920.1004" timestamp="1605701069446" />
     <state width="1229" height="260" key="GridCell.Tab.1.bottom" timestamp="1607540081312">
       <screen x="0" y="23" width="1680" height="956" />
