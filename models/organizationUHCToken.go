@@ -6,23 +6,24 @@ import (
 )
 
 const (
-	OrganizationUHCAccessNONE = "NONE"
+	OrganizationUHCAccessNONE  = "NONE"
 	OrganizationUHCAccessADMIN = "ADMIN"
 )
 
 type OrganizationUHCToken struct {
+	ID                      string                   `json:"id,omitempty" bson:"id,omitempty"`
 	Token                   string                   `json:"token,omitempty" bson:"token,omitempty"`
 	OrganizationOwnerId     string                   `json:"organizationOwnerId,omitempty" bson:"organizationOwnerId,omitempty"`
 	ApplicationsPermissions *[]ApplicationPermission `bson:"applicationsPermissions,omitempty" json:"applicationsPermissions,omitempty"`
-	CreatedAt   *time.Time `bson:"createdAt,omitempty" json:"createdAt,omitempty"`
-	UpdatedAt   *time.Time `bson:"updatedAt,omitempty" json:"updatedAt,omitempty"`
+	CreatedAt               *time.Time               `bson:"createdAt,omitempty" json:"createdAt,omitempty"`
+	UpdatedAt               *time.Time               `bson:"updatedAt,omitempty" json:"updatedAt,omitempty"`
 }
 
 func (organizationUhcToken *OrganizationUHCToken) RoleAccessToService(serviceName string) string {
 	if organizationUhcToken.ApplicationsPermissions == nil {
 		return OrganizationUHCAccessNONE
 	} else {
-		for _,permission := range(*organizationUhcToken.ApplicationsPermissions) {
+		for _, permission := range *organizationUhcToken.ApplicationsPermissions {
 			if permission.ServiceName == serviceName {
 				return permission.ServiceRole
 			}
@@ -35,7 +36,7 @@ func (organizationUhcToken *OrganizationUHCToken) GetApplicationPermission(servi
 	if organizationUhcToken.ApplicationsPermissions == nil {
 		return nil, errors.New("no permissions for this token")
 	} else {
-		for _,permission := range(*organizationUhcToken.ApplicationsPermissions) {
+		for _, permission := range *organizationUhcToken.ApplicationsPermissions {
 			if permission.ServiceName == serviceName {
 				return &permission, nil
 			}
@@ -51,7 +52,7 @@ func (organizationUhcToken *OrganizationUHCToken) AddOrUpdateAccessToService(ser
 		newPermission := ApplicationPermission{ServiceRole: role, ServiceName: serviceName, CreatedAt: &created}
 		organizationUhcToken.ApplicationsPermissions = &[]ApplicationPermission{newPermission}
 	} else {
-		for index,permission := range(*organizationUhcToken.ApplicationsPermissions) {
+		for index, permission := range *organizationUhcToken.ApplicationsPermissions {
 			if permission.ServiceName == serviceName {
 				permissions := *organizationUhcToken.ApplicationsPermissions
 				permissions[index].ServiceRole = role
