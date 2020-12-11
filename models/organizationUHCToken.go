@@ -19,6 +19,13 @@ type OrganizationUHCToken struct {
 	UpdatedAt               *time.Time               `bson:"updatedAt,omitempty" json:"updatedAt,omitempty"`
 }
 
+type OrganizationUHCTokenResponse struct {
+	Code    int          `bson:"code,omitempty" json:"code,omitempty"`
+	Count   int64        `bson:"count,omitempty" json:"count,omitempty"`
+	Message string       `bson:"message,omitempty" json:"message,omitempty"`
+	Data    []OrganizationUHCToken `bson:"data,omitempty" json:"data,omitempty"`
+}
+
 func (organizationUhcToken *OrganizationUHCToken) RoleAccessToService(serviceName string) string {
 	if organizationUhcToken.ApplicationsPermissions == nil {
 		return OrganizationUHCAccessNONE
