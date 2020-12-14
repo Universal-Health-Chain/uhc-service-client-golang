@@ -14,4 +14,12 @@ const (
 	DeleteUser                           = "/api/v1/user/me/remove/account"
 	FindUser                             = "/api/v1/user/info"
 
+	UpdateOrganizationUHCFromVerifyCredential = "/api/v1/organization/uhc/credential"
+	CreateOrganizationCredential              = "/api/v1/organization/credential"
+	GetOrganizationUHC                        = "/api/v1/organization/uhc"
+	GetOrganizationVCByCredentialId           = "/api/v1/organization/credential"
+
+
+
+
 )

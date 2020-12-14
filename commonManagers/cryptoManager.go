@@ -15,6 +15,10 @@ type CryptoManager struct {
 
 
 func (manager *CryptoManager) GenerateKeyPair() (publicKeyBase64 string, privateKeyBase64 string, err error) {
+	return GenerateKeyPair()
+}
+
+func GenerateKeyPair() (publicKeyBase64 string, privateKeyBase64 string, err error) {
 	publicKeyBytes, privateKeysBytes, err := box.GenerateKey(rand.Reader)
 	if err != nil {
 		return "", "", err
