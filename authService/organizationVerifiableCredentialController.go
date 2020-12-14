@@ -8,21 +8,20 @@ import (
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 	"io/ioutil"
 	"net/http"
-	"strings"
 )
 
-type OrgaizationVerifiableCredentialController struct {
+type OrganizationVerifiableCredentialController struct {
 	models.Service
 }
 
-func (userAdminController *OrgaizationVerifiableCredentialController) CreateOrganizationCredential(organizationCredential models.OrganizationVC) (*models.OrganizationVCResponse, error) {
+func (orgaizationVerifiableCredentialController *OrganizationVerifiableCredentialController) CreateOrganizationCredential(organizationCredential models.OrganizationVC) (*models.OrganizationVCResponse, error) {
 
 	jsonValue, _ := json.Marshal(organizationCredential)
 	organizationVCResponse := models.OrganizationVCResponse{}
-	url := userAdminController.BackendUrl + authRoute + CreateOrganizationCredential
+	url := orgaizationVerifiableCredentialController.BackendUrl + authRoute + CreateOrganizationCredential
 	request, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
 	request.Header.Set("Content-Type", "application/json")
-	request.Header.Set("Authorization", "Bearer "+userAdminController.Token)
+	request.Header.Set("Authorization", "Bearer "+orgaizationVerifiableCredentialController.Token)
 	request.Header.Set("x-serviceClient-uhc", "service-client")
 
 	client := &http.Client{}
@@ -50,14 +49,14 @@ func (userAdminController *OrgaizationVerifiableCredentialController) CreateOrga
 }
 
 
-func (userAdminController *OrgaizationVerifiableCredentialController) GetOrganizationVCByCredentialId(organizationCredentialId string) (*models.OrganizationVCResponse, error) {
+func (orgaizationVerifiableCredentialController *OrganizationVerifiableCredentialController) GetOrganizationVCByCredentialId(organizationCredentialId string) (*models.OrganizationVCResponse, error) {
 
 	organizationVCResponse := models.OrganizationVCResponse{}
-	url := strings.ReplaceAll(userAdminController.BackendUrl + authRoute + CreateOrganizationCredential, "{organizationId}", organizationCredentialId)
+	url := orgaizationVerifiableCredentialController.BackendUrl + authRoute + GetOrganizationVCByCredentialId + "?id=" + organizationCredentialId
 
-	request, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
+	request, _ := http.NewRequest("GET", url, nil)
 	request.Header.Set("Content-Type", "application/json")
-	request.Header.Set("Authorization", "Bearer "+userAdminController.Token)
+	request.Header.Set("Authorization", "Bearer "+orgaizationVerifiableCredentialController.Token)
 	request.Header.Set("x-serviceClient-uhc", "service-client")
 
 	client := &http.Client{}

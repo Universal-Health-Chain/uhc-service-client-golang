@@ -20,11 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/authService/organizationVerifiableCredentialController.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authService/organizationVerifiableCredentialController_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/paths.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/paths.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commonManagers/cryptoManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/cryptoManager.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/organizationVerifiableCredential.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/organizationVerifiableCredential.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/authService.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/authService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/organizationVerifiableCredentialController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/organizationVerifiableCredentialController.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
