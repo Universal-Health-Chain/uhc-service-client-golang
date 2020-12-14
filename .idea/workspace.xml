@@ -20,8 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/models/connectionExternalCreationRequest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/userCreationRequest.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/organizationUHCToken.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/organizationUHCToken.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,17 +70,17 @@
     <property name="settings.editor.selected.configurable" value="go.sdk" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/models" />
-      <recent name="$PROJECT_DIR$/serviceClient" />
-      <recent name="$PROJECT_DIR$/service" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/models" />
       <recent name="$PROJECT_DIR$/connectionsService" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/authService" />
       <recent name="$PROJECT_DIR$/utils" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/models" />
+      <recent name="$PROJECT_DIR$/serviceClient" />
+      <recent name="$PROJECT_DIR$/service" />
     </key>
   </component>
   <component name="RunManager" selected="Go Test.TestAddOrUpdateAccessToService in github.com/Universal-Health-Chain/uhc-service-client-golang/models (1)">
