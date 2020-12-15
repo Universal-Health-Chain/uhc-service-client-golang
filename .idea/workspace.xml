@@ -20,11 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/models/device.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/walletKey.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/encryptionKey.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/encryptionKey.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/dataForTesting_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/dataForTesting_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/walletKey.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/walletKey.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
