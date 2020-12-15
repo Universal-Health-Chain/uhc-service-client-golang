@@ -20,10 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/authService/organizationVerifiableCredentialController_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/device.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/walletKey.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/authService.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/authService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/organizationVerifiableCredentialController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/organizationVerifiableCredentialController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/encryptionKey.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/encryptionKey.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/dataForTesting_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/dataForTesting_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +62,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/authService" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/models" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -72,8 +73,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/authService" />
       <recent name="$PROJECT_DIR$/models" />
+      <recent name="$PROJECT_DIR$/authService" />
       <recent name="$PROJECT_DIR$/connectionsService" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/utils" />
