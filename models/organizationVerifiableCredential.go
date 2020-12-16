@@ -35,7 +35,6 @@ type OrganizationVC struct {
 
 type FhirCredentialSubject struct {
 	FhirOrganization                *fhir4.Organization              `bson:"fhir,omitempty" json:"fhir,omitempty"`
-	OrganizationAccessUHCExtensions *OrganizationAccessUHCExtensions `bson:"organizationUhcAccessExtensions,omitempty" json:"organizationUhcAccessExtensions,omitempty"` //dlt: no
 	UhcPublicExtensions             *OrganizationPublicUHCExtensions `bson:"uhcPublicExtensions,omitempty" json:"uhcPublicExtensions,omitempty"`                         //dlt: no
 }
 

@@ -10,13 +10,20 @@ const (
 	OrganizationUHCAccessADMIN = "ADMIN"
 )
 
+const (
+	OrganizationUHCStatusINACTIVE  = "INACTIVE"
+	OrganizationUHCStatusADMIN = "ACTIVE"
+)
+
 type OrganizationUHCToken struct {
 	ID                      string                   `json:"id,omitempty" bson:"id,omitempty"`
+	DeviceId                string                   `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
 	Token                   string                   `json:"token,omitempty" bson:"token,omitempty"`
 	OrganizationOwnerId     string                   `json:"organizationOwnerId,omitempty" bson:"organizationOwnerId,omitempty"`
 	ApplicationsPermissions *[]ApplicationPermission `bson:"applicationsPermissions,omitempty" json:"applicationsPermissions,omitempty"`
 	CreatedAt               *time.Time               `bson:"createdAt,omitempty" json:"createdAt,omitempty"`
 	UpdatedAt               *time.Time               `bson:"updatedAt,omitempty" json:"updatedAt,omitempty"`
+	Status               	string             		 `bson:"updatedAt,omitempty" json:"updatedAt,omitempty"`
 }
 
 type OrganizationUHCTokenResponse struct {
