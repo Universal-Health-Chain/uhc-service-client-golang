@@ -10,10 +10,10 @@ import (
 
 var encryptionKeysExamplesFilesPath = "../utils/dataForTesting/encryptionKey"
 
-var encryptionKeysExamples = []models.EncryptionKey{}
+var encryptionKeysExamples = []models.Key{}
 
 
-func GetEncryptionKeysForTesting() (users []models.EncryptionKey, err error) {
+func GetEncryptionKeysForTesting() (users []models.Key, err error) {
 	if len(encryptionKeysExamples) == 0 {
 		root := encryptionKeysExamplesFilesPath
 		files, _ := ioutil.ReadDir(root)
@@ -35,17 +35,17 @@ func GetEncryptionKeysForTesting() (users []models.EncryptionKey, err error) {
 
 
 
-func readEncryptionKeysInJson(path string) (organizations models.EncryptionKey, err error) {
-	encryptionKey := models.EncryptionKey{}
+func readEncryptionKeysInJson(path string) (organizations models.Key, err error) {
+	encryptionKey := models.Key{}
 	result, err1 := ioutil.ReadFile(path)
 	if err1 != nil {
 		log.Println(err1)
-		return models.EncryptionKey{}, err1	//empty and error
+		return models.Key{}, err1 //empty and error
 	}
 	err2 := json.Unmarshal([]byte(result), &encryptionKey)
 	if err2 != nil {
 		log.Println(err2)
-		return models.EncryptionKey{}, err2	//empty and error
+		return models.Key{}, err2 //empty and error
 	}
 	return encryptionKey, nil
 

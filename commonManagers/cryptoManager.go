@@ -49,7 +49,7 @@ func bytesToString (b []byte) string {
 	return string(b[:])
 }
 
-func (manager *CryptoManager) EncryptUsingEncryptionKey(encryptionKey *models.EncryptionKey, encryptionRequest *models.EncryptionRequest) (encryptionResult *models.EncryptedResult, err error) {
+func (manager *CryptoManager) EncryptUsingEncryptionKey(encryptionKey *models.Key, encryptionRequest *models.EncryptionRequest) (encryptionResult *models.EncryptedResult, err error) {
 	encryptionResult = &models.EncryptedResult{}
 
 	encryptedMessage, err := manager.EncryptMessage(encryptionRequest.OtherPartPublicKeyBase64, encryptionKey.PrivateKeyBase64, encryptionRequest.Payload)
@@ -82,7 +82,7 @@ func (manager *CryptoManager) EncryptMessage(recipientPublicKey, senderPrivateKe
 	return BytesToBase64String(encrypted), nil
 }
 
-func (manager *CryptoManager) DecryptUsingEncryptionKey(encryptionKey *models.EncryptionKey, decryptionRequest *models.DecryptionRequest) (decryptionResult *models.DecryptedResult, err error) {
+func (manager *CryptoManager) DecryptUsingEncryptionKey(encryptionKey *models.Key, decryptionRequest *models.DecryptionRequest) (decryptionResult *models.DecryptedResult, err error) {
 	decryptionResult = &models.DecryptedResult{}
 
 	decryptedMessage, err := manager.DecryptMessage(decryptionRequest.OtherPartPublicKeyBase64, encryptionKey.PrivateKeyBase64, decryptionRequest.Payload)

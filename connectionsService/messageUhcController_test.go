@@ -20,11 +20,11 @@ func TestConnectionUhcController_SendMessageUhc(t *testing.T) {
 	user1, _ := authController.RegisterDeletingForTesting(usernameTesting, emailTesting, userPwTesting)
 	user2, _ := authController.RegisterDeletingForTesting(usernameTesting+"2test", emailTesting+"2test", userPwTesting+"2test")
 
-	encryptionKeyRequest := models.EncryptionKeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
+	encryptionKeyRequest := models.KeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
 	encryptionKey.Token = user1.Token
 	encryptionKey.CreateEncryptionKey(encryptionKeyRequest)
 
-	encryptionKeyRequest2 := models.EncryptionKeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
+	encryptionKeyRequest2 := models.KeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
 	encryptionKey.Token = user2.Token
 	encryptionKey.CreateEncryptionKey(encryptionKeyRequest2)
 
