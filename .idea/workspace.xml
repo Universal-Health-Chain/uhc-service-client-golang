@@ -20,16 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/cryptoController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/cryptoController_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/encryptionKeyController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/encryptionKeyController_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commonManagers/cryptoManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/cryptoManager.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/connectionsService/connectionUhcController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/connectionUhcController_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/connectionsService/messageUhcController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/messageUhcController_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/encryptionKey.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/encryptionKey.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/walletKey.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/walletKey.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/dataForTesting.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/dataForTesting.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

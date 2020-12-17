@@ -19,8 +19,6 @@ type User struct {
 	RecoverAccountAttempts      int     `bson:"recoverAccountAttempts" json:"recoverAccountAttempts"`
 	ConfirmedAccount            bool    `bson:"confirmedAccount,omitempty" json:"confirmedAccount,omitempty"`
 	InvitedUser                 bool    `bson:"invitedUser,omitempty" json:"invitedUser,omitempty"`
-	ActiveEncryptionKeyId       *string `bson:"activeEncryptionKeyId,omitempty" json:"activeEncryptionKeyId,omitempty"`
-	ActiveEncryptionPublicKeyId *string `bson:"activeEncryptionPublicKeyId,omitempty" json:"activeEncryptionPublicKeyId,omitempty"`
 
 	Email                  string                   `bson:"email,omitempty" json:"email,omitempty"`
 	FirstName              string                   `bson:"firstName,omitempty" json:"firstName,omitempty"`
