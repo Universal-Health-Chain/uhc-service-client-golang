@@ -20,7 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/walletKey.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/walletKey.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -297,6 +298,10 @@
     </state>
     <state x="295" y="202" key="SettingsEditor/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602750889579" />
     <state x="225" y="35" key="SettingsEditor/0.23.1280.734@0.23.1280.734" timestamp="1605616059227" />
+    <state x="523" y="181" key="VCS.ChangeListViewerDialog" timestamp="1608194770904">
+      <screen x="0" y="23" width="1680" height="956" />
+    </state>
+    <state x="523" y="181" key="VCS.ChangeListViewerDialog/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1608194770904" />
     <state width="713" height="407" key="XDebugger.FullValuePopup" timestamp="1607539939242">
       <screen x="0" y="23" width="1680" height="956" />
     </state>

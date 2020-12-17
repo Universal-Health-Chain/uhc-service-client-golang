@@ -8,13 +8,13 @@ const (
 )
 
 type WalletKey struct {
-	AccessPassword      string     `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
-	ID                  string     `bson:"id,omitempty" json:"id,omitempty"`
-	OwnerId             string     `bson:"ownerId,omitempty" json:"ownerId,omitempty"`
-	OwnerType           string     `bson:"ownerType,omitempty" json:"ownerType,omitempty"`
-	Type                string     `bson:"type,omitempty" json:"type,omitempty"`
-	CreatedAt           *time.Time `bson:"createdAt,omitempty" json:"createdAt,omitempty"`
-	UpdatedAt           *time.Time `bson:"updatedAt,omitempty" json:"updatedAt,omitempty"`
-	ActiveEncryptionKey *string    `bson:"activeEncryptionKey,omitempty" json:"activeEncryptionKey,omitempty"`
-	ActiveSigningKey    *string    `bson:"activeSingingKey,omitempty" json:"activeSingingKey,omitempty"`
+	AccessPassword        string     `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
+	ID                    string     `bson:"id,omitempty" json:"id,omitempty"`
+	OwnerId               string     `bson:"ownerId,omitempty" json:"ownerId,omitempty"`
+	OwnerType             string     `bson:"ownerType,omitempty" json:"ownerType,omitempty"`
+	Type                  string     `bson:"type,omitempty" json:"type,omitempty"`
+	CreatedAt             *time.Time `bson:"createdAt,omitempty" json:"createdAt,omitempty"`
+	UpdatedAt             *time.Time `bson:"updatedAt,omitempty" json:"updatedAt,omitempty"`
+	ActiveEncryptionKeyId *string    `bson:"activeEncryptionKey,omitempty" json:"activeEncryptionKey,omitempty"`
+	ActiveSigningKeyId    *string    `bson:"activeSingingKey,omitempty" json:"activeSingingKey,omitempty"`
 }
