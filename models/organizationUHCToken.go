@@ -23,7 +23,7 @@ type OrganizationUHCToken struct {
 	ApplicationsPermissions *[]ApplicationPermission `bson:"applicationsPermissions,omitempty" json:"applicationsPermissions,omitempty"`
 	CreatedAt               *time.Time               `bson:"createdAt,omitempty" json:"createdAt,omitempty"`
 	UpdatedAt               *time.Time               `bson:"updatedAt,omitempty" json:"updatedAt,omitempty"`
-	Status               	string             		 `bson:"updatedAt,omitempty" json:"updatedAt,omitempty"`
+	Status               	string             		 `bson:"status,omitempty" json:"status,omitempty"`
 }
 
 type OrganizationUHCTokenResponse struct {
