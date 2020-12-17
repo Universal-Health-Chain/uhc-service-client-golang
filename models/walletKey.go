@@ -18,3 +18,11 @@ type WalletKey struct {
 	ActiveEncryptionKeyId *string    `bson:"activeEncryptionKey,omitempty" json:"activeEncryptionKey,omitempty"`
 	ActiveSigningKeyId    *string    `bson:"activeSingingKey,omitempty" json:"activeSingingKey,omitempty"`
 }
+
+
+type WalletKeyResponse struct {
+	Code    int          `bson:"code,omitempty" json:"code,omitempty"`
+	Count   int64        `bson:"count,omitempty" json:"count,omitempty"`
+	Message string       `bson:"message,omitempty" json:"message,omitempty"`
+	Data    []WalletKey `bson:"data,omitempty" json:"data,omitempty"`
+}
