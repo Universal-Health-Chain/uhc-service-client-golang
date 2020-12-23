@@ -20,9 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/commonManagers/jwsManager.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/commonManagers/jwsManager_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commonManagers/vcManager_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/jwsManager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/jwsManager_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +38,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="C:\Go" />
+  <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -89,7 +91,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestCreateVerifyData in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers">
+  <component name="RunManager" selected="Go Test.ExampleCredential_AddLinkedDataProofMultiProofs in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (1)">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -97,6 +99,39 @@
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/" />
       <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="ExampleCredential_AddLinkedDataProofMultiProofs in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="uhc-service-client-golang" />
+      <working_directory value="$PROJECT_DIR$/commonManagers" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^\QExampleCredential_AddLinkedDataProofMultiProofs\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="ExampleCredential_AddLinkedDataProofMultiProofs in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="uhc-service-client-golang" />
+      <working_directory value="$PROJECT_DIR$/commonManagers" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^\QExampleCredential_AddLinkedDataProofMultiProofs\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="ExampleCredential_GenerateBBSSelectiveDisclosure in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="uhc-service-client-golang" />
+      <working_directory value="$PROJECT_DIR$/commonManagers" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^\QExampleCredential_GenerateBBSSelectiveDisclosure\E$" />
       <method v="2" />
     </configuration>
     <configuration name="TestAddOrUpdateAccessToService in github.com/Universal-Health-Chain/uhc-service-client-golang/models (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -108,39 +143,6 @@
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <pattern value="^\QTestAddOrUpdateAccessToService\E$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestAddOrUpdateAccessToService in github.com/Universal-Health-Chain/uhc-service-client-golang/models" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="uhc-service-client-golang" />
-      <working_directory value="$PROJECT_DIR$/models" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/models" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestAddOrUpdateAccessToService\E$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestConnectionUhcController_SendMessageUhc in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService (2)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="uhc-service-client-golang" />
-      <working_directory value="$PROJECT_DIR$/connectionsService" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestConnectionUhcController_SendMessageUhc\E$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestConnectionUhcController_SendMessageUhc in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService (3)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="uhc-service-client-golang" />
-      <working_directory value="$PROJECT_DIR$/connectionsService" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestConnectionUhcController_SendMessageUhc\E$" />
       <method v="2" />
     </configuration>
     <configuration name="TestCreateVerifyData in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -166,15 +168,15 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.ExampleCredential_AddLinkedDataProofMultiProofs in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (1)" />
+        <item itemvalue="Go Test.ExampleCredential_AddLinkedDataProofMultiProofs in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
         <item itemvalue="Go Test.TestCreateVerifyData in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
+        <item itemvalue="Go Test.ExampleCredential_GenerateBBSSelectiveDisclosure in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
         <item itemvalue="Go Test.TestAddOrUpdateAccessToService in github.com/Universal-Health-Chain/uhc-service-client-golang/models (1)" />
-        <item itemvalue="Go Test.TestAddOrUpdateAccessToService in github.com/Universal-Health-Chain/uhc-service-client-golang/models" />
-        <item itemvalue="Go Test.TestConnectionUhcController_SendMessageUhc in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService (3)" />
-        <item itemvalue="Go Test.TestConnectionUhcController_SendMessageUhc in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService (2)" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="" />
@@ -204,9 +206,10 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="431" y="153" key="#GOROOT" timestamp="1603108236940">
-      <screen x="0" y="23" width="1680" height="941" />
+    <state x="369" y="135" key="#GOROOT" timestamp="1608670588276">
+      <screen x="0" y="23" width="1440" height="814" />
     </state>
+    <state x="369" y="135" key="#GOROOT/0.23.1440.814@0.23.1440.814" timestamp="1608670588276" />
     <state x="431" y="153" key="#GOROOT/0.23.1680.941@0.23.1680.941" timestamp="1603108236940" />
     <state x="637" y="392" key="#Go_Modules" timestamp="1602749490418">
       <screen x="0" y="23" width="1680" height="954" />
@@ -219,8 +222,8 @@
     <state width="1040" height="443" key="DebuggerActiveHint/-995.-2137.3840.2137/0.23.1680.947@0.23.1680.947" timestamp="1606131153867" />
     <state width="684" height="446" key="DebuggerActiveHint/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602753869691" />
     <state width="1043" height="448" key="DebuggerActiveHint/0.23.1680.956@0.23.1680.956" timestamp="1607539976007" />
-    <state width="1619" height="315" key="GridCell.Tab.0.bottom" timestamp="1608636006215">
-      <screen x="0" y="0" width="2386" height="1303" />
+    <state width="962" height="210" key="GridCell.Tab.0.bottom" timestamp="1608711216384">
+      <screen x="0" y="23" width="1440" height="814" />
     </state>
     <state width="1161" height="208" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.947@-995.-2137.3840.2137" timestamp="1606139782236" />
     <state width="812" height="210" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.947@0.23.1680.947" timestamp="1607003714082" />
@@ -231,11 +234,12 @@
     <state width="692" height="167" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079612" />
     <state width="692" height="167" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957175" />
     <state width="1619" height="315" key="GridCell.Tab.0.bottom/0.0.2386.1303@0.0.2386.1303" timestamp="1608636006215" />
+    <state width="962" height="210" key="GridCell.Tab.0.bottom/0.23.1440.814@0.23.1440.814" timestamp="1608711216384" />
     <state width="812" height="210" key="GridCell.Tab.0.bottom/0.23.1680.947@0.23.1680.947" timestamp="1606756182783" />
     <state width="810" height="210" key="GridCell.Tab.0.bottom/0.23.1680.956@0.23.1680.956" timestamp="1607541834218" />
     <state width="1878" height="243" key="GridCell.Tab.0.bottom/0.23.1920.1004@0.23.1920.1004" timestamp="1605701069447" />
-    <state width="1619" height="315" key="GridCell.Tab.0.center" timestamp="1608636006214">
-      <screen x="0" y="0" width="2386" height="1303" />
+    <state width="962" height="210" key="GridCell.Tab.0.center" timestamp="1608711216382">
+      <screen x="0" y="23" width="1440" height="814" />
     </state>
     <state width="1161" height="208" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.947@-995.-2137.3840.2137" timestamp="1606139782235" />
     <state width="812" height="210" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.947@0.23.1680.947" timestamp="1607003714073" />
@@ -246,11 +250,12 @@
     <state width="692" height="167" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079612" />
     <state width="692" height="167" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957174" />
     <state width="1619" height="315" key="GridCell.Tab.0.center/0.0.2386.1303@0.0.2386.1303" timestamp="1608636006214" />
+    <state width="962" height="210" key="GridCell.Tab.0.center/0.23.1440.814@0.23.1440.814" timestamp="1608711216382" />
     <state width="812" height="210" key="GridCell.Tab.0.center/0.23.1680.947@0.23.1680.947" timestamp="1606756182783" />
     <state width="810" height="210" key="GridCell.Tab.0.center/0.23.1680.956@0.23.1680.956" timestamp="1607541834217" />
     <state width="1878" height="243" key="GridCell.Tab.0.center/0.23.1920.1004@0.23.1920.1004" timestamp="1605701069446" />
-    <state width="1619" height="315" key="GridCell.Tab.0.left" timestamp="1608636006214">
-      <screen x="0" y="0" width="2386" height="1303" />
+    <state width="962" height="210" key="GridCell.Tab.0.left" timestamp="1608711216382">
+      <screen x="0" y="23" width="1440" height="814" />
     </state>
     <state width="1161" height="208" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.947@-995.-2137.3840.2137" timestamp="1606139782234" />
     <state width="812" height="210" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.947@0.23.1680.947" timestamp="1607003714056" />
@@ -261,11 +266,12 @@
     <state width="692" height="167" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079611" />
     <state width="692" height="167" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957173" />
     <state width="1619" height="315" key="GridCell.Tab.0.left/0.0.2386.1303@0.0.2386.1303" timestamp="1608636006214" />
+    <state width="962" height="210" key="GridCell.Tab.0.left/0.23.1440.814@0.23.1440.814" timestamp="1608711216382" />
     <state width="812" height="210" key="GridCell.Tab.0.left/0.23.1680.947@0.23.1680.947" timestamp="1606756182782" />
     <state width="810" height="210" key="GridCell.Tab.0.left/0.23.1680.956@0.23.1680.956" timestamp="1607541834216" />
     <state width="1878" height="243" key="GridCell.Tab.0.left/0.23.1920.1004@0.23.1920.1004" timestamp="1605701069446" />
-    <state width="1619" height="315" key="GridCell.Tab.0.right" timestamp="1608636006214">
-      <screen x="0" y="0" width="2386" height="1303" />
+    <state width="962" height="210" key="GridCell.Tab.0.right" timestamp="1608711216383">
+      <screen x="0" y="23" width="1440" height="814" />
     </state>
     <state width="1161" height="208" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.947@-995.-2137.3840.2137" timestamp="1606139782235" />
     <state width="812" height="210" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.947@0.23.1680.947" timestamp="1607003714075" />
@@ -276,6 +282,7 @@
     <state width="692" height="167" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602754079612" />
     <state width="692" height="167" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957174" />
     <state width="1619" height="315" key="GridCell.Tab.0.right/0.0.2386.1303@0.0.2386.1303" timestamp="1608636006214" />
+    <state width="962" height="210" key="GridCell.Tab.0.right/0.23.1440.814@0.23.1440.814" timestamp="1608711216383" />
     <state width="812" height="210" key="GridCell.Tab.0.right/0.23.1680.947@0.23.1680.947" timestamp="1606756182783" />
     <state width="810" height="210" key="GridCell.Tab.0.right/0.23.1680.956@0.23.1680.956" timestamp="1607541834217" />
     <state width="1878" height="243" key="GridCell.Tab.0.right/0.23.1920.1004@0.23.1920.1004" timestamp="1605701069446" />
@@ -337,6 +344,10 @@
       <screen x="0" y="23" width="1680" height="956" />
     </state>
     <state width="713" height="407" key="XDebugger.FullValuePopup/0.23.1680.956@0.23.1680.956" timestamp="1607539939242" />
+    <state x="331" y="185" width="586" height="490" key="find.popup" timestamp="1608671915485">
+      <screen x="0" y="23" width="1440" height="814" />
+    </state>
+    <state x="331" y="185" width="586" height="490" key="find.popup/0.23.1440.814@0.23.1440.814" timestamp="1608671915485" />
     <state x="458" y="299" key="search.everywhere.popup" timestamp="1605871513266">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
