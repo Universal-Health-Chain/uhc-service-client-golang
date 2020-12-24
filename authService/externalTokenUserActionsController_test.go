@@ -47,5 +47,5 @@ func TestExternalTokenUserActionsController_CreateNewUserAndKeyIfNotExistsExisti
 	assert.Nil(t, errata, "errata should be nil")
 	assert.NotNil(t, resp)
 	//assert.Equal(t, email, resp.Data[0].Email )
-	assert.Equal(t, email, resp.Code, 204 )
+	assert.Equal(t, resp.Code, 204 )
 }

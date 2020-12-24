@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0ff4d7f1-607d-4895-b982-bdefb0bc9a50" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/authService/externalTokenUserActionsController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/externalTokenUserActionsController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/externalTokenUserActionsController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/externalTokenUserActionsController_test.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
+  </component>
+  <component name="RunManager" selected="Go Test.TestExternalTokenUserActionsController_CreateNewUserAndKeyIfNotExistsExistingUser in github.com/Universal-Health-Chain/uhc-service-client-golang/authService">
+    <configuration name="TestExternalTokenUserActionsController_CreateNewUserAndKeyIfNotExists in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="uhc-service-client-golang" />
+      <working_directory value="$PROJECT_DIR$/authService" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestExternalTokenUserActionsController_CreateNewUserAndKeyIfNotExists\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestExternalTokenUserActionsController_CreateNewUserAndKeyIfNotExistsExistingUser in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="uhc-service-client-golang" />
+      <working_directory value="$PROJECT_DIR$/authService" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestExternalTokenUserActionsController_CreateNewUserAndKeyIfNotExistsExistingUser\E$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.TestExternalTokenUserActionsController_CreateNewUserAndKeyIfNotExistsExistingUser in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
+        <item itemvalue="Go Test.TestExternalTokenUserActionsController_CreateNewUserAndKeyIfNotExists in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="730" height="466" key="DebuggerActiveHint" timestamp="1608830966086">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state width="730" height="466" key="DebuggerActiveHint/0.23.1680.947@0.23.1680.947" timestamp="1608830966086" />
+    <state width="1148" height="260" key="GridCell.Tab.0.bottom" timestamp="1608830948522">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state width="1148" height="260" key="GridCell.Tab.0.bottom/0.23.1680.947@0.23.1680.947" timestamp="1608830948522" />
+    <state width="1148" height="260" key="GridCell.Tab.0.center" timestamp="1608830948522">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state width="1148" height="260" key="GridCell.Tab.0.center/0.23.1680.947@0.23.1680.947" timestamp="1608830948522" />
+    <state width="1148" height="260" key="GridCell.Tab.0.left" timestamp="1608830948521">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state width="1148" height="260" key="GridCell.Tab.0.left/0.23.1680.947@0.23.1680.947" timestamp="1608830948521" />
+    <state width="1148" height="260" key="GridCell.Tab.0.right" timestamp="1608830948522">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state width="1148" height="260" key="GridCell.Tab.0.right/0.23.1680.947@0.23.1680.947" timestamp="1608830948522" />
+    <state width="1148" height="260" key="GridCell.Tab.1.bottom" timestamp="1608830949369">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state width="1148" height="260" key="GridCell.Tab.1.bottom/0.23.1680.947@0.23.1680.947" timestamp="1608830949369" />
+    <state width="1148" height="260" key="GridCell.Tab.1.center" timestamp="1608830949368">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state width="1148" height="260" key="GridCell.Tab.1.center/0.23.1680.947@0.23.1680.947" timestamp="1608830949368" />
+    <state width="1148" height="260" key="GridCell.Tab.1.left" timestamp="1608830949368">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state width="1148" height="260" key="GridCell.Tab.1.left/0.23.1680.947@0.23.1680.947" timestamp="1608830949368" />
+    <state width="1148" height="260" key="GridCell.Tab.1.right" timestamp="1608830949369">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state width="1148" height="260" key="GridCell.Tab.1.right/0.23.1680.947@0.23.1680.947" timestamp="1608830949369" />
+    <state x="497" y="81" key="SettingsEditor" timestamp="1608830584551">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state x="497" y="81" key="SettingsEditor/0.23.1680.947@0.23.1680.947" timestamp="1608830584551" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/authService/externalTokenUserActionsController.go</url>
+          <line>49</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/authService/externalTokenUserActionsController.go</url>
+          <line>50</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

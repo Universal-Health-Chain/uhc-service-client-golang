@@ -47,7 +47,7 @@ func (externalTokenUserActionsController *ExternalTokenUserActionsController) Cr
 		return &userResponse, errors.New(message)
 	}
 
-	if err != nil && response.StatusCode != 204 {
+	if err != nil && response.StatusCode == 204 {
 		userResponse = models.UserResponse{Message: "user exists", Code: 204, Data: nil}
 		return &userResponse, nil
 	}
