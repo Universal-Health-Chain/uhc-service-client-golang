@@ -5,22 +5,15 @@ import (
 	"crypto/sha512"
 	"encoding/json"
 	"fmt"
-	"github.com/stretchr/testify/require"
 	bls12381 "github.com/kilic/bls12-381"
+	"github.com/stretchr/testify/require"
 
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/jsonld"
-	// "github.com/hyperledger/aries-framework-go/pkg/doc/jose"
-	// "github.com/hyperledger/aries-framework-go/pkg/doc/util"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/proof"
-	// "github.com/hyperledger/aries-framework-go/pkg/doc/signature/signer"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite/ed25519signature2018"
-	// "github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite/jsonwebsignature2020"
-	// sigverifier "github.com/hyperledger/aries-framework-go/pkg/doc/signature/verifier"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/util"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/util/signature"
-	// "github.com/hyperledger/aries-framework-go/pkg/doc/verifiable"
-	// "github.com/hyperledger/aries-framework-go/pkg/kms"
 	"testing"
 	"time"
 )
@@ -52,7 +45,33 @@ var (
 	bbsPrivKeyB64 = "PcVroyzTlmnYIIq8In8QOZhpK72AdTjj3EitB9tSNrg"
 	bbsPubKeyB64  = "l0Wtf3gy5f140G5vCoCJw2420hwk6Xw65/DX3ycv1W7/eMky8DyExw+o1s2bmq3sEIJatkiN8f5D4k0766x0UvfbupFX+vVkeqnlOvT6o2cag2osQdMFbBQqAybOM4Gm" //nolint:lll
 )
+func Test_SignJsonWithProofJWS(t *testing.T) {
+	signerEntity := signature.GetEd25519Signer([]byte(issuerPrivKey), []byte(issuerPubKey))
+	proofCreator := DidCreatorForTesting
+	signedJWSDoc, err := SignJsonWithProofJWS(signerEntity, validDoc, proofCreator)
+	// println("signedJWSDoc = ", string(signedJWSDoc))
 
+	var signedJWSMap map[string]interface{}
+	err = json.Unmarshal(signedJWSDoc, &signedJWSMap)
+	require.NoError(t, err)
+
+	proofsIface, ok := signedJWSMap["proof"]
+	require.True(t, ok)
+
+	proofs, ok := proofsIface.([]interface{})
+	require.True(t, ok)
+	require.Len(t, proofs, 1)
+
+	proofMap, ok := proofs[0].(map[string]interface{})
+	require.True(t, ok)
+
+	require.Equal(t, proofCreator, proofMap["creator"])
+	require.Equal(t, "assertionMethod", proofMap["proofPurpose"])
+	require.Equal(t, "Ed25519Signature2018", proofMap["type"])
+	require.Contains(t, proofMap, "created")
+	require.Contains(t, proofMap, "jws")
+
+}
 func TestCreateEd25519SignKeys(t *testing.T) {
 	// It generates public and private signing keys for Ed25519Signature2018
 	signingKeys, err := CreateEd25519SignKeys()
@@ -155,19 +174,19 @@ func (s *mockSignatureSuite) CompactProof() bool {
 
 //nolint:lll
 const validDoc = `{
-  "@context": ["https://w3id.org/DidEntityForTesting/v1"],
-  "id": "DidEntityForTesting:example:21tDAKCERh95uGgKbJNHYp",
+  "@context": ["https://w3id.org/did/v1", "https://w3id.org/security/v2"],
+  "id": "did:example:21tDAKCERh95uGgKbJNHYp",
   "publicKey": [
     {
-      "id": "DidEntityForTesting:example:123456789abcdefghi#keys-1",
-      "type": "Secp256k1VerificationKey2018",
-      "controller": "DidEntityForTesting:example:123456789abcdefghi",
+      "id": "did:example:123456789abcdefghi#keys-1",
+      "type": "EcdsaSecp256k1VerificationKey2019",
+      "controller": "did:example:123456789abcdefghi",
       "publicKeyBase58": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
     },
     {
-      "id": "DidEntityForTesting:example:123456789abcdefghw#key2",
+      "id": "did:example:123456789abcdefghw#key2",
       "type": "RsaVerificationKey2018",
-      "controller": "DidEntityForTesting:example:123456789abcdefghw",
+      "controller": "did:example:123456789abcdefghw",
       "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAryQICCl6NZ5gDKrnSztO\n3Hy8PEUcuyvg/ikC+VcIo2SFFSf18a3IMYldIugqqqZCs4/4uVW3sbdLs/6PfgdX\n7O9D22ZiFWHPYA2k2N744MNiCD1UE+tJyllUhSblK48bn+v1oZHCM0nYQ2NqUkvS\nj+hwUU3RiWl7x3D2s9wSdNt7XUtW05a/FXehsPSiJfKvHJJnGOX0BgTvkLnkAOTd\nOrUZ/wK69Dzu4IvrN4vs9Nes8vbwPa/ddZEzGR0cQMt0JBkhk9kU/qwqUseP1QRJ\n5I1jR4g8aYPL/ke9K35PxZWuDp3U0UPAZ3PjFAh+5T+fc7gzCs9dPzSHloruU+gl\nFQIDAQAB\n-----END PUBLIC KEY-----"
     }
   ],

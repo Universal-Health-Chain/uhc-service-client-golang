@@ -70,7 +70,7 @@ func createDidDocumentWithSigningKey(pubKey []byte) *didDocument.Doc {
 	return didDoc
 }
 
-func TestDocumentSigner_Sign(t *testing.T) {
+func TestDocumentSigner_Sign1(t *testing.T) {
 	proofCreator := DidCreatorForTesting
 	signerEntity := signature.GetEd25519Signer([]byte(issuerPrivKey), []byte(issuerPubKey))
 	signSuite := ed25519signature2018.New(suite.WithSigner(signerEntity))

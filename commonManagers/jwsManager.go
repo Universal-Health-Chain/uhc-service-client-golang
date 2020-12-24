@@ -7,8 +7,13 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	"github.com/google/uuid"
 	"github.com/btcsuite/btcutil/base58"
+	"github.com/google/uuid"
+	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/proof"
+	documentSigner "github.com/hyperledger/aries-framework-go/pkg/doc/signature/signer"
+	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite"
+	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite/ed25519signature2018"
+	"github.com/hyperledger/aries-framework-go/pkg/doc/util/signature"
 	"strings"
 )
 
@@ -26,8 +31,27 @@ const (
 	JwtSignaturePart = 2
 )
 
-func CreateEd25519SignKeys() (*models.Ed25519SignerEntity, error) {
+func SignJsonWithProofJWS(signerEntity signature.Signer, serializedJson string, proofCreator string) ([]byte, error) {
+	s := documentSigner.New(ed25519signature2018.New(suite.WithSigner(signerEntity)))
 
+	signContext := &documentSigner.Context{
+		Creator:       proofCreator,
+		SignatureType: Ed25519SignatureType,
+	}
+
+	signedDoc, err := s.Sign(signContext, []byte(serializedJson))
+	if err != nil {return nil, err}
+	println("signedDoc = ", string(signedDoc))
+
+	signContext.SignatureRepresentation = proof.SignatureJWS
+	signedJWSDoc, err := s.Sign(signContext, []byte(serializedJson))
+	if err != nil {return nil, err}
+
+	println("signedJWSDoc = ", string(signedJWSDoc))
+	return signedJWSDoc, err
+}
+
+func CreateEd25519SignKeys() (*models.Ed25519SignerEntity, error) {
 	// It generates public and private signing keys for Ed25519Signature2018
 	publicSingKeyBytes, secretSignKeyBytes, _ := ed25519.GenerateKey(nil)
 	// if err != nil {return nil, err}
