@@ -106,7 +106,7 @@ func TestCreateVerifyData(t *testing.T) {
 	// It creates the proof
 	created, err := time.Parse(time.RFC3339, "2018-03-15T00:00:00Z")
 	require.NoError(t, err)
-	// idSplit := strings.Split(creator, "#") // creator will contain didID#keyID
+	// idSplit := strings.Split(DidCreatorForTesting, "#") // DidCreatorForTesting will contain didID#keyID
 	// if len(idSplit) != creatorParts { return nil, fmt.Errorf("wrong id %s to resolve", idSplit)}
 	// keyHandler, err := keyManager.Get(idSplit[1])
 	newProof := &proof.Proof{
@@ -155,19 +155,19 @@ func (s *mockSignatureSuite) CompactProof() bool {
 
 //nolint:lll
 const validDoc = `{
-  "@context": ["https://w3id.org/did/v1"],
-  "id": "did:example:21tDAKCERh95uGgKbJNHYp",
+  "@context": ["https://w3id.org/DidEntityForTesting/v1"],
+  "id": "DidEntityForTesting:example:21tDAKCERh95uGgKbJNHYp",
   "publicKey": [
     {
-      "id": "did:example:123456789abcdefghi#keys-1",
+      "id": "DidEntityForTesting:example:123456789abcdefghi#keys-1",
       "type": "Secp256k1VerificationKey2018",
-      "controller": "did:example:123456789abcdefghi",
+      "controller": "DidEntityForTesting:example:123456789abcdefghi",
       "publicKeyBase58": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
     },
     {
-      "id": "did:example:123456789abcdefghw#key2",
+      "id": "DidEntityForTesting:example:123456789abcdefghw#key2",
       "type": "RsaVerificationKey2018",
-      "controller": "did:example:123456789abcdefghw",
+      "controller": "DidEntityForTesting:example:123456789abcdefghw",
       "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAryQICCl6NZ5gDKrnSztO\n3Hy8PEUcuyvg/ikC+VcIo2SFFSf18a3IMYldIugqqqZCs4/4uVW3sbdLs/6PfgdX\n7O9D22ZiFWHPYA2k2N744MNiCD1UE+tJyllUhSblK48bn+v1oZHCM0nYQ2NqUkvS\nj+hwUU3RiWl7x3D2s9wSdNt7XUtW05a/FXehsPSiJfKvHJJnGOX0BgTvkLnkAOTd\nOrUZ/wK69Dzu4IvrN4vs9Nes8vbwPa/ddZEzGR0cQMt0JBkhk9kU/qwqUseP1QRJ\n5I1jR4g8aYPL/ke9K35PxZWuDp3U0UPAZ3PjFAh+5T+fc7gzCs9dPzSHloruU+gl\nFQIDAQAB\n-----END PUBLIC KEY-----"
     }
   ],

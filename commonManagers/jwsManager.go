@@ -12,18 +12,33 @@ import (
 	"strings"
 )
 
+const (
+	Ed25519KeyType 			= "Ed25519VerificationKey2018"
+	Ed25519SignatureType 	= "Ed25519Signature2018"
+	DidContext             	= "https://www.w3.org/ns/did/v1"
+	SecurityContext        	= "https://w3id.org/security/v2"
+	SecurityContextJWK2020 	= "https://trustbloc.github.io/context/vc/credentials-v1.jsonld"
+)
+
+const (
+	JwtPartsNumber   = 3
+	JwtHeaderPart    = 0
+	JwtSignaturePart = 2
+)
+
 func CreateEd25519SignKeys() (*models.Ed25519SignerEntity, error) {
 
 	// It generates public and private signing keys for Ed25519Signature2018
 	publicSingKeyBytes, secretSignKeyBytes, _ := ed25519.GenerateKey(nil)
 	// if err != nil {return nil, err}
 
-	uuidRandom, _ := uuid.NewRandom()
+	uuidRandomv4, _ := uuid.NewRandom()
 	// if err != nil {return nil, err}
-	id := uuidRandom.String()
+	uuidv4String := uuidRandomv4.String()
 
 	signerEntity := &models.Ed25519SignerEntity{
-		Id : id,
+		Id : uuidv4String,
+		// UhcKeyIdBase64URL:
 		PublicKeyBytes: publicSingKeyBytes,
 		PrivateKeyBytes: secretSignKeyBytes,
 		PublicKeyBase58: base58.Encode(publicSingKeyBytes),
@@ -46,11 +61,11 @@ func GetJwtHeaderMap (jwtHeaderB64 string) map[string]interface{} {
 
 func GetJWTHeader(jwt string) (string, error) {
 	jwtParts := strings.Split(jwt, ".")
-	if len(jwtParts) != jwtPartsNumber { // nolint:gomnd
+	if len(jwtParts) != JwtPartsNumber { // nolint:gomnd
 		return "", errors.New("invalid JWT")
 	}
 
-	return jwtParts[jwtHeaderPart], nil
+	return jwtParts[JwtHeaderPart], nil
 }
 
 // GetDigest returns document digest.

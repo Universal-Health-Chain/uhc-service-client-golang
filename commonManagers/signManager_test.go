@@ -31,7 +31,7 @@ func TestCreateVerifyDataOfChallenge(t *testing.T){
 
 func getSignatureContext() *signer.Context {
 	return &signer.Context{
-		Creator:       "creator",
+		Creator:       "DidCreatorForTesting",
 		SignatureType: ed25519signature2018.SignatureType,
 	}
 }
@@ -81,7 +81,7 @@ const jsonldJWS = "jws"
 func prepareJWSProof(signSuite *ed25519signature2018.Suite, proofOptions map[string]interface{},
 	opts ...jsonld.ProcessorOpts) ([]byte, error) {
 	// TODO proof contexts shouldn't be hardcoded in jws, should be passed in jsonld doc by author [Issue#1833]
-	proofOptions[jsonldContext] = []interface{}{securityContext, securityContextJWK2020}
+	proofOptions[jsonldContext] = []interface{}{SecurityContext, SecurityContextJWK2020}
 	proofOptionsCopy := make(map[string]interface{}, len(proofOptions))
 
 	for key, value := range proofOptions { proofOptionsCopy[key] = value }
