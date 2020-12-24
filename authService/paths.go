@@ -18,7 +18,11 @@ const (
 	CreateOrganizationCredential              = "/api/v1/organization/credential"
 	GetOrganizationUHC                        = "/api/v1/organization/uhc"
 	GetOrganizationVCByCredentialId           = "/api/v1/organization/credential"
+	CreateOrganizationUHCFromFhir             = "/api/v1/organization/uhc/fhir"
 
 	GetOrganizationUHCTokenByToken = "/api/v1/organization/uhc/token/token/{token}"
 	GetOrganizationUHCTokenById    = "/api/v1/organization/uhc/token/id/{id}"
+
+	CreateNewUserAndKeyIfNotExists = "/api/v1/organization/external/user/register"
+
 )

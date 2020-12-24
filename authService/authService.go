@@ -10,6 +10,8 @@ type AuthService  struct {
 	EncryptionKeyController                    EncryptionKeyController
 	UserAdminController                        UserAdminController
 	OrganizationVerifiableCredentialController OrganizationVerifiableCredentialController
+	OrganizationUHCController OrganizationUHCController
+	OrganizationTokenUHCController OrganizationTokenUHCController
 }
 
 func (authService *AuthService) Initialize(backendUrl string) {
@@ -18,6 +20,8 @@ func (authService *AuthService) Initialize(backendUrl string) {
 	authService.EncryptionKeyController = EncryptionKeyController{models.Service{BackendUrl: backendUrl}}
 	authService.UserAdminController = UserAdminController{models.Service{BackendUrl: backendUrl}}
 	authService.OrganizationVerifiableCredentialController = OrganizationVerifiableCredentialController{models.Service{BackendUrl: backendUrl}}
+	authService.OrganizationUHCController = OrganizationUHCController{models.Service{BackendUrl: backendUrl}}
+	authService.OrganizationTokenUHCController = OrganizationTokenUHCController{models.Service{BackendUrl: backendUrl}}
 }
 
 func (authService *AuthService) SetToken(token string) {
@@ -26,4 +30,6 @@ func (authService *AuthService) SetToken(token string) {
 	authService.EncryptionKeyController.Token = token
 	authService.UserAdminController.Token = token
 	authService.OrganizationVerifiableCredentialController.Token = token
+	authService.OrganizationUHCController.Token = token
+	authService.OrganizationTokenUHCController.Token = token
 }

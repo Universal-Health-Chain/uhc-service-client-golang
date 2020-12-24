@@ -9,6 +9,7 @@ type OrganizationUHCAccess struct {
 	ID                              string                   `bson:"id,omitempty" json:"id,omitempty"`
 	OrganizationUhcId               string                   `bson:"organizationUhcId,omitempty" json:"organizationUhcId,omitempty"`
 	ActiveEncryptionKeyID           *string                  `bson:"activeEncryptionKeyID,omitempty" json:"activeEncryptionKeyID,omitempty"`
+	ActiveSigningKeyID              *string                  `bson:"activeSigningKeyID,omitempty" json:"activeSigningKeyID,omitempty"`
 	ActiveOrganizationAccessTokenId *string                  `bson:"activeOrganizationAccessTokenId,omitempty" json:"activeOrganizationAccessTokenId,omitempty"`
 	ApplicationsLicenses            *[]ApplicationLicense    `bson:"ApplicationsLicenses,omitempty" json:"applications,omitempty"`
 	ApplicationsPermissions         *[]ApplicationPermission `bson:"applicationsPermissions,omitempty" json:"applicationsPermissions,omitempty"`

@@ -10,9 +10,12 @@ import (
 
 var organizationTokenUHCController OrganizationTokenUHCController
 var organizationTokenForTesting string
+var emailTesting string
 func init() {
 	godotenv.Load("../.env")
 	backendUrl = os.Getenv("BACKENDURL")
+	emailTesting = usernameTesting + "@email.com"
+
 	organizationTokenUHCController = OrganizationTokenUHCController{models.Service{BackendUrl: backendUrl}}
 	usernameTesting = os.Getenv("USERNAMETEST")
 	userPwTesting = os.Getenv("PASSWORDTEST")
@@ -21,10 +24,7 @@ func init() {
 
 
 func TestOrganizationTokenUHCController_GetOrganizationUHCTokenByToken(t *testing.T) {
-	userResp, err := authController.Login(usernameTesting, userPwTesting)
-	assert.Nil(t, err, "err should be nil")
-	token := userResp.Data[0].Token
-	assert.NotEqual(t, token, "")
+	_, _ = authController.RegisterDeletingForTesting(usernameTesting, emailTesting, userPwTesting)
 
 	//encryptionKey.Token = userResp.Data[0].Token
 
@@ -36,10 +36,8 @@ func TestOrganizationTokenUHCController_GetOrganizationUHCTokenByToken(t *testin
 
 
 func TestOrganizationTokenUHCController_GetOrganizationUHCTokenById(t *testing.T) {
-	userResp, err := authController.Login(usernameTesting, userPwTesting)
-	assert.Nil(t, err, "err should be nil")
-	token := userResp.Data[0].Token
-	assert.NotEqual(t, token, "")
+	_, _ = authController.RegisterDeletingForTesting(usernameTesting, emailTesting, userPwTesting)
+
 
 	//encryptionKey.Token = userResp.Data[0].Token
 
