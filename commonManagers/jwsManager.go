@@ -1,14 +1,10 @@
 package commonManagers
 
 import (
-	"crypto/ed25519"
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	"github.com/btcsuite/btcutil/base58"
-	"github.com/google/uuid"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/proof"
 	documentSigner "github.com/hyperledger/aries-framework-go/pkg/doc/signature/signer"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite"
@@ -49,29 +45,6 @@ func SignJsonWithProofJWS(signerEntity signature.Signer, serializedJson string, 
 
 	println("signedJWSDoc = ", string(signedJWSDoc))
 	return signedJWSDoc, err
-}
-
-func CreateEd25519SignKeys() (*models.Ed25519SignerEntity, error) {
-	// It generates public and private signing keys for Ed25519Signature2018
-	publicSingKeyBytes, secretSignKeyBytes, _ := ed25519.GenerateKey(nil)
-	// if err != nil {return nil, err}
-
-	uuidRandomv4, _ := uuid.NewRandom()
-	// if err != nil {return nil, err}
-	uuidv4String := uuidRandomv4.String()
-
-	signerEntity := &models.Ed25519SignerEntity{
-		Id : uuidv4String,
-		// UhcKeyIdBase64URL:
-		PublicKeyBytes: publicSingKeyBytes,
-		PrivateKeyBytes: secretSignKeyBytes,
-		PublicKeyBase58: base58.Encode(publicSingKeyBytes),
-		PrivateKeyBase58: base58.Encode(secretSignKeyBytes),
-		PublicKeyBase64: BytesToBase64String(publicSingKeyBytes),
-		PrivateKeyBase64: BytesToBase64String(secretSignKeyBytes),
-	}
-
-	return signerEntity, nil
 }
 
 func GetJwtHeaderMap (jwtHeaderB64 string) map[string]interface{} {

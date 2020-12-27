@@ -13,6 +13,35 @@ import (
 	"testing"
 )
 
+func Test_CreateEd25519SignKeyPair(t *testing.T) {
+	signKeyPair,err := CreateEd25519SignKeyPair(walletIdForTesting, "", nil, "")
+	require.NoError(t, err)
+	require.NotEmpty(t, signKeyPair.ID)
+	require.NotEmpty(t, signKeyPair.Meta.Created)
+	require.NotEmpty(t, signKeyPair.PublicKeyInfo.PublicKeyBase64)
+	require.NotEmpty(t, signKeyPair.PrivateKeyInfo.WalletId)
+	require.NotEmpty(t, signKeyPair.PrivateKeyInfo.PrivateKeyBase64)
+	require.Equal(t, signKeyPair.PublicKeyInfo.Type, Ed25519KeyType)	// "Ed25519VerificationKey2018"
+	require.Empty(t, signKeyPair.Meta.Tag)
+	require.Empty(t, signKeyPair.PublicKeyInfo.IdWithDid)
+	require.Empty(t, signKeyPair.PublicKeyInfo.Expires)
+	require.Empty(t, signKeyPair.PublicKeyInfo.Revoked)
+	require.Empty(t, signKeyPair.PrivateKeyInfo.Purposes)
+
+	println("signKeyPair.PublicKeyInfo.PublicKeyBase64 = ", signKeyPair.PublicKeyInfo.PublicKeyBase64)	// hexadecimal
+	publicSignKey, err := Base64StringToBytes(signKeyPair.PublicKeyInfo.PublicKeyBase64)
+	privateSignKey, err := Base64StringToBytes(signKeyPair.PrivateKeyInfo.PrivateKeyBase64)
+
+	// It creates the signer entity with the generated keys
+	signerEntity := signature.GetEd25519Signer(privateSignKey, publicSignKey)
+	require.NotEmpty(t, signerEntity.PublicKey)	// hexadecimal
+	println("signerEntity.PublicKey = ", signerEntity.PublicKey)	// hexadecimal
+	// fmt.Printf("signerEntity.PublicKey %v \n", signerEntity.PublicKey)
+}
+
+// ed25519KeyFetcher := createDIDKeyFetcher(t, ed25519Signer.PublicKeyBytes(), "76e12ec712ebc6f1c221ebfeb1f")
+
+// ---------------------------------------------------
 func TestCreateVerifyDataOfChallenge(t *testing.T){
 	signer := signature.GetEd25519Signer([]byte(issuerPrivKey), []byte(issuerPubKey))
 	signSuite := ed25519signature2018.New(suite.WithSigner(signer))

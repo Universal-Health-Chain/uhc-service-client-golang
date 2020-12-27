@@ -33,30 +33,3 @@ type HashDltOutput struct {
 	TxId            string	`bson:"txId,omitempty" json:txId",omitempty"`						// the identifier of the blockchain transaction
 }
 
-type Ed25519SignerEntity struct {  // see https://w3c-ccg.github.io/security-vocab/
-	Id				string		`bson:"id,omitempty" json:"id,omitempty"`					// UUID random v4 to identify the Key Pair for signing of the entity
-	Type            string		`bson:"type,omitempty" json:"type,omitempty"`				// "@type": "Ed25519SignatureKey2018"
-	Context      	[]string	`bson:"context,omitempty" json:"@context,omitempty"`		// "@context": ["https://w3id.org/security/v1"]
-	PublicKeyBytes  []byte		`bson:"digestValue,omitempty" json:"digestValue,omitempty"`
-	PrivateKeyBytes	[]byte		`bson:"digestAlgorithm,omitempty" json:"digestAlgorithm,omitempty"`
-	PublicKeyBase58 string		`bson:"digestValue,omitempty" json:"digestValue,omitempty"`
-	PrivateKeyBase58 string		`bson:"digestAlgorithm,omitempty" json:"digestAlgorithm,omitempty"`
-	PublicKeyBase64 string		`bson:"digestValue,omitempty" json:"digestValue,omitempty"`
-	PrivateKeyBase64 string		`bson:"digestAlgorithm,omitempty" json:"digestAlgorithm,omitempty"`
-}
-
-/*
-"@context": ["https://w3id.org/security/v2"],
-"id": "publicsignEHR1", // si almacena claves de varios dispositivos entonces se antepone el DID  did:v1:uuid:804c6ac3-ce3b-46ce-b134-17175d5bee74#publicsignEHR1
-"type": "Ed25519VerificationKey2018",
-"passphrase": "passphrase to encrypt the generated private key a the DID document (not for public blockchain)",
-"controller": "did:v1:uuid:804c6ac3-ce3b-46ce-b134-17175d5bee74", // el documento DID
-"expires": "2017-02-08T16:02:20Z", // por ejemplo si se revoca o si se fija una fecha de expiración
-"publicKeyBase58" : "B12NYF8RrR3h41TDCTJojY59usg3mbtbjnFs7Eud1Y6u",
-"privateKeyBase58": "la clave privada en base58"
-"publicKeyBase64" : "B12NYF8RrR3h41TDCTJojY59usg3mbtbjnFs7Eud1Y6u",
-"privateKeyBase64": "la clave privada en base58"
-"publicKeyBytes" : "esto sería para base64",
-"privateKeyBytes": "la clave privada en base64"
- */
-

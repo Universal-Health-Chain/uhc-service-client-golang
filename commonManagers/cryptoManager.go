@@ -12,8 +12,6 @@ import (
 type CryptoManager struct {
 }
 
-
-
 func (manager *CryptoManager) GenerateKeyPair() (publicKeyBase64 string, privateKeyBase64 string, err error) {
 	return GenerateKeyPair()
 }
@@ -143,8 +141,6 @@ func (manager *CryptoManager) GetSharedKeyInBytesByBase64Keys(recipientPublicKey
 	box.Precompute(&sharedKeyBytes, &recipientPublicKeyBytes, &senderPrivateKeyBytes)
 	return sharedKeyBytes, nil
 }
-
-
 
 
 func (manager *CryptoManager) EncryptToBase64WithSharedKeyInBase64(message, sharedKey *string) (encryptedMessage string, err error) {
