@@ -55,6 +55,7 @@ func TestCryptoManager_EncryptUsingEncryptionKey_Decrypt(t *testing.T) {
 	assert.Equal(t, decryptionResult.DecryptedMessage, message)
 
 }
+
 func TestEncryptionManager_Decrypt(t *testing.T) {
 	message := "Hello world"
 
@@ -104,7 +105,6 @@ func TestCryptoManager_GetSharedEncryptionKey(t *testing.T) {
 
 	assert.Equal(t, sharedKeyResult, ConnectionSharedKeyForTesting)
 }
-
 
 func TestCryptoManager_EncryptBytesWithSharedKey(t *testing.T) {
 	keySender := encryptionKeys[0]

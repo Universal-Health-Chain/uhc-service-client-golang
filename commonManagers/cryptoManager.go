@@ -5,8 +5,10 @@ import (
 	b64 "encoding/base64"
 	"errors"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
+	"github.com/google/uuid"
 	"golang.org/x/crypto/nacl/box"
 	"io"
+	"time"
 )
 
 type CryptoManager struct {
@@ -16,12 +18,57 @@ func (manager *CryptoManager) GenerateKeyPair() (publicKeyBase64 string, private
 	return GenerateKeyPair()
 }
 
+func (manager *CryptoManager) CreateX25519KeyPair(walletId string, ownerDid string, purposes []string, tag string) (*models.KeyPairStorage, error) {
+	return CreateX25519EncryptKeyPair(walletId, ownerDid, purposes, tag)
+}
+
 func GenerateKeyPair() (publicKeyBase64 string, privateKeyBase64 string, err error) {
 	publicKeyBytes, privateKeysBytes, err := box.GenerateKey(rand.Reader)
 	if err != nil {
 		return "", "", err
 	}
 	return BytesToBase64String(publicKeyBytes[:]), BytesToBase64String(privateKeysBytes[:]), nil
+}
+
+func CreateX25519EncryptKeyPair(walletId string, ownerDid string, purposes []string, tag string) (*models.KeyPairStorage, error) {
+	_, err := uuid.Parse(walletId)
+	if err != nil {return nil, errors.New("WalletId is mandatory")}
+
+	// It generates public and private signing keys for Ed25519Signature2018
+	publicEncryptKeyBase64, secretEncryptKeyBase64, err := GenerateKeyPair()
+	if err != nil {return nil, err}
+
+	// ownerDid and purposes should be optional
+	uuidRandomv4, _ := uuid.NewRandom()
+	uuidv4String := uuidRandomv4.String()
+	timestamp := time.Now()
+
+	encryptKeyPair := &models.KeyPairStorage{
+		ID: uuidv4String,
+		Meta: models.KeyPairMeta{
+			Created: &timestamp,
+			Tag:     tag,
+		},
+		PublicKeyInfo: models.PublicKeyInfo{
+			// IdWithDid:       ownerDid + "#" + uuidv4String,
+			Type:            X25519KeyType,		// "X25519KeyAgreementKey2019"
+			// Expires:         &time.Time{},
+			PublicKeyBase64: publicEncryptKeyBase64,
+		},
+		PrivateKeyInfo: models.PrivateKeyInfo{
+			WalletId: walletId,
+			Purposes: purposes,
+			PrivateKeyBase64: secretEncryptKeyBase64,
+		},
+	}
+
+	// IdWithDid is the public identifier of the key in the owner's blockchain DID document
+	_, err = uuid.Parse(ownerDid)
+	if err == nil {
+		encryptKeyPair.PublicKeyInfo.IdWithDid = ownerDid + "#" + uuidv4String
+	}
+
+	return encryptKeyPair, nil
 }
 
 func BytesToBase64String(b []byte) string {
@@ -131,7 +178,6 @@ func (manager *CryptoManager) GetSharedEncryptionKey (recipientPublicKey, sender
 	return BytesToBase64String(sharedKey[:]), nil
 }
 
-
 func (manager *CryptoManager) GetSharedKeyInBytesByBase64Keys(recipientPublicKey, senderSecretKey *string) (sharedKey [32]byte, err error){
 	var sharedKeyBytes [32]byte
 	recipientPublicKeyBytes, err := base64StringToBytes32(*recipientPublicKey)
@@ -141,7 +187,6 @@ func (manager *CryptoManager) GetSharedKeyInBytesByBase64Keys(recipientPublicKey
 	box.Precompute(&sharedKeyBytes, &recipientPublicKeyBytes, &senderPrivateKeyBytes)
 	return sharedKeyBytes, nil
 }
-
 
 func (manager *CryptoManager) EncryptToBase64WithSharedKeyInBase64(message, sharedKey *string) (encryptedMessage string, err error) {
 	messageBytes := []byte(*message)

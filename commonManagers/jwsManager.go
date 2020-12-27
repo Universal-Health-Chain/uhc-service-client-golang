@@ -14,6 +14,7 @@ import (
 )
 
 const (
+	X25519KeyType 			= "X25519KeyAgreementKey2019"
 	Ed25519KeyType 			= "Ed25519VerificationKey2018"
 	Ed25519SignatureType 	= "Ed25519Signature2018"
 	DidContext             	= "https://www.w3.org/ns/did/v1"
