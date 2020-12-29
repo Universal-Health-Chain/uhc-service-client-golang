@@ -5,21 +5,14 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/proof"
 	documentSigner "github.com/hyperledger/aries-framework-go/pkg/doc/signature/signer"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite/ed25519signature2018"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/util/signature"
 	"strings"
-)
-
-const (
-	X25519KeyType 			= "X25519KeyAgreementKey2019"
-	Ed25519KeyType 			= "Ed25519VerificationKey2018"
-	Ed25519SignatureType 	= "Ed25519Signature2018"
-	DidContext             	= "https://www.w3.org/ns/did/v1"
-	SecurityContext        	= "https://w3id.org/security/v2"
-	SecurityContextJWK2020 	= "https://trustbloc.github.io/context/vc/credentials-v1.jsonld"
+	"time"
 )
 
 const (
@@ -28,18 +21,38 @@ const (
 	JwtSignaturePart = 2
 )
 
-func SignJsonWithProofJWS(signerEntity signature.Signer, serializedJson string, proofCreator string) ([]byte, error) {
+func SignJsonWithProofJWS(signKeyPair models.Key, serializedJson string, purpose string) ([]byte, error) {
+	privateSignKeyBytes, err := Base64StringToBytes(signKeyPair.PrivateKeyBase64)
+	if err != nil || privateSignKeyBytes == nil {return nil, errors.New("No valid KeyPair")}
+
+	publicSignKeyBytes, err := Base64StringToBytes(signKeyPair.PrivateKeyBase64)
+	if err != nil || publicSignKeyBytes == nil {return nil, errors.New("No valid KeyPair")}
+
+	// TODO: check if purpose is valid
+
+	signerEntity := signature.GetEd25519Signer(privateSignKeyBytes, publicSignKeyBytes)
+	proofCreator := signKeyPair.Controller
+
 	s := documentSigner.New(ed25519signature2018.New(suite.WithSigner(signerEntity)))
 
 	signContext := &documentSigner.Context{
-		Creator:       proofCreator,
-		SignatureType: Ed25519SignatureType,
+		SignatureType:           Ed25519SignatureType,
+		Creator:                 proofCreator,
+		SignatureRepresentation: 0,
+		Created:                 &time.Time{},
+		Domain:                  "",
+		Nonce:                   nil,
+		VerificationMethod:      "",
+		Challenge:               "",
+		Purpose:                 purpose,
 	}
 
+	// Only for testing
 	signedDoc, err := s.Sign(signContext, []byte(serializedJson))
 	if err != nil {return nil, err}
 	println("signedDoc = ", string(signedDoc))
 
+	// It creates the desired 'jws' field instead of 'proofValue'
 	signContext.SignatureRepresentation = proof.SignatureJWS
 	signedJWSDoc, err := s.Sign(signContext, []byte(serializedJson))
 	if err != nil {return nil, err}
@@ -66,8 +79,7 @@ func GetJWTHeader(jwt string) (string, error) {
 	return jwtParts[JwtHeaderPart], nil
 }
 
-// GetDigest returns document digest.
-func DigestForEd25519Signature2018(doc []byte) []byte {
+func DocDigestForEd25519Signature2018(doc []byte) []byte {
 	digest := sha256.Sum256(doc)
 	return digest[:]
 }

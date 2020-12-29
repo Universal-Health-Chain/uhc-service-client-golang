@@ -14,12 +14,13 @@ import (
 type CryptoManager struct {
 }
 
+// TODO: use 'CreateX25519KeyPair' instead of 'GenerateKeyPair'
 func (manager *CryptoManager) GenerateKeyPair() (publicKeyBase64 string, privateKeyBase64 string, err error) {
 	return GenerateKeyPair()
 }
 
-func (manager *CryptoManager) CreateX25519KeyPair(walletId string, ownerDid string, purposes []string, tag string) (*models.KeyPairStorage, error) {
-	return CreateX25519EncryptKeyPair(walletId, ownerDid, purposes, tag)
+func (manager *CryptoManager) CreateX25519KeyPair(walletId string, uhcUserId string, purposes []string, tag string) (*models.Key, error) {
+	return CreateX25519EncryptKeyPair(walletId, uhcUserId, purposes, tag)
 }
 
 func GenerateKeyPair() (publicKeyBase64 string, privateKeyBase64 string, err error) {
@@ -30,42 +31,36 @@ func GenerateKeyPair() (publicKeyBase64 string, privateKeyBase64 string, err err
 	return BytesToBase64String(publicKeyBytes[:]), BytesToBase64String(privateKeysBytes[:]), nil
 }
 
-func CreateX25519EncryptKeyPair(walletId string, ownerDid string, purposes []string, tag string) (*models.KeyPairStorage, error) {
+func CreateX25519EncryptKeyPair(walletId string, uhcOwnerId string, purposes []string, tag string) (*models.Key, error) {
 	_, err := uuid.Parse(walletId)
-	if err != nil {return nil, errors.New("WalletId is mandatory")}
+	if err != nil {return nil, errors.New("Wallet ID is mandatory")}
+
+	_, err = uuid.Parse(uhcOwnerId)
+	if err != nil {return nil, errors.New("Owner ID is mandatory")}
+
+	if len(purposes) == 0 { purposes = []string{""}}	// provisional while Capability isn't an array to avoid nil errors
 
 	// It generates public and private signing keys for Ed25519Signature2018
 	publicEncryptKeyBase64, secretEncryptKeyBase64, err := GenerateKeyPair()
 	if err != nil {return nil, err}
 
-	// ownerDid and purposes should be optional
+	// uhcOwnerId and purposes should be optional
 	uuidRandomv4, _ := uuid.NewRandom()
 	uuidv4String := uuidRandomv4.String()
 	timestamp := time.Now()
 
-	encryptKeyPair := &models.KeyPairStorage{
-		ID: uuidv4String,
-		Meta: models.KeyPairMeta{
-			Created: &timestamp,
-			Tag:     tag,
-		},
-		PublicKeyInfo: models.PublicKeyInfo{
-			// IdWithDid:       ownerDid + "#" + uuidv4String,
-			Type:            X25519KeyType,		// "X25519KeyAgreementKey2019"
-			// Expires:         &time.Time{},
-			PublicKeyBase64: publicEncryptKeyBase64,
-		},
-		PrivateKeyInfo: models.PrivateKeyInfo{
-			WalletId: walletId,
-			Purposes: purposes,
-			PrivateKeyBase64: secretEncryptKeyBase64,
-		},
-	}
-
-	// IdWithDid is the public identifier of the key in the owner's blockchain DID document
-	_, err = uuid.Parse(ownerDid)
-	if err == nil {
-		encryptKeyPair.PublicKeyInfo.IdWithDid = ownerDid + "#" + uuidv4String
+	encryptKeyPair := &models.Key{
+		ID:        		uuidv4String,
+		WalletKeyId:	walletId,
+		Tag:			tag,
+		Type:           X25519KeyType,		// "X25519KeyAgreementKey2019"
+		CreatedAt:      &timestamp,
+		// Expires:        &time.Time{},
+		Controller:     DIDMethod + uhcOwnerId, // not uhcOwnerId
+		DidKeyId:       DIDMethod + uhcOwnerId + "#" + uuidv4String,
+		PublicKeyBase64:publicEncryptKeyBase64,
+		PrivateKeyBase64:secretEncryptKeyBase64,
+		Capability: 	purposes[0],		// TODO: Change to Purposes []string
 	}
 
 	return encryptKeyPair, nil

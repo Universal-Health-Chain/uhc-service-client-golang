@@ -1,19 +1,24 @@
 package commonManagers
 
 import (
+	"crypto/ed25519"
 	"encoding/hex"
 	"errors"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	"github.com/google/uuid"
-	"crypto/ed25519"
 	"github.com/btcsuite/btcutil/base58"
+	"github.com/google/uuid"
 	didDocument "github.com/hyperledger/aries-framework-go/pkg/doc/did"
 	"time"
 )
 
-func CreateEd25519SignKeyPair(walletId string, ownerDid string, purposes []string, tag string) (*models.KeyPairStorage, error) {
+func CreateEd25519SignKeyPair(walletId string, uhcOwnerId string, purposes []string, tag string) (*models.Key, error) {
 	_, err := uuid.Parse(walletId)
 	if err != nil {return nil, errors.New("WalletId is mandatory")}
+
+	_, err = uuid.Parse(uhcOwnerId)
+	if err != nil {return nil, errors.New("Owner ID is mandatory")}
+
+	if len(purposes) == 0 { purposes = []string{""}}	// provisional while Capability isn't an array to avoid nil errors
 
 	// It generates public and private signing keys for Ed25519Signature2018
 	publicSingKeyBytes, secretSignKeyBytes, err := ed25519.GenerateKey(nil)
@@ -24,30 +29,18 @@ func CreateEd25519SignKeyPair(walletId string, ownerDid string, purposes []strin
 	uuidv4String := uuidRandomv4.String()
 	timestamp := time.Now()
 
-	signKeyPair := &models.KeyPairStorage{
-		ID: uuidv4String,
-		Meta: models.KeyPairMeta{
-			Created: &timestamp,
-			Tag:     tag,
-		},
-		PublicKeyInfo: models.PublicKeyInfo{
-			// IdWithDid:       ownerDid + "#" + uuidv4String,
-			Type:            Ed25519KeyType,
-			Expires:         &time.Time{},
-			Revoked:         &time.Time{},
-			PublicKeyBase64: BytesToBase64String(publicSingKeyBytes),
-		},
-		PrivateKeyInfo: models.PrivateKeyInfo{
-			WalletId: walletId,
-			Purposes: purposes,
-			PrivateKeyBase64: BytesToBase64String(secretSignKeyBytes),
-		},
-	}
-
-	// IdWithDid is the public identifier of the key in the owner's blockchain DID document
-	_, err = uuid.Parse(ownerDid)
-	if err == nil {
-		signKeyPair.PublicKeyInfo.IdWithDid = ownerDid + "#" + uuidv4String
+	signKeyPair := &models.Key{
+		ID:        		uuidv4String,
+		WalletKeyId:	walletId,
+		Tag:			tag,
+		Type:           Ed25519KeyType,		// "Ed25519VerificationKey2018"
+		CreatedAt:      &timestamp,
+		// Expires:        &time.Time{},
+		Controller:     DIDMethod + uhcOwnerId, // not uhcOwnerId,
+		DidKeyId:       DIDMethod + uhcOwnerId + "#" + uuidv4String,
+		PublicKeyBase64:BytesToBase64String(publicSingKeyBytes),
+		PrivateKeyBase64:BytesToBase64String(secretSignKeyBytes),
+		Capability: 	purposes[0],		// TODO: Change to Purposes []string
 	}
 
 	return signKeyPair, nil

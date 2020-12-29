@@ -11,6 +11,7 @@ require (
 	github.com/hyperledger/aries-framework-go v0.1.4
 	github.com/joho/godotenv v1.3.0
 	github.com/kilic/bls12-381 v0.0.0-20201104083100-a288617c07f1
+	github.com/piprate/json-gold v0.3.0
 	github.com/stretchr/testify v1.6.1
 	golang.org/x/crypto v0.0.0-20201117144127-c1f2f97bffc9
 	golang.org/x/text v0.3.3 // indirect

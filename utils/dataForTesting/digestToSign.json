@@ -1,0 +1,7 @@
+{
+  "@context": ["https://w3id.org/security/v2"],
+  "type": "Digest",
+  "digestValue": "3b13152c7af2e840af8ffe981cd782faa2b8332ef80087d487a6a664cca62317",
+  "digestAlgorithm": "SHA3-256",
+  "proofPurpose": "assertionMethod"
+}

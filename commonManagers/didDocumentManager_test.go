@@ -18,15 +18,19 @@ import (
 	"time"
 )
 
-const DidEntityForTesting = "did:v1:uuid:EntityDidBlockchainUuid"
-const UhcPublicSingKeyIdForTesting = "UhcPublicSingKeyId"
-const DidCreatorForTesting = DidEntityForTesting + "#" + UhcPublicSingKeyIdForTesting
+const DefaultProofPurpose = "assertionMethod"
 
-func TestCreateSignedDidDocument(t *testing.T) {
-	// signerEntity := signature.GetEd25519Signer([]byte(issuerPrivKey), []byte(issuerPubKey))
-	didDoc := createDidDocumentWithSigningKey(issuerPubKey)
-	proofCreator := DidCreatorForTesting
-	signedJWSDoc, err := SignDidDocument(issuerPrivKey,issuerPubKey, didDoc, proofCreator)
+func Test_CreateDefaultDID(t *testing.T) {
+	didDoc, err := CreateDefaultDID(SignKeyPairForTesting, EncryptKeyPairForTesting)
+	require.NoError(t, err)
+	fmt.Printf("default did with both sign and encryption public keys = %v \n", didDoc)
+}
+
+func Test_CreateSignedDidDocument(t *testing.T) {
+	// signerEntity := signature.GetEd25519Signer([]byte(Ed25519PrivateKeyBytesForTesting), []byte(Ed25519PublicKeyBytesForTesting))
+	didDoc := createDidDocumentWithSigningKey(Ed25519PublicKeyBytesForTesting)
+	proofCreator := UserSignPublicKeyDID
+	signedJWSDoc, err := SignDidDocument(Ed25519PrivateKeyBytesForTesting, Ed25519PublicKeyBytesForTesting, didDoc, proofCreator)
 	require.NoError(t, err)
 	require.NotEmpty(t, signedJWSDoc)
 	fmt.Printf("verifyData %v \n", string(signedJWSDoc))
@@ -49,7 +53,7 @@ func TestCreateSignedDidDocument(t *testing.T) {
 	require.Equal(t, proofCreator, proofMap["creator"])
 	require.Equal(t, "assertionMethod", proofMap["proofPurpose"])
 	require.Equal(t, "Ed25519Signature2018", proofMap["type"])
-	require.Contains(t, proofMap, "created")
+	require.Contains(t, proofMap, "CreatedTImeForTesting")
 
 	require.Contains(t, proofMap, "proofValue")
 	// require.Contains(t, proofMap, "jws")
@@ -57,25 +61,25 @@ func TestCreateSignedDidDocument(t *testing.T) {
 
 func createDidDocumentWithSigningKey(pubKey []byte) *didDocument.Doc {
 	signingKey := didDocument.PublicKey{
-		ID:         DidCreatorForTesting,
+		ID:         UserSignPublicKeyDID,
 		Type:       Ed25519KeyType,
-		Controller: DidEntityForTesting,
+		Controller: UserDIDForTesting,
 		Value:      pubKey,
 	}
 	createdTime := time.Now()
 
 	didDoc := &didDocument.Doc{
 		Context:   []string{DidContext, SecurityContext},
-		ID:        DidEntityForTesting,
+		ID:        UserDIDForTesting,
 		PublicKey: []didDocument.PublicKey{signingKey},
 		Created:   &createdTime,
 	}
 	return didDoc
 }
 
-func TestDocumentSigner_Sign1(t *testing.T) {
-	proofCreator := DidCreatorForTesting
-	signerEntity := signature.GetEd25519Signer([]byte(issuerPrivKey), []byte(issuerPubKey))
+func Test_DocumentSigner_Sign1(t *testing.T) {
+	proofCreator := UserSignPublicKeyDID
+	signerEntity := signature.GetEd25519Signer([]byte(Ed25519PrivateKeyBytesForTesting), []byte(Ed25519PublicKeyBytesForTesting))
 	signSuite := ed25519signature2018.New(suite.WithSigner(signerEntity))
 	docSigner := documentSigner.New(signSuite)
 
@@ -90,7 +94,7 @@ func TestDocumentSigner_Sign1(t *testing.T) {
 	// require.NoError(t, err)
 	// require.NotNil(t, signedDoc)
 
-	signedDoc2 := ed25519.Sign(issuerPrivKey, []byte(validDoc))
+	signedDoc2 := ed25519.Sign(Ed25519PrivateKeyBytesForTesting, []byte(validDoc))
 	require.NotNil(t, signedDoc2)
 
 	context.SignatureRepresentation = proof.SignatureJWS
