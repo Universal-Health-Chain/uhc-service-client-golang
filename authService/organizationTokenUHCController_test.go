@@ -36,16 +36,31 @@ func TestOrganizationTokenUHCController_GetOrganizationUHCTokenByToken(t *testin
 
 
 func TestOrganizationTokenUHCController_GetOrganizationUHCTokenById(t *testing.T) {
-	_, _ = authController.RegisterDeletingForTesting(usernameTesting, emailTesting, userPwTesting)
-
+	user,_ := authController.RegisterDeletingForTesting(usernameTesting, emailTesting, userPwTesting)
+	token := user.Token
 
 	//encryptionKey.Token = userResp.Data[0].Token
 
-	resp, _ := organizationTokenUHCController.GetOrganizationUHCTokenByToken(organizationTokenForTesting)
-	tokenId := resp.Data[0].ID
+	respToken, _ := organizationTokenUHCController.GetOrganizationUHCTokenByToken(organizationTokenForTesting)
+	tokenId := respToken.Data[0].ID
 
-	resp, _ = organizationTokenUHCController.GetOrganizationUHCTokenById(tokenId)
+	respId, _ := organizationTokenUHCController.GetOrganizationUHCTokenById(tokenId)
 
-	assert.Equal(t, organizationTokenForTesting, resp.Data[0].Token )
-	assert.Equal(t, tokenId, resp.Data[0].ID )
+	assert.Equal(t, organizationTokenForTesting, respId.Data[0].Token )
+	assert.Equal(t, tokenId, respId.Data[0].ID )
+
+	user, _ = authController.RegisterDeletingForTesting(usernameTesting, emailTesting, userPwTesting)
+	token = user.Token
+	encryptionKeyOrganization.Token = token
+	orgId := respToken.Data[0].OrganizationOwnerId
+
+	resp, errata := encryptionKeyOrganization.GetOrganizationPublicInfoOfActiveKey(orgId)
+	assert.NotNil(t, resp)
+	assert.Nil(t, errata)
+	assert.NotNil(t, resp.Data[0].ID)
+	assert.NotNil(t, resp.Data[0].Tag)
+
+
+
+
 }

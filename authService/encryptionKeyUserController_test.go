@@ -8,12 +8,12 @@ import (
 	"testing"
 )
 
-var encryptionKey EncryptionKeyController
+var encryptionKey EncryptionKeyUserController
 
 func init() {
 	godotenv.Load("../.env")
 	backendUrl = os.Getenv("BACKENDURL")
-	encryptionKey = EncryptionKeyController{models.Service{BackendUrl: backendUrl}}
+	encryptionKey = EncryptionKeyUserController{models.Service{BackendUrl: backendUrl}}
 	usernameTesting = os.Getenv("USERNAMETEST")
 	userPwTesting = os.Getenv("PASSWORDTEST")
 }
@@ -27,7 +27,7 @@ func Test_EncryptionKeyCreationController(t *testing.T) {
 	encryptionKey.Token = userResp.Data[0].Token
 
 	encryptionKeyRequest := models.KeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
-	_, errata := encryptionKey.CreateEncryptionKey(encryptionKeyRequest)
+	_, errata := encryptionKey.CreateUserEncryptionKey(encryptionKeyRequest)
 	assert.Nil(t, errata, "errata should be nil")
 }
 

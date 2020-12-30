@@ -5,10 +5,14 @@ const (
 	EncryptPayloadUsingEncryptionRequest = "/api/v1/crypto/encrypt"
 	GetSharedEncryptionKey               = "/api/v1/crypto/shared/key"
 
-	CreateEncryptionKey          = "/api/v1/key/new"
+	CreateUserEncryptionKey      = "/api/v1/key/new"
 	GetSelfPublicInfoOfActiveKey = "/api/v1/key/public/me"
 	GetUserPublicInfoOfActiveKey = "/api/v1/key/public/user/{userId}"
 	GetPublicInfoOfEncryptionKey = "/api/v1/key/public/id/{encryptionKey}"
+
+	CreateOrganizationEncryptionKey      = "/api/v1/organization/uhc/key"
+	GetOrganizationPublicInfoOfActiveKey = "/api/v1/organization/uhc/key/public/{organizationId}"
+
 
 	RegisterUser = "/api/v1/user/register"
 	DeleteUser   = "/api/v1/user/me/remove/account"

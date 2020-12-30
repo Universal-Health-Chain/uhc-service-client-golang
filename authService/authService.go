@@ -7,17 +7,17 @@ import (
 type AuthService  struct {
 	AuthController                             AuthController
 	CryptoController                           CryptoController
-	EncryptionKeyController                    EncryptionKeyController
+	EncryptionKeyController                    EncryptionKeyUserController
 	UserAdminController                        UserAdminController
 	OrganizationVerifiableCredentialController OrganizationVerifiableCredentialController
-	OrganizationUHCController OrganizationUHCController
-	OrganizationTokenUHCController OrganizationTokenUHCController
+	OrganizationUHCController                  OrganizationUHCController
+	OrganizationTokenUHCController             OrganizationTokenUHCController
 }
 
 func (authService *AuthService) Initialize(backendUrl string) {
 	authService.AuthController = AuthController{models.Service{BackendUrl: backendUrl}}
 	authService.CryptoController = CryptoController{models.Service{BackendUrl: backendUrl}}
-	authService.EncryptionKeyController = EncryptionKeyController{models.Service{BackendUrl: backendUrl}}
+	authService.EncryptionKeyController = EncryptionKeyUserController{models.Service{BackendUrl: backendUrl}}
 	authService.UserAdminController = UserAdminController{models.Service{BackendUrl: backendUrl}}
 	authService.OrganizationVerifiableCredentialController = OrganizationVerifiableCredentialController{models.Service{BackendUrl: backendUrl}}
 	authService.OrganizationUHCController = OrganizationUHCController{models.Service{BackendUrl: backendUrl}}

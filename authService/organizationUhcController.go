@@ -15,10 +15,10 @@ type OrganizationUHCController struct {
 	models.Service
 }
 
-func (organizationUHCController *OrganizationUHCController) CreateOrganizationUHCFromFhir(organizationFhir fhir4.Organization) (*models.OrganizationUHCResponse, error) {
+func (organizationUHCController *OrganizationUHCController) CreateOrganizationUHCFromFhir(organizationFhir fhir4.Organization) (*models.OrganizationVCResponse, error) {
 
 	jsonValue, _ := json.Marshal(organizationFhir)
-	organizationUhcResponse := models.OrganizationUHCResponse{}
+	organizationUhcResponse := models.OrganizationVCResponse{}
 	url := organizationUHCController.BackendUrl + authRoute + CreateOrganizationUHCFromFhir
 	request, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
 	request.Header.Set("Content-Type", "application/json")
@@ -53,12 +53,12 @@ func (organizationUHCController *OrganizationUHCController) CreateOrganizationUH
 func (organizationUHCController *OrganizationUHCController) GetOrganizationUHC(organizationUhcId string) (*models.OrganizationUHCResponse, error) {
 
 	organizationUhcResponse := models.OrganizationUHCResponse{}
-	url := organizationUHCController.BackendUrl + authRoute + GetOrganizationUHC + "?id=" + organizationUhcId
+	url := organizationUHCController.BackendUrl + authRoute + GetOrganizationUHC + "?organizationId=" + organizationUhcId
 
 	request, _ := http.NewRequest("GET", url, nil)
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer "+organizationUHCController.Token)
-	request.Header.Set("x-serviceClient-uhc", "service-client")
+	request.Header.Set("x-serviceClient-uhc", "OrganizationUHCController")
 
 	client := &http.Client{}
 	response, err := client.Do(request)

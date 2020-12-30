@@ -35,11 +35,11 @@ func TestPushTokenUHCController_GetPushTokensByUHCId(t *testing.T) {
 
 	encryptionKeyRequest := models.KeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
 	encryptionKey.Token = user1.Token
-	encryptionKey.CreateEncryptionKey(encryptionKeyRequest)
+	encryptionKey.CreateUserEncryptionKey(encryptionKeyRequest)
 
 	encryptionKeyRequest2 := models.KeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
 	encryptionKey.Token = user2.Token
-	encryptionKey.CreateEncryptionKey(encryptionKeyRequest2)
+	encryptionKey.CreateUserEncryptionKey(encryptionKeyRequest2)
 
 	implicitConnectionRequest := models.ConnectionCreationImplicitRequest{}
 	implicitConnectionRequest.ImplicitInvitationTokenInitiator = *user2.ImplicitInvitationToken
