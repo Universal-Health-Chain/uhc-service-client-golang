@@ -6,9 +6,10 @@ import (
 
 type ConnectionUHC struct {
 	ID                        string                   `json:"id" bson:"id"`
-	InvitationUhcId           string                   `json:"invitationUhcId" bson:"invitationUhcID"`
-	InitiatorUserId           string                   `json:"initiatorUserId" bson:"initiatorUserId"`
-	InvitedUserId             string                   `json:"invitedUserId" bson:"invitedUserId"`
+	InvitationUhcId           string                   `json:"invitationUhcId,omitempty" bson:"invitationUhcID,omitempty"`
+	InitiatorUserId           string                   `json:"initiatorUserId,omitempty" bson:"initiatorUserId,omitempty"`
+	InitiatorOrganizationId   string                   `json:"initiatorOrganizationId,omitempty" bson:"initiatorOrganizationId,omitempty"`
+	InvitedUserId             string                   `json:"invitedUserId,omitempty" bson:"invitedUserId,omitempty"`
 	EncryptionRequirements    EncryptionRequirements   `json:"encryptionRequirements" bson:"encryptionRequirements"`
 	ActivePermissions         *[]PermissionsUHC        `json:"activePermissions" bson:"activePermissions"`
 	PendingPermissionsRequest *[]PermissionsRequestUHC `json:"requestedPendingPermissions" bson:"requestedPendingPermissions"`
