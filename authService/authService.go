@@ -12,6 +12,7 @@ type AuthService  struct {
 	OrganizationVerifiableCredentialController OrganizationVerifiableCredentialController
 	OrganizationUHCController                  OrganizationUHCController
 	OrganizationTokenUHCController             OrganizationTokenUHCController
+	ExternalTokenUserActionsController ExternalTokenUserActionsController
 }
 
 func (authService *AuthService) Initialize(backendUrl string) {
@@ -22,6 +23,7 @@ func (authService *AuthService) Initialize(backendUrl string) {
 	authService.OrganizationVerifiableCredentialController = OrganizationVerifiableCredentialController{models.Service{BackendUrl: backendUrl}}
 	authService.OrganizationUHCController = OrganizationUHCController{models.Service{BackendUrl: backendUrl}}
 	authService.OrganizationTokenUHCController = OrganizationTokenUHCController{models.Service{BackendUrl: backendUrl}}
+	authService.ExternalTokenUserActionsController = ExternalTokenUserActionsController{models.Service{BackendUrl: backendUrl}}
 }
 
 func (authService *AuthService) SetToken(token string) {
@@ -32,6 +34,7 @@ func (authService *AuthService) SetToken(token string) {
 	authService.OrganizationVerifiableCredentialController.Token = token
 	authService.OrganizationUHCController.Token = token
 	authService.OrganizationTokenUHCController.Token = token
+	authService.ExternalTokenUserActionsController.Token = token
 }
 
 func (authService *AuthService) SetServiceToken(token string) {
@@ -42,4 +45,5 @@ func (authService *AuthService) SetServiceToken(token string) {
 	authService.OrganizationVerifiableCredentialController.ServiceToken = token
 	authService.OrganizationUHCController.ServiceToken = token
 	authService.OrganizationTokenUHCController.ServiceToken = token
+	authService.ExternalTokenUserActionsController.ServiceToken = token
 }
