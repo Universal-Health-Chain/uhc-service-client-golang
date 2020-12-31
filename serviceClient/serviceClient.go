@@ -23,3 +23,9 @@ func (serviceClient *ServiceClient) SetToken(token string) {
 	serviceClient.ConnectionsService.SetToken(token)
 	serviceClient.UsersService.SetToken(token)
 }
+
+func (serviceClient *ServiceClient) SetServiceToken(token string) {
+	serviceClient.AuthService.SetServiceToken(token)
+	serviceClient.ConnectionsService.SetServiceToken(token)
+	serviceClient.UsersService.SetServiceToken(token)
+}

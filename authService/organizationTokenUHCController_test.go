@@ -59,8 +59,4 @@ func TestOrganizationTokenUHCController_GetOrganizationUHCTokenById(t *testing.T
 	assert.Nil(t, errata)
 	assert.NotNil(t, resp.Data[0].ID)
 	assert.NotNil(t, resp.Data[0].Tag)
-
-
-
-
 }

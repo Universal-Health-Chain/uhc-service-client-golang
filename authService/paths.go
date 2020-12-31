@@ -13,7 +13,6 @@ const (
 	CreateOrganizationEncryptionKey      = "/api/v1/organization/uhc/key"
 	GetOrganizationPublicInfoOfActiveKey = "/api/v1/organization/uhc/key/public/{organizationId}"
 
-
 	RegisterUser = "/api/v1/user/register"
 	DeleteUser   = "/api/v1/user/me/remove/account"
 	FindUser     = "/api/v1/user/info"
@@ -27,6 +26,7 @@ const (
 	GetOrganizationUHCTokenByToken = "/api/v1/organization/uhc/token/token/{token}"
 	GetOrganizationUHCTokenById    = "/api/v1/organization/uhc/token/id/{id}"
 
-	CreateNewUserAndKeyIfNotExists = "/api/v1/organization/external/user/register"
-
+	CreateNewUserAndKeyIfNotExists                 = "/api/v1/organization/external/user/register"
+	GetOrganizationPublicInfoOfActiveKeyExternally = "/api/v1/organization/external/uhc/key/public/{organizationId}"
+	GetUserPublicInfoOfActiveKeyExternally         = "/api/v1/user/external/key/public"
 )

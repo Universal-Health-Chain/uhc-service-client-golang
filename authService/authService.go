@@ -33,3 +33,13 @@ func (authService *AuthService) SetToken(token string) {
 	authService.OrganizationUHCController.Token = token
 	authService.OrganizationTokenUHCController.Token = token
 }
+
+func (authService *AuthService) SetServiceToken(token string) {
+	authService.AuthController.ServiceToken = token
+	authService.CryptoController.ServiceToken = token
+	authService.EncryptionKeyController.ServiceToken = token
+	authService.UserAdminController.ServiceToken = token
+	authService.OrganizationVerifiableCredentialController.ServiceToken = token
+	authService.OrganizationUHCController.ServiceToken = token
+	authService.OrganizationTokenUHCController.ServiceToken = token
+}

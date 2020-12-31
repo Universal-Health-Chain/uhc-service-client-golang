@@ -20,19 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ff4d7f1-607d-4895-b982-bdefb0bc9a50" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/authService/encryptionKeyOrganizationController.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/authService/encryptionKeyOrganizationController_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/authService/authService.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/authService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/cryptoController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/cryptoController_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/encryptionKeyUserController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/encryptionKeyUserController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/externalTokenUserActionsController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/externalTokenUserActionsController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/externalTokenUserActionsController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/externalTokenUserActionsController_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/authService/organizationTokenUHCController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/organizationTokenUHCController_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/organizationUhcController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/organizationUhcController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authService/organizationUhcController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/organizationUhcController_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/authService/paths.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/paths.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/connectionsService/connectionUhcController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/connectionUhcController_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/connectionsService/messageUhcController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/messageUhcController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectionsService/connectionsService.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/connectionsService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/serviceClient/serviceClient.go" beforeDir="false" afterPath="$PROJECT_DIR$/serviceClient/serviceClient.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usersService/usersService.go" beforeDir="false" afterPath="$PROJECT_DIR$/usersService/usersService.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,8 +47,8 @@
       <recent name="$PROJECT_DIR$/authService" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestOrganizationTokenUHCController_GetOrganizationUHCTokenById in github.com/Universal-Health-Chain/uhc-service-client-golang/authService">
-    <configuration name="TestOrganizationTokenUHCController_GetOrganizationUHCTokenById in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.TestExternalTokenUserActionsController_GetOrganizationPublicInfoOfActiveKeyExternally in github.com/Universal-Health-Chain/uhc-service-client-golang/authService">
+    <configuration name="TestExternalTokenUserActionsController_GetOrganizationPublicInfoOfActiveKeyExternally in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$/authService" />
       <framework value="gotest" />
@@ -59,10 +56,10 @@
       <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestOrganizationTokenUHCController_GetOrganizationUHCTokenById\E$" />
+      <pattern value="^\QTestExternalTokenUserActionsController_GetOrganizationPublicInfoOfActiveKeyExternally\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestOrganizationTokenUHCController_GetOrganizationUHCTokenById in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestExternalTokenUserActionsController_GetUserPublicInfoOfActiveKeyExternally in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$/authService" />
       <framework value="gotest" />
@@ -70,10 +67,10 @@
       <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestOrganizationTokenUHCController_GetOrganizationUHCTokenById\E$" />
+      <pattern value="^\QTestExternalTokenUserActionsController_GetUserPublicInfoOfActiveKeyExternally\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="Test_EncryptionKeyOrganizationCreationController in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestExternalTokenUserActionsController_GetUserPublicInfoOfActiveKeyExternally in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (3)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$/authService" />
       <framework value="gotest" />
@@ -81,10 +78,10 @@
       <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTest_EncryptionKeyOrganizationCreationController\E$" />
+      <pattern value="^\QTestExternalTokenUserActionsController_GetUserPublicInfoOfActiveKeyExternally\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="Test_PublicInfo in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestExternalTokenUserActionsController_GetUserPublicInfoOfActiveKeyExternally in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (4)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$/authService" />
       <framework value="gotest" />
@@ -92,10 +89,10 @@
       <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTest_PublicInfo\E$" />
+      <pattern value="^\QTestExternalTokenUserActionsController_GetUserPublicInfoOfActiveKeyExternally\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="Test_PublicInfo in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestExternalTokenUserActionsController_GetUserPublicInfoOfActiveKeyExternally in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$/authService" />
       <framework value="gotest" />
@@ -103,16 +100,16 @@
       <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTest_PublicInfo\E$" />
+      <pattern value="^\QTestExternalTokenUserActionsController_GetUserPublicInfoOfActiveKeyExternally\E$" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.TestOrganizationTokenUHCController_GetOrganizationUHCTokenById in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
-        <item itemvalue="Go Test.Test_PublicInfo in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)" />
-        <item itemvalue="Go Test.Test_PublicInfo in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" />
-        <item itemvalue="Go Test.TestOrganizationTokenUHCController_GetOrganizationUHCTokenById in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" />
-        <item itemvalue="Go Test.Test_EncryptionKeyOrganizationCreationController in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (1)" />
+        <item itemvalue="Go Test.TestExternalTokenUserActionsController_GetOrganizationPublicInfoOfActiveKeyExternally in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
+        <item itemvalue="Go Test.TestExternalTokenUserActionsController_GetUserPublicInfoOfActiveKeyExternally in github.com/Universal-Health-Chain/uhc-service-client-golang/authService" />
+        <item itemvalue="Go Test.TestExternalTokenUserActionsController_GetUserPublicInfoOfActiveKeyExternally in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (4)" />
+        <item itemvalue="Go Test.TestExternalTokenUserActionsController_GetUserPublicInfoOfActiveKeyExternally in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (3)" />
+        <item itemvalue="Go Test.TestExternalTokenUserActionsController_GetUserPublicInfoOfActiveKeyExternally in github.com/Universal-Health-Chain/uhc-service-client-golang/authService (2)" />
       </list>
     </recent_temporary>
   </component>
@@ -132,50 +129,50 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1098" height="466" key="DebuggerActiveHint" timestamp="1609352388967">
+    <state width="1098" height="466" key="DebuggerActiveHint" timestamp="1609419364435">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
-    <state width="1098" height="466" key="DebuggerActiveHint/0.23.1680.947@0.23.1680.947" timestamp="1609352388967" />
+    <state width="1098" height="466" key="DebuggerActiveHint/0.23.1680.947@0.23.1680.947" timestamp="1609419364435" />
     <state width="781" height="467" key="DebuggerActiveHint/0.23.1680.949@0.23.1680.949" timestamp="1609329426661" />
-    <state width="931" height="253" key="GridCell.Tab.0.bottom" timestamp="1609353626720">
+    <state width="812" height="253" key="GridCell.Tab.0.bottom" timestamp="1609419407193">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
-    <state width="931" height="253" key="GridCell.Tab.0.bottom/0.23.1680.947@0.23.1680.947" timestamp="1609353626720" />
+    <state width="812" height="253" key="GridCell.Tab.0.bottom/0.23.1680.947@0.23.1680.947" timestamp="1609419407193" />
     <state width="751" height="210" key="GridCell.Tab.0.bottom/0.23.1680.949@0.23.1680.949" timestamp="1609329840270" />
-    <state width="931" height="253" key="GridCell.Tab.0.center" timestamp="1609353626719">
+    <state width="812" height="253" key="GridCell.Tab.0.center" timestamp="1609419407192">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
-    <state width="931" height="253" key="GridCell.Tab.0.center/0.23.1680.947@0.23.1680.947" timestamp="1609353626719" />
+    <state width="812" height="253" key="GridCell.Tab.0.center/0.23.1680.947@0.23.1680.947" timestamp="1609419407192" />
     <state width="751" height="210" key="GridCell.Tab.0.center/0.23.1680.949@0.23.1680.949" timestamp="1609329840270" />
-    <state width="931" height="253" key="GridCell.Tab.0.left" timestamp="1609353626719">
+    <state width="812" height="253" key="GridCell.Tab.0.left" timestamp="1609419407192">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
-    <state width="931" height="253" key="GridCell.Tab.0.left/0.23.1680.947@0.23.1680.947" timestamp="1609353626719" />
+    <state width="812" height="253" key="GridCell.Tab.0.left/0.23.1680.947@0.23.1680.947" timestamp="1609419407192" />
     <state width="751" height="210" key="GridCell.Tab.0.left/0.23.1680.949@0.23.1680.949" timestamp="1609329840269" />
-    <state width="931" height="253" key="GridCell.Tab.0.right" timestamp="1609353626720">
+    <state width="812" height="253" key="GridCell.Tab.0.right" timestamp="1609419407193">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
-    <state width="931" height="253" key="GridCell.Tab.0.right/0.23.1680.947@0.23.1680.947" timestamp="1609353626720" />
+    <state width="812" height="253" key="GridCell.Tab.0.right/0.23.1680.947@0.23.1680.947" timestamp="1609419407193" />
     <state width="751" height="210" key="GridCell.Tab.0.right/0.23.1680.949@0.23.1680.949" timestamp="1609329840270" />
-    <state width="1432" height="260" key="GridCell.Tab.1.bottom" timestamp="1609353615634">
+    <state width="1286" height="260" key="GridCell.Tab.1.bottom" timestamp="1609419393464">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
-    <state width="1432" height="260" key="GridCell.Tab.1.bottom/0.23.1680.947@0.23.1680.947" timestamp="1609353615634" />
+    <state width="1286" height="260" key="GridCell.Tab.1.bottom/0.23.1680.947@0.23.1680.947" timestamp="1609419393464" />
     <state width="1145" height="260" key="GridCell.Tab.1.bottom/0.23.1680.949@0.23.1680.949" timestamp="1609329597596" />
-    <state width="1432" height="260" key="GridCell.Tab.1.center" timestamp="1609353615634">
+    <state width="1286" height="260" key="GridCell.Tab.1.center" timestamp="1609419393463">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
-    <state width="1432" height="260" key="GridCell.Tab.1.center/0.23.1680.947@0.23.1680.947" timestamp="1609353615634" />
+    <state width="1286" height="260" key="GridCell.Tab.1.center/0.23.1680.947@0.23.1680.947" timestamp="1609419393463" />
     <state width="1145" height="260" key="GridCell.Tab.1.center/0.23.1680.949@0.23.1680.949" timestamp="1609329597596" />
-    <state width="1432" height="260" key="GridCell.Tab.1.left" timestamp="1609353615634">
+    <state width="1286" height="260" key="GridCell.Tab.1.left" timestamp="1609419393463">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
-    <state width="1432" height="260" key="GridCell.Tab.1.left/0.23.1680.947@0.23.1680.947" timestamp="1609353615634" />
+    <state width="1286" height="260" key="GridCell.Tab.1.left/0.23.1680.947@0.23.1680.947" timestamp="1609419393463" />
     <state width="1145" height="260" key="GridCell.Tab.1.left/0.23.1680.949@0.23.1680.949" timestamp="1609329597595" />
-    <state width="1432" height="260" key="GridCell.Tab.1.right" timestamp="1609353615634">
+    <state width="1286" height="260" key="GridCell.Tab.1.right" timestamp="1609419393464">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
-    <state width="1432" height="260" key="GridCell.Tab.1.right/0.23.1680.947@0.23.1680.947" timestamp="1609353615634" />
+    <state width="1286" height="260" key="GridCell.Tab.1.right/0.23.1680.947@0.23.1680.947" timestamp="1609419393464" />
     <state width="1145" height="260" key="GridCell.Tab.1.right/0.23.1680.949@0.23.1680.949" timestamp="1609329597596" />
     <state x="497" y="81" key="SettingsEditor" timestamp="1608830584551">
       <screen x="0" y="23" width="1680" height="947" />
@@ -187,12 +184,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/authService/externalTokenUserActionsController.go</url>
-          <line>49</line>
+          <line>50</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/authService/externalTokenUserActionsController.go</url>
-          <line>50</line>
+          <line>51</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
@@ -224,6 +221,21 @@
           <url>file://$PROJECT_DIR$/authService/encryptionKeyOrganizationController_test.go</url>
           <line>44</line>
           <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/authService/externalTokenUserActionsController.go</url>
+          <line>106</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/authService/externalTokenUserActionsController_test.go</url>
+          <line>66</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/authService/externalTokenUserActionsController_test.go</url>
+          <line>62</line>
+          <option name="timeStamp" value="48" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

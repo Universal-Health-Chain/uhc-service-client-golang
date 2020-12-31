@@ -18,3 +18,8 @@ func (connectionsService *ConnectionsService) SetToken(token string) {
 	connectionsService.ConnectionUhcController.Token = token
 	connectionsService.MessageUhcController.Token = token
 }
+
+func (connectionsService *ConnectionsService) SetServiceToken(token string) {
+	connectionsService.ConnectionUhcController.ServiceToken = token
+	connectionsService.MessageUhcController.ServiceToken = token
+}
