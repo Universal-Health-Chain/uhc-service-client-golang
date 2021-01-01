@@ -20,8 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ff4d7f1-607d-4895-b982-bdefb0bc9a50" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/models/externalBase64MessageCreationRequest.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/externalFhirMessageCreationRequest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/externalMessageCreationResult.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
