@@ -8,7 +8,7 @@ const (
 	CreateUserEncryptionKey      = "/api/v1/key/new"
 	GetSelfPublicInfoOfActiveKey = "/api/v1/key/public/me"
 	GetUserPublicInfoOfActiveKey = "/api/v1/key/public/user/{userId}"
-	GetPublicInfoOfEncryptionKey = "/api/v1/key/public/id/{encryptionKey}"
+	GetPublicInfoOfEncryptionKey = "/api/v1/key/public/id/{encryptionKeyUserController}"
 
 	CreateOrganizationEncryptionKey      = "/api/v1/organization/uhc/key"
 	GetOrganizationPublicInfoOfActiveKey = "/api/v1/organization/uhc/key/public/{organizationId}"
@@ -29,4 +29,6 @@ const (
 	CreateNewUserAndKeyIfNotExists                 = "/api/v1/organization/external/user/register"
 	GetOrganizationPublicInfoOfActiveKeyExternally = "/api/v1/organization/external/uhc/key/public/{organizationId}"
 	GetUserPublicInfoOfActiveKeyExternally         = "/api/v1/user/external/key/public"
+	EncryptPayloadUsingEncryptionRequestExternally = "/api/v1/organization/external/uhc/key/encrypt"
+
 )

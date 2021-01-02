@@ -85,7 +85,7 @@ func (encryptionKeyController *EncryptionKeyOrganizationController) GetOrganizat
 
 func (encryptionKeyController *EncryptionKeyOrganizationController) GetPublicInfoOfEncryptionKey(encryptionKey string) (*models.PublicInfoFromKeyResponse, error) {
 	publicInfoResponse := models.PublicInfoFromKeyResponse{}
-	url := strings.ReplaceAll(encryptionKeyController.BackendUrl + authRoute + GetPublicInfoOfEncryptionKey, "{encryptionKey}", encryptionKey)
+	url := strings.ReplaceAll(encryptionKeyController.BackendUrl + authRoute + GetPublicInfoOfEncryptionKey, "{encryptionKeyUserController}", encryptionKey)
 
 	request, _ := http.NewRequest("GET", url, nil)
 	request.Header.Set("Content-Type", "application/json")

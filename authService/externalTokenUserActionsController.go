@@ -140,3 +140,36 @@ func (externalTokenUserActionsController *ExternalTokenUserActionsController) Ge
 
 	return &publicInfoResponse, nil
 }
+
+func (externalTokenUserActionsController *ExternalTokenUserActionsController) EncryptPayloadUsingEncryptionRequestExternally(encryptionRequest models.EncryptionRequest) (*models.EncryptedResultResponse, error) {
+
+	var encryptedResultResponse *models.EncryptedResultResponse
+	jsonValue, _ := json.Marshal(encryptionRequest)
+
+	url := externalTokenUserActionsController.BackendUrl + authRoute + EncryptPayloadUsingEncryptionRequestExternally
+	request, _ := http.NewRequest("PUT", url, bytes.NewBuffer(jsonValue))
+	request.Header.Set("Content-Type", "application/json")
+	//request.Header.Set("Authorization", "Bearer " + externalTokenUserActionsController.Token)
+	request.Header.Set("x-service-token",externalTokenUserActionsController.ServiceToken )
+
+	request.Header.Set("x-serviceClient-uhc", "connectionsService")
+
+	client := &http.Client{}
+	response, err := client.Do(request)
+
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return nil, err
+	}
+
+	_ = json.Unmarshal(body, &encryptedResultResponse)
+
+	if response.StatusCode != 200 {
+		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
+		return encryptedResultResponse, errors.New(message)
+	}
+
+	return encryptedResultResponse, nil
+
+}

@@ -26,7 +26,7 @@ func init() {
 func TestOrganizationTokenUHCController_GetOrganizationUHCTokenByToken(t *testing.T) {
 	_, _ = authController.RegisterDeletingForTesting(usernameTesting, emailTesting, userPwTesting)
 
-	//encryptionKey.Token = userResp.Data[0].Token
+	//encryptionKeyUserController.Token = userResp.Data[0].Token
 
 	resp, errata := organizationTokenUHCController.GetOrganizationUHCTokenByToken(organizationTokenForTesting)
 	assert.Nil(t, errata, "errata should be nil")
@@ -39,7 +39,7 @@ func TestOrganizationTokenUHCController_GetOrganizationUHCTokenById(t *testing.T
 	user,_ := authController.RegisterDeletingForTesting(usernameTesting, emailTesting, userPwTesting)
 	token := user.Token
 
-	//encryptionKey.Token = userResp.Data[0].Token
+	//encryptionKeyUserController.Token = userResp.Data[0].Token
 
 	respToken, _ := organizationTokenUHCController.GetOrganizationUHCTokenByToken(organizationTokenForTesting)
 	tokenId := respToken.Data[0].ID
