@@ -70,6 +70,7 @@ var X25519EncryptKeyPairForTesting = models.Key{
 	ControllerDID:	UserDIDForTesting,		// DIDMethod + UhcUserId
 	PublicKeyDID:   UserEncryptPublicKeyDID,// ControllerDID + "#" + signKeyPair.ID
 	Type:           X25519KeyType,
+	Usage:          models.KeyUsageEncryption,
 	Tag:            "tag",
 	CreatedAt:      &CreatedTImeForTesting,
 	// Capability:  "",

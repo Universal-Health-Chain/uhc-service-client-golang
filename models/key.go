@@ -3,9 +3,14 @@ package models
 import (
 	"time"
 )
+
 const (
-	KeyUsageEncryption 	= "ENCRYPTION"
-	KeyUsageSigning    	= "SIGN"
+	// for 'Usage'
+	EncryptionKeyTypeEncryption = "ENCRYPTION"	// Please avoid this name and use KeyUsageEncryption
+	EncryptionKeyTypeSigning    = "SIGN"		// Please avoid this name and use KeyUsageSigning
+	KeyUsageEncryption 	= "ENCRYPTION"			// Use this one instead of EncryptionKeyTypeEncryption
+	KeyUsageSigning    	= "SIGN"				// Use this one instead of EncryptionKeyTypeSigning
+	// for 'Type'
 	X25519KeyType 			= "X25519KeyAgreementKey2019"
 	Ed25519KeyType 			= "Ed25519VerificationKey2018"
 )
