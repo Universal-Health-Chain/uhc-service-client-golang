@@ -7,17 +7,23 @@ import (
 type AuthService  struct {
 	AuthController                             AuthController
 	CryptoController                           CryptoController
-	EncryptionKeyController                    EncryptionKeyController
+	EncryptionKeyController                    EncryptionKeyUserController
 	UserAdminController                        UserAdminController
 	OrganizationVerifiableCredentialController OrganizationVerifiableCredentialController
+	OrganizationUHCController                  OrganizationUHCController
+	OrganizationTokenUHCController             OrganizationTokenUHCController
+	ExternalTokenUserActionsController ExternalTokenUserActionsController
 }
 
 func (authService *AuthService) Initialize(backendUrl string) {
 	authService.AuthController = AuthController{models.Service{BackendUrl: backendUrl}}
 	authService.CryptoController = CryptoController{models.Service{BackendUrl: backendUrl}}
-	authService.EncryptionKeyController = EncryptionKeyController{models.Service{BackendUrl: backendUrl}}
+	authService.EncryptionKeyController = EncryptionKeyUserController{models.Service{BackendUrl: backendUrl}}
 	authService.UserAdminController = UserAdminController{models.Service{BackendUrl: backendUrl}}
 	authService.OrganizationVerifiableCredentialController = OrganizationVerifiableCredentialController{models.Service{BackendUrl: backendUrl}}
+	authService.OrganizationUHCController = OrganizationUHCController{models.Service{BackendUrl: backendUrl}}
+	authService.OrganizationTokenUHCController = OrganizationTokenUHCController{models.Service{BackendUrl: backendUrl}}
+	authService.ExternalTokenUserActionsController = ExternalTokenUserActionsController{models.Service{BackendUrl: backendUrl}}
 }
 
 func (authService *AuthService) SetToken(token string) {
@@ -26,4 +32,18 @@ func (authService *AuthService) SetToken(token string) {
 	authService.EncryptionKeyController.Token = token
 	authService.UserAdminController.Token = token
 	authService.OrganizationVerifiableCredentialController.Token = token
+	authService.OrganizationUHCController.Token = token
+	authService.OrganizationTokenUHCController.Token = token
+	authService.ExternalTokenUserActionsController.Token = token
+}
+
+func (authService *AuthService) SetServiceToken(token string) {
+	authService.AuthController.ServiceToken = token
+	authService.CryptoController.ServiceToken = token
+	authService.EncryptionKeyController.ServiceToken = token
+	authService.UserAdminController.ServiceToken = token
+	authService.OrganizationVerifiableCredentialController.ServiceToken = token
+	authService.OrganizationUHCController.ServiceToken = token
+	authService.OrganizationTokenUHCController.ServiceToken = token
+	authService.ExternalTokenUserActionsController.ServiceToken = token
 }

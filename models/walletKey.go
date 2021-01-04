@@ -27,3 +27,8 @@ type WalletKeyResponse struct {
 	Message string       `bson:"message,omitempty" json:"message,omitempty"`
 	Data    []WalletKey `bson:"data,omitempty" json:"data,omitempty"`
 }
+
+type WalletPasswordChangeRequest struct {
+	NewPassword  string `bson:"newPassword,omitempty" json:"newPassword,omitempty"`
+	OwnerUserId string `bson:"ownerUserId,omitempty" json:"ownerUserId,omitempty"`
+}

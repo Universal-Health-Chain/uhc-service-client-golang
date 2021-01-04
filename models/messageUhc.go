@@ -5,18 +5,20 @@ import (
 )
 
 type MessageUHC struct {
-	ID                  string      `json:"id" bson:"id"`
-	ConnectionUhcId     string      `json:"connectionUhcId" bson:"connectionUhcId"`
-	Thread              string      `json:"thread" bson:"thread"`
-	RespondsToMessageId string      `json:"respondsToMessageId" bson:"respondsToMessageId"`
-	Type                string      `json:"type" bson:"type"`
-	Label               string      `json:"label" bson:"label"`
-	FromUserId          string      `json:"fromUserId" bson:"fromUserId"`
-	ToUserId            string      `json:"toUserId" bson:"toUserId"`
-	JWMPayload          *JWMPayload `json:"jwmPayload" bson:"jwmPayload"`
-	UHCPayload          *UHCPayload `json:"uhcPayload" bson:"uhcPayload"`
-	CreatedAt           *time.Time  `json:"createdAt" bson:"createdAt"`
-	Status              string      `json:"status" bson:"status"`
+	ID                  string `json:"id" bson:"id"`
+	ConnectionUhcId     string `json:"connectionUhcId" bson:"connectionUhcId"`
+	Thread              string `json:"thread" bson:"thread"`
+	RespondsToMessageId string `json:"respondsToMessageId" bson:"respondsToMessageId"`
+	Type                string `json:"type" bson:"type"`
+	Label               string `json:"label" bson:"label"`
+	FromUserId          string `json:"fromUserId,omitempty" bson:"fromUserId,omitempty"`
+	FromOrganizationId  string `json:"fromOrganizationId,omitempty" bson:"fromOrganizationId,omitempty"`
+
+	ToUserId   string      `json:"toUserId,omitempty" bson:"toUserId,omitempty"`
+	JWMPayload *JWMPayload `json:"jwmPayload" bson:"jwmPayload"`
+	UHCPayload *UHCPayload `json:"uhcPayload" bson:"uhcPayload"`
+	CreatedAt  *time.Time  `json:"createdAt" bson:"createdAt"`
+	Status     string      `json:"status" bson:"status"`
 }
 
 type JWMPayload struct {

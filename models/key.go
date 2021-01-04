@@ -34,6 +34,13 @@ type KeyCreationRequest struct {
 	AccessPassword string `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
 	Tag            string `bson:"tag,omitempty" json:"tag,omitempty"`
 }
+
+type KeyCreationOrganizationRequest struct {
+	OrganizationId string `bson:"organizationId,omitempty" json:"organizationId,omitempty"`
+	AccessPassword *string `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
+	Tag            string `bson:"tag,omitempty" json:"tag,omitempty"`
+}
+
 type KeyResponse struct {
 	Code    int    `bson:"code,omitempty" json:"code,omitempty"`
 	Count   int64  `bson:"count,omitempty" json:"count,omitempty"`

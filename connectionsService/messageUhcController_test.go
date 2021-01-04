@@ -8,11 +8,11 @@ import (
 )
 
 var messageUhcController MessageUhcController
-var encryptionKey authService.EncryptionKeyController
+var encryptionKey authService.EncryptionKeyUserController
 
 func init() {
 	messageUhcController = MessageUhcController{models.Service{BackendUrl: backendUrl}}
-	encryptionKey = authService.EncryptionKeyController{models.Service{BackendUrl: backendUrl}}
+	encryptionKey = authService.EncryptionKeyUserController{models.Service{BackendUrl: backendUrl}}
 
 }
 
@@ -22,11 +22,11 @@ func TestConnectionUhcController_SendMessageUhc(t *testing.T) {
 
 	encryptionKeyRequest := models.KeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
 	encryptionKey.Token = user1.Token
-	encryptionKey.CreateEncryptionKey(encryptionKeyRequest)
+	encryptionKey.CreateUserEncryptionKey(encryptionKeyRequest)
 
 	encryptionKeyRequest2 := models.KeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
 	encryptionKey.Token = user2.Token
-	encryptionKey.CreateEncryptionKey(encryptionKeyRequest2)
+	encryptionKey.CreateUserEncryptionKey(encryptionKeyRequest2)
 
 	implicitConnectionRequest := models.ConnectionCreationImplicitRequest{}
 	implicitConnectionRequest.ImplicitInvitationTokenInitiator = *user2.ImplicitInvitationToken

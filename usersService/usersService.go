@@ -15,3 +15,7 @@ func (connectionsService *UsersService) Initialize(backendUrl string) {
 func (connectionsService *UsersService) SetToken(token string) {
 	connectionsService.PushTokenUHCController.Token = token
 }
+
+func (connectionsService *UsersService) SetServiceToken(token string) {
+	connectionsService.PushTokenUHCController.ServiceToken = token
+}

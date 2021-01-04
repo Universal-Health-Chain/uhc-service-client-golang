@@ -43,25 +43,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Go File" />
-      </list>
-    </option>
-  </component>
-  <component name="GOROOT" path="/usr/local/go" />
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GoLibraries">
-    <option name="useGoPathFromSystemEnvironment" value="false" />
-  </component>
-  <component name="ProjectId" id="1iuCtwreudmEccJfGkUJXFPMm0b" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
@@ -79,22 +60,15 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="go.sdk" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/commonManagers" />
       <recent name="$PROJECT_DIR$/models" />
-      <recent name="$PROJECT_DIR$/authService" />
       <recent name="$PROJECT_DIR$/connectionsService" />
       <recent name="$PROJECT_DIR$" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/models" />
-      <recent name="$PROJECT_DIR$/serviceClient" />
-      <recent name="$PROJECT_DIR$/service" />
     </key>
   </component>
   <component name="RunManager" selected="Go Test.Test_GenericJsonSignWithJCS in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (3)">
@@ -163,20 +137,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="" />
-      <created>1605616024148</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1605616024148</updated>
-    </task>
-    <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -193,12 +153,14 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="431" y="153" key="#GOROOT" timestamp="1603108236940">
-      <screen x="0" y="23" width="1680" height="941" />
+    <state width="922" height="469" key="DebuggerActiveHint" timestamp="1609629185796">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
-    <state x="431" y="153" key="#GOROOT/0.23.1680.941@0.23.1680.941" timestamp="1603108236940" />
-    <state x="637" y="392" key="#Go_Modules" timestamp="1602749490418">
-      <screen x="0" y="23" width="1680" height="954" />
+    <state width="1098" height="466" key="DebuggerActiveHint/0.23.1680.947@0.23.1680.947" timestamp="1609419364435" />
+    <state width="921" height="467" key="DebuggerActiveHint/0.23.1680.949@0.23.1680.949" timestamp="1609436919269" />
+    <state width="922" height="469" key="DebuggerActiveHint/0.23.1680.952@0.23.1680.952" timestamp="1609629185796" />
+    <state width="808" height="253" key="GridCell.Tab.0.bottom" timestamp="1609629329486">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state x="637" y="392" key="#Go_Modules/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602749490418" />
     <state x="100" y="123" width="1049" height="614" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1609092154324">
@@ -416,24 +378,24 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/authService/cryptoController_test.go</url>
-          <line>40</line>
-          <option name="timeStamp" value="8" />
+          <url>file://$PROJECT_DIR$/authService/externalTokenUserActionsController.go</url>
+          <line>50</line>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/authService/encryptionKeyController_test.go</url>
-          <line>29</line>
-          <option name="timeStamp" value="12" />
+          <url>file://$PROJECT_DIR$/authService/externalTokenUserActionsController.go</url>
+          <line>51</line>
+          <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/authService/authController_test.go</url>
-          <line>36</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/authService/authController_test.go</url>
+          <url>file://$PROJECT_DIR$/authService/organizationUhcController_test.go</url>
           <line>35</line>
-          <option name="timeStamp" value="17" />
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/authService/organizationUhcController_test.go</url>
+          <line>37</line>
+          <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/authService/userAdminController_test.go</url>
@@ -441,14 +403,14 @@
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/connectionsService/connectionUhcController.go</url>
+          <url>file://$PROJECT_DIR$/authService/organizationTokenUHCController_test.go</url>
           <line>59</line>
-          <option name="timeStamp" value="24" />
+          <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/models/organizationUHCToken.go</url>
-          <line>71</line>
-          <option name="timeStamp" value="26" />
+          <url>file://$PROJECT_DIR$/authService/encryptionKeyOrganizationController.go</url>
+          <line>110</line>
+          <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$USER_HOME$/go/pkg/mod/github.com/hyperledger/aries-framework-go@v0.1.4/pkg/doc/signature/suite/ed25519signature2018/public_key_verifier_test.go</url>

@@ -7,5 +7,6 @@ type ConnectionExternalCreationRequest struct {
 	GoalCode                    string `json:"goal-code,omitempty" bson:"goal-code,omitempty"`
 	OrganizationCreatorId       string `json:"organizationCreatorId" bson:"organizationCreatorId"`
 	InvitedUserId               string `json:"invitedUserId" bson:"invitedUserId"`
+	InvitedUserEmail               string `json:"invitedUserEmail" bson:"invitedUserEmail"`
 	EncryptionKeyOrganizationId string `json:"encryptionKeyOrganizationId" bson:"encryptionKeyOrganizationId"`
 }

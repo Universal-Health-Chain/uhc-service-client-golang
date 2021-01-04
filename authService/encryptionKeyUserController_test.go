@@ -8,12 +8,12 @@ import (
 	"testing"
 )
 
-var encryptionKey EncryptionKeyController
+var encryptionKeyUserController EncryptionKeyUserController
 
 func init() {
 	godotenv.Load("../.env")
 	backendUrl = os.Getenv("BACKENDURL")
-	encryptionKey = EncryptionKeyController{models.Service{BackendUrl: backendUrl}}
+	encryptionKeyUserController = EncryptionKeyUserController{models.Service{BackendUrl: backendUrl}}
 	usernameTesting = os.Getenv("USERNAMETEST")
 	userPwTesting = os.Getenv("PASSWORDTEST")
 }
@@ -24,10 +24,10 @@ func Test_EncryptionKeyCreationController(t *testing.T) {
 	token := userResp.Data[0].Token
 	assert.NotEqual(t, token, "")
 
-	encryptionKey.Token = userResp.Data[0].Token
+	encryptionKeyUserController.Token = userResp.Data[0].Token
 
 	encryptionKeyRequest := models.KeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
-	_, errata := encryptionKey.CreateEncryptionKey(encryptionKeyRequest)
+	_, errata := encryptionKeyUserController.CreateUserEncryptionKey(encryptionKeyRequest)
 	assert.Nil(t, errata, "errata should be nil")
 }
 
@@ -37,9 +37,9 @@ func TestEncryptionKeyController_GetUserPublicInfoOfActiveKeyController(t *testi
 	token := userResp.Data[0].Token
 	assert.NotEqual(t, token, "")
 
-	encryptionKey.Token = userResp.Data[0].Token
+	encryptionKeyUserController.Token = userResp.Data[0].Token
 
-	resp, errata := encryptionKey.GetUserPublicInfoOfActiveKey(userResp.Data[0].ID)
+	resp, errata := encryptionKeyUserController.GetUserPublicInfoOfActiveKey(userResp.Data[0].ID)
 	assert.Nil(t, errata, "errata should be nil")
 	assert.NotNil(t, resp)
 }
