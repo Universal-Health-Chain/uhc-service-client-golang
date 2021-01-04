@@ -1,0 +1,19 @@
+{
+  "@context":[
+    "https://www.w3.org/ns/did/v1"
+  ],
+  "digestAlgorithm":"SHA3-256",
+  "digestValue":"3b13152c7af2e840af8ffe981cd782faa2b8332ef80087d487a6a664cca62317",
+  "id":"",
+  "proof":[
+    {
+      "created":"0001-01-01T00:00:00Z",
+      "creator":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#aaab749d-ccfc-44a7-9bbc-b7d22999ff5f",
+      "jws":"eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..7kdn0hv6f16m-0MveDQ51wHXn2ThibeYVqqHduMFMvCcaE404qkI1SXNjm9yD4KkXiy7DqICcAm-W4XRpgVLBg",
+      "proofPurpose":"test",
+      "type":"Ed25519Signature2018"
+    }
+  ],
+  "proofPurpose":"assertionMethod",
+  "type":"Digest"
+}
