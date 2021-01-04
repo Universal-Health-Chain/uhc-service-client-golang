@@ -21,10 +21,10 @@ type Key struct {
 	PrivateKeyBase64 string     `bson:"privateKeyBase64,omitempty" json:"privateKeyBase64,omitempty"`
 	CreatedAt        *time.Time `bson:"createdAt,omitempty" json:"createdAt,omitempty"`
 	UpdatedAt        *time.Time `bson:"updatedAt,omitempty" json:"updatedAt,omitempty"`
-	DidKeyId       	string		`bson:"didKeyId,omitempty" json:"didKeyId,omitempty"`	// "did:v1:uuid:" + uhcUserId + "#" + Key.ID
-	Controller      string		`bson:"controller,omitempty" json:"didKeyId,omitempty"`
-	Expires         *time.Time	`bson:"expires,omitempty" json:"expires,omitempty"`
-	Revoked         *time.Time	`bson:"revoked,omitempty" json:"revoked,omitempty"`
+	ControllerDID    string     `bson:"controllerDid,omitempty" json:"controllerDid,omitempty"`	// "did:v1:uuid:" + uhcUserId
+	PublicKeyDID     string     `bson:"publicKeyDid,omitempty" json:"publicKeyDid,omitempty"` 	// "did:v1:uuid:" + uhcUserId + "#" + Key.ID
+	Expires          *time.Time `bson:"expires,omitempty" json:"expires,omitempty"`
+	Revoked          *time.Time `bson:"revoked,omitempty" json:"revoked,omitempty"`
 }
 type KeyRetrievalRequest struct {
 	AccessPassword  string `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`

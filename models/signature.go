@@ -22,7 +22,7 @@ type DigestToSign struct {  // see https://w3c-ccg.github.io/security-vocab/
 
 type DigestSigned struct {     // see https://w3c-ccg.github.io/security-vocab/#Digest
 	DigestToSign	DigestToSign	`bson:",inline"`
-	Proof           proof.Proof		`bson:"proof,omitempty" json:"proof,omitempty"`   					// the signature proof
+	Proof           []proof.Proof	`bson:"proof,omitempty" json:"proof,omitempty"`   					// the signature proof
 }
 
 type HashDltOutput struct {

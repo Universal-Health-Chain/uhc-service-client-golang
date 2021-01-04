@@ -37,7 +37,7 @@ const UserDIDForTesting 		= DIDMethod + UhcUserIdForTesting
 const DeviceDIDForTesting 		= DIDMethod + UhcDeviceIdForTesting
 
 const UserSignPublicKeyID 		= "aaab749d-ccfc-44a7-9bbc-b7d22999ff5f"
-const UserSignPublicKeyDID 		= UserDIDForTesting + "#" + UserSignPublicKeyID
+const UserVerifyPublicKeyDID 	= UserDIDForTesting + "#" + UserSignPublicKeyID
 
 const UserEncryptPublicKeyID 	= "2412b88c-6a70-494f-8cd1-f43acc4b852c"
 const UserEncryptPublicKeyDID 	= UserDIDForTesting + "#" + UserEncryptPublicKeyID
@@ -47,28 +47,39 @@ var UserForTesting = &models.User{
 	DidController: UserDIDForTesting,
 }
 
-var SignKeyPairForTesting = models.Key{
-	ID:              UserSignPublicKeyID,
-	CreatedAt:       &CreatedTImeForTesting,
-	Tag:             "tag",
-	DidKeyId:        UserSignPublicKeyDID,
-	Type:            Ed25519KeyType,
+var Ed25519SignKeyPairForTesting = models.Key{
+	ID:				UserSignPublicKeyID,
+	ControllerDID:	UserDIDForTesting,		// DIDMethod + UhcUserId
+	PublicKeyDID:	UserVerifyPublicKeyDID,	// ControllerDID + "#" + signKeyPair.ID
+	Type:           Ed25519KeyType,
+	Usage:          models.KeyUsageSigning,
+	Tag:            "tag",
+	CreatedAt:      &CreatedTImeForTesting,
+	Capability:     DefaultProofPurpose,
+	WalletKeyId:    WalletIdForTesting,
 	PublicKeyBase64: BytesToBase64String(Ed25519PublicKeyBytesForTesting),
-	WalletKeyId:     WalletIdForTesting,
-	// Purposes: []"purposes",
 	PrivateKeyBase64:BytesToBase64String(Ed25519PrivateKeyBytesForTesting),
+	// UpdatedAt:        &time.Time{},
+	// Expires:          &time.Time{},
+	// Revoked:          &time.Time{},
+	// Purposes: []"purposes",
 }
 
-var EncryptKeyPairForTesting = models.Key{
-	ID:              UserEncryptPublicKeyID,
-	CreatedAt:       &CreatedTImeForTesting,
-	Tag:             "tag",
-	DidKeyId:        UserEncryptPublicKeyDID,
-	Type:            X25519KeyType,
-	PublicKeyBase64: BytesToBase64String(Ed25519PrivateKeyBytesForTesting), // todo: change to X25519PublicKeyForTesting
-	WalletKeyId:     WalletIdForTesting,
+var X25519EncryptKeyPairForTesting = models.Key{
+	ID:				UserEncryptPublicKeyID,
+	ControllerDID:	UserDIDForTesting,		// DIDMethod + UhcUserId
+	PublicKeyDID:   UserEncryptPublicKeyDID,// ControllerDID + "#" + signKeyPair.ID
+	Type:           X25519KeyType,
+	Tag:            "tag",
+	CreatedAt:      &CreatedTImeForTesting,
+	// Capability:  "",
+	WalletKeyId:    WalletIdForTesting,
+	PublicKeyBase64: X25519PublicKeyB64ForTesting,
+	PrivateKeyBase64:X25519PrivateKeyB64ForTesting,
+	// UpdatedAt:        &time.Time{},
+	// Expires:          &time.Time{},
+	// Revoked:          &time.Time{},
 	// Purposes: []"purposes",
-	PrivateKeyBase64: BytesToBase64String(Ed25519PrivateKeyBytesForTesting), // todo: change to X25519PublicKeyForTesting
 }
 
 var keyPairManager = KeyPairManager{}
@@ -87,7 +98,7 @@ func Test_CreateEd25519SignKeyPair(t *testing.T) {
 	require.NotEmpty(t, signKeyPair.PrivateKeyBase64)
 	require.Equal(t, signKeyPair.Type, Ed25519KeyType)		// "Ed25519VerificationKey2018"
 	require.Equal(t, signKeyPair.Capability, "test")	// TODO: change to Purposes
-	require.Equal(t, signKeyPair.DidKeyId, DIDMethod + UhcUserIdForTesting + "#" + signKeyPair.ID)
+	require.Equal(t, signKeyPair.PublicKeyDID, DIDMethod + UhcUserIdForTesting + "#" + signKeyPair.ID)
 	require.Empty(t, signKeyPair.Tag)
 	require.Empty(t, signKeyPair.Expires)
 	require.Empty(t, signKeyPair.Revoked)
@@ -120,7 +131,7 @@ func Test_CreateX25519EncryptKeyPair(t *testing.T) {
 	require.NotEmpty(t, encryptKeyPair.PrivateKeyBase64)
 	require.Equal(t, encryptKeyPair.Type, X25519KeyType) // "X25519KeyAgreementKey2019"
 	require.Equal(t, encryptKeyPair.Capability, "test")	// TODO: change to Purposes
-	require.Equal(t, encryptKeyPair.DidKeyId, DIDMethod + UhcUserIdForTesting + "#" + encryptKeyPair.ID)
+	require.Equal(t, encryptKeyPair.PublicKeyDID, DIDMethod + UhcUserIdForTesting + "#" + encryptKeyPair.ID)
 	require.Empty(t, encryptKeyPair.Tag)
 	require.Empty(t, encryptKeyPair.Expires)
 	require.Empty(t, encryptKeyPair.Revoked)

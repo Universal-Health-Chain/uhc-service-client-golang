@@ -1,0 +1,43 @@
+{
+  "@context":[
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/v2"
+  ],
+  "authentication":[
+    "did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#aaab749d-ccfc-44a7-9bbc-b7d22999ff5f"
+  ],
+  "capabilityDelegation": [
+    "did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#aaab749d-ccfc-44a7-9bbc-b7d22999ff5f"
+  ],
+  "capabilityInvocation": [
+    "did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#aaab749d-ccfc-44a7-9bbc-b7d22999ff5f"
+  ],
+  "created":"2020-01-01T20:21:22Z",
+  "id":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e",
+  "keyAgreement":[
+    "did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#2412b88c-6a70-494f-8cd1-f43acc4b852c"
+  ],
+  "proof":[
+    {
+      "created":"2020-12-30T18:33:17.624003+01:00",
+      "creator":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#aaab749d-ccfc-44a7-9bbc-b7d22999ff5f",
+      "proofPurpose":"assertionMethod",
+      "proofValue":"ZWJLR2y3VvuErvF0Upvd4PPX7reit7cDK_8Nr7PHWcoihxHiqvDeUQBNTJZrQCTwMvM0n-ZfBMU_9F_G9YMTAw",
+      "type":"Ed25519Signature2018"
+    }
+  ],
+  "publicKey":[
+    {
+      "controller":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e",
+      "id":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#aaab749d-ccfc-44a7-9bbc-b7d22999ff5f",
+      "publicKeyBase58":"GmyWNNyGhRzhoKnE8yoJn12pDpoABjhn1PxqAroVzD94",
+      "type":"Ed25519VerificationKey2018"
+    },
+    {
+      "controller":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e",
+      "id":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#2412b88c-6a70-494f-8cd1-f43acc4b852c",
+      "publicKeyBase58":"8J42xZoLrV3VtLTEgkJeg7FShBUBHeT1NWntLrXofCdN",
+      "type":"X25519KeyAgreementKey2019"
+    }
+  ]
+}

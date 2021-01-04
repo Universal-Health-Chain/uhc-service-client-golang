@@ -1,43 +1,43 @@
 package commonManagers
 
 import (
-	"crypto/ed25519"
 	"encoding/json"
 	"fmt"
 	didDocument "github.com/hyperledger/aries-framework-go/pkg/doc/did"
-	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/proof"
-	documentSigner "github.com/hyperledger/aries-framework-go/pkg/doc/signature/signer"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite/ed25519signature2018"
-	"github.com/hyperledger/aries-framework-go/pkg/doc/util/signature"
+	signVerifier "github.com/hyperledger/aries-framework-go/pkg/doc/signature/verifier"
+
 	vdriapi "github.com/hyperledger/aries-framework-go/pkg/framework/aries/api/vdri"
 	// "github.com/hyperledger/aries-framework-go/pkg/vdri"
 	"github.com/hyperledger/aries-framework-go/pkg/vdri/key"
 	"github.com/stretchr/testify/require"
 	"testing"
-	"time"
 )
 
 const DefaultProofPurpose = "assertionMethod"
 
 func Test_CreateDefaultDID(t *testing.T) {
-	didDoc, err := CreateDefaultDID(SignKeyPairForTesting, EncryptKeyPairForTesting)
+	didDoc, err := CreateDefaultDID(Ed25519SignKeyPairForTesting, X25519EncryptKeyPairForTesting)
 	require.NoError(t, err)
 	fmt.Printf("default did with both sign and encryption public keys = %v \n", didDoc)
 }
 
 func Test_CreateSignedDidDocument(t *testing.T) {
 	// signerEntity := signature.GetEd25519Signer([]byte(Ed25519PrivateKeyBytesForTesting), []byte(Ed25519PublicKeyBytesForTesting))
-	didDoc := createDidDocumentWithSigningKey(Ed25519PublicKeyBytesForTesting)
-	proofCreator := UserSignPublicKeyDID
-	signedJWSDoc, err := SignDidDocument(Ed25519PrivateKeyBytesForTesting, Ed25519PublicKeyBytesForTesting, didDoc, proofCreator)
+	// didDoc := createDidDocumentWithSigningKeyForTesting(Ed25519PublicKeyBytesForTesting)
+	didDoc, err := CreateDefaultDID(Ed25519SignKeyPairForTesting, X25519EncryptKeyPairForTesting)
 	require.NoError(t, err)
-	require.NotEmpty(t, signedJWSDoc)
-	fmt.Printf("verifyData %v \n", string(signedJWSDoc))
-	fmt.Println(string(signedJWSDoc))
+
+	proofCreator := UserVerifyPublicKeyDID
+	signedDidDoc, err := SignDidDocument(Ed25519PrivateKeyBytesForTesting, Ed25519PublicKeyBytesForTesting, didDoc, proofCreator)
+	require.NoError(t, err)
+	require.NotEmpty(t, signedDidDoc)
+	fmt.Printf("verifyData %v \n", string(signedDidDoc))
+	// fmt.Println(string(signedDidDoc))
 
 	var signedJWSMap map[string]interface{}
-	err = json.Unmarshal(signedJWSDoc, &signedJWSMap)
+	err = json.Unmarshal(signedDidDoc, &signedJWSMap)
 	require.NoError(t, err)
 
 	proofsIface, ok := signedJWSMap["proof"]
@@ -51,131 +51,94 @@ func Test_CreateSignedDidDocument(t *testing.T) {
 	require.True(t, ok)
 
 	require.Equal(t, proofCreator, proofMap["creator"])
-	require.Equal(t, "assertionMethod", proofMap["proofPurpose"])
-	require.Equal(t, "Ed25519Signature2018", proofMap["type"])
-	require.Contains(t, proofMap, "CreatedTImeForTesting")
+	require.Equal(t, DefaultProofPurpose, proofMap["proofPurpose"])
+	require.Equal(t, Ed25519SignatureType, proofMap["type"])	// Signature, but not Ed25519KeyType of type "Ed25519VerificationKey2018"
+	require.Contains(t, proofMap, "created")
 
 	require.Contains(t, proofMap, "proofValue")
 	// require.Contains(t, proofMap, "jws")
 }
 
-func createDidDocumentWithSigningKey(pubKey []byte) *didDocument.Doc {
-	signingKey := didDocument.PublicKey{
-		ID:         UserSignPublicKeyDID,
-		Type:       Ed25519KeyType,
-		Controller: UserDIDForTesting,
-		Value:      pubKey,
-	}
-	createdTime := time.Now()
-
-	didDoc := &didDocument.Doc{
-		Context:   []string{DidContext, SecurityContext},
-		ID:        UserDIDForTesting,
-		PublicKey: []didDocument.PublicKey{signingKey},
-		Created:   &createdTime,
-	}
-	return didDoc
-}
-
-func Test_DocumentSigner_Sign1(t *testing.T) {
-	proofCreator := UserSignPublicKeyDID
-	signerEntity := signature.GetEd25519Signer([]byte(Ed25519PrivateKeyBytesForTesting), []byte(Ed25519PublicKeyBytesForTesting))
-	signSuite := ed25519signature2018.New(suite.WithSigner(signerEntity))
-	docSigner := documentSigner.New(signSuite)
-
-	context := &documentSigner.Context{
-		Creator:       proofCreator,
-		SignatureType: ed25519signature2018.SignatureType,
-		// SignatureRepresentation: proof.SignatureJWS,
-	}
-
-	// signedDoc, err := docSigner.Sign(context, []byte(validDoc))	// invalid JSON-LD context
-	// signedDoc, err := createSignedDidDocument(context, []byte(validDoc))	// invalid JSON-LD context
-	// require.NoError(t, err)
-	// require.NotNil(t, signedDoc)
-
-	signedDoc2 := ed25519.Sign(Ed25519PrivateKeyBytesForTesting, []byte(validDoc))
-	require.NotNil(t, signedDoc2)
-
-	context.SignatureRepresentation = proof.SignatureJWS
-	signedJWSDoc, err := docSigner.Sign(context, []byte(validDoc))
+func Test_ValidateDidSignedProof(t *testing.T) {
+	// didDoc := createDidDocumentWithSigningKeyForTesting(Ed25519PublicKeyBytesForTesting)
+	didDoc, err := CreateDefaultDID(Ed25519SignKeyPairForTesting, X25519EncryptKeyPairForTesting)
 	require.NoError(t, err)
-	require.NotNil(t, signedJWSDoc)
+
+	proofCreator := UserVerifyPublicKeyDID
+	signedDoc, err := SignDidDocument(Ed25519PrivateKeyBytesForTesting, Ed25519PublicKeyBytesForTesting, didDoc, proofCreator)
+	// signedDoc2 := ed25519.Sign(Ed25519PrivateKeyBytesForTesting, []byte(validDoc))
+	require.Nil(t, err)
+	println("signedDoc = ", string(signedDoc))
+
+	parsedDoc, err := didDocument.ParseDocument(signedDoc)
+	require.Nil(t, err)
+	require.NotNil(t, parsedDoc)
+
+	// verify proof.Value of a DID document with did.VerifyProof()
+	verifierSignatureSuites := []signVerifier.SignatureSuite{
+		ed25519signature2018.New(
+			suite.WithVerifier(ed25519signature2018.NewPublicKeyVerifier()),	// keyType: "OKP", curve: "Ed25519", algorithm: "EdDSA"
+			suite.WithCompactProof()),
+		// other suites...
+		// ecdsasecp256k1signature2019.New(suite.WithVerifier(ecdsasecp256k1signature2019.NewPublicKeyVerifier())),
+	}
+
+	err = parsedDoc.VerifyProof(verifierSignatureSuites)
+	require.Nil(t, err)
 }
 
-const (
-	didKey         = "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
-	didKeyID       = "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH#z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH" //nolint:lll
-	agreementKeyID = "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH#z6LSbysY2xFMRpGMhb7tFTLMpeuPRaqaWM1yECx2AtzE3KCc" //nolint:lll
-
-	pubKeyBase58       = "B12NYF8RrR3h41TDCTJojY59usg3mbtbjnFs7Eud1Y6u"
-	keyAgreementBase58 = "JhNWeSVLMYccCk7iopQW4guaSJTojqpMEELgSLhKwRr"
-)
-
-func TestBuild(t *testing.T) {
-// t.Run("build with default key type", func(t *testing.T) {
+func Test_CreateDidKeyDocumentNotUHC(t *testing.T) {
 	v := key.New()
 
 	pubKey := &vdriapi.PubKey{
 		Type:  Ed25519KeyType,
-		// Value: base58.Decode(pubKeyBase58),
+		Value: Ed25519PublicKeyBytesForTesting,
 	}
 
 	doc, err := v.Build(pubKey)
 	require.NoError(t, err)
 	require.NotNil(t, doc)
-
-	// assertDoc(t, doc)
-}
-
-/*
-func assertDoc(t *testing.T, doc *didDocument.Doc) {
-	// validate @context
-	require.Equal(t, didDocument.schemaV1, doc.Context[0])
-
-	// validate id
-	require.Equal(t, didKey, doc.ID)
-
-	expectedPubKey := &did.VerificationMethod{
-		ID:         didKeyID,
-		Type:       ed25519VerificationKey2018,
-		Controller: didKey,
-		Value:      base58.Decode(pubKeyBase58),
-	}
-
-	expectedKeyAgreement := &did.VerificationMethod{
-		ID:         agreementKeyID,
-		Type:       x25519KeyAgreementKey2019,
-		Controller: didKey,
-		Value:      base58.Decode(keyAgreementBase58),
-	}
-
-	// validate publicKey
-	assertPubKey(t, expectedPubKey, &doc.VerificationMethod[0])
-
-	// validate assertionMethod
-	assertPubKey(t, expectedPubKey, &doc.AssertionMethod[0].VerificationMethod)
-
-	// validate authentication
-	assertPubKey(t, expectedPubKey, &doc.Authentication[0].VerificationMethod)
-
-	// validate capabilityDelegation
-	assertPubKey(t, expectedPubKey, &doc.CapabilityDelegation[0].VerificationMethod)
-
-	// validate capabilityInvocation
-	assertPubKey(t, expectedPubKey, &doc.CapabilityInvocation[0].VerificationMethod)
-
-	// validate keyAgreement
-	assertPubKey(t, expectedKeyAgreement, &doc.KeyAgreement[0].VerificationMethod)
+	fmt.Printf("DID document from key = %v \n", doc)
 }
 
 
-func assertPubKey(t *testing.T, expectedPubKey, actualPubKey *did.VerificationMethod) {
-	require.NotNil(t, actualPubKey)
-	require.Equal(t, expectedPubKey.ID, actualPubKey.ID)
-	require.Equal(t, expectedPubKey.Type, actualPubKey.Type)
-	require.Equal(t, expectedPubKey.Controller, actualPubKey.Controller)
-	require.Equal(t, expectedPubKey.Value, actualPubKey.Value)
+// DID Document capabilites, Verification method and KeyAgreement: https://whitepaper.fission.codes/identity/did-doc
+const DidDocSignedForTesting = `
+{
+  "@context":[
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/v2"
+  ],
+  "authentication":[
+    "did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#aaab749d-ccfc-44a7-9bbc-b7d22999ff5f"
+  ],
+  "created":"2020-01-01T20:21:22Z",
+  "id":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e",
+  "keyAgreement":[
+    "did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#2412b88c-6a70-494f-8cd1-f43acc4b852c"
+  ],
+  "proof":[
+    {
+      "created":"2020-12-30T18:33:17.624003+01:00",
+      "creator":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#aaab749d-ccfc-44a7-9bbc-b7d22999ff5f",
+      "proofPurpose":"assertionMethod",
+      "proofValue":"ZWJLR2y3VvuErvF0Upvd4PPX7reit7cDK_8Nr7PHWcoihxHiqvDeUQBNTJZrQCTwMvM0n-ZfBMU_9F_G9YMTAw",
+      "type":"Ed25519Signature2018"
+    }
+  ],
+  "publicKey":[
+    {
+      "controller":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e",
+      "id":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#aaab749d-ccfc-44a7-9bbc-b7d22999ff5f",
+      "publicKeyBase58":"GmyWNNyGhRzhoKnE8yoJn12pDpoABjhn1PxqAroVzD94",
+      "type":"Ed25519VerificationKey2018"
+    },
+    {
+      "controller":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e",
+      "id":"did:v1:uuid:5d96ea7b-ed86-4f73-b181-c32c0bd9a17e#2412b88c-6a70-494f-8cd1-f43acc4b852c",
+      "publicKeyBase58":"8J42xZoLrV3VtLTEgkJeg7FShBUBHeT1NWntLrXofCdN",
+      "type":"X25519KeyAgreementKey2019"
+    }
+  ]
 }
-
- */
+`

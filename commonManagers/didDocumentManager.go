@@ -45,12 +45,12 @@ func SignDidDocument(privKey, pubKey []byte, doc *didDocument.Doc, proofCreator 
 	return signedDoc, err
 }
 
-// The ID of the DID Document is the KeyPair.PublicKeyInfo.Controller of both sign and encryption key pairs
+// The ID of the DID Document is the KeyPair.PublicKeyInfo.ControllerDID of both sign and encryption key pairs
 func CreateDefaultDID(signKeyPair models.Key, encryptKeyPair models.Key) (*didDocument.Doc, error) {
 	// TODO: check if KeyPair have all the required fields
 
-	if signKeyPair.Controller == "" || signKeyPair.Controller != encryptKeyPair.Controller {
-		return nil, errors.New("KeyPair's Controller error")
+	if signKeyPair.ControllerDID == "" || signKeyPair.ControllerDID != encryptKeyPair.ControllerDID {
+		return nil, errors.New("KeyPair's ControllerDID error")
 	}
 
 	// It converts base64 public keys to bytes
@@ -68,10 +68,10 @@ func CreateDefaultDID(signKeyPair models.Key, encryptKeyPair models.Key) (*didDo
 
 	/*
 	eService := didDocument.Service{
-		ID:              signKeyPair.PublicKeyInfo.Controller + "#" + "did-communication",
+		ID:              signKeyPair.PublicKeyInfo.ControllerDID + "#" + "did-communication",
 		Type:            "did-communication",
 		ServiceEndpoint: "https://agent.example.com/",
-		RecipientKeys:   []string{signKeyPair.PublicKeyInfo.Controller},
+		RecipientKeys:   []string{signKeyPair.PublicKeyInfo.ControllerDID},
 		Priority:        0,
 	}*/
 	// createdTime := time.Now()
@@ -79,9 +79,9 @@ func CreateDefaultDID(signKeyPair models.Key, encryptKeyPair models.Key) (*didDo
 	didAuthentication := []didDocument.VerificationMethod{
 		{
 			PublicKey: *didDocument.NewPublicKeyFromBytes(
-				signKeyPair.DidKeyId,
+				signKeyPair.PublicKeyDID,
 				signKeyPair.Type,
-				signKeyPair.Controller,
+				signKeyPair.ControllerDID,
 				signPublicKeyBytes),
 			Relationship: didDocument.Authentication,
 		},
@@ -90,27 +90,33 @@ func CreateDefaultDID(signKeyPair models.Key, encryptKeyPair models.Key) (*didDo
 	didKeyAgreement := []didDocument.VerificationMethod{
 		{
 			PublicKey: *didDocument.NewPublicKeyFromBytes(
-				encryptKeyPair.DidKeyId,
+				encryptKeyPair.PublicKeyDID,
 				encryptKeyPair.Type,
-				encryptKeyPair.Controller,
+				encryptKeyPair.ControllerDID,
 				encryptPublicKeyBytes),
 			Relationship: didDocument.KeyAgreement,
 		},
 	}
 
-	didPubKey := []didDocument.PublicKey{
+	didPublicKeys := []didDocument.PublicKey{
 		{
-			ID:         "did:example:123456789abcdefghi#keys-1",
-			Controller: signKeyPair.Controller,
+			ID:         signKeyPair.PublicKeyDID,	// signKeyPair.ControllerDID + "#" + signKeyPair.ID
+			Controller: signKeyPair.ControllerDID,	// DIDMethod + UhcUserId
 			Type:       signKeyPair.Type,
 			Value:      signPublicKeyBytes,
+		},
+		{
+			ID:         encryptKeyPair.PublicKeyDID,	// encryptKeyPair.ControllerDID + "#" + encryptKeyPair.ID
+			Controller: encryptKeyPair.ControllerDID,	// DIDMethod + UhcUserId
+			Type:       encryptKeyPair.Type,
+			Value:      encryptPublicKeyBytes,
 		},
 	}
 
 	return &didDocument.Doc{
-		Context:              []string{DidContext},
-		ID:                   signKeyPair.Controller,
-		PublicKey:            didPubKey,
+		Context:              []string{DidContext, SecurityContext},
+		ID:                   signKeyPair.ControllerDID,	// DIDMethod + UhcUserId
+		PublicKey:            didPublicKeys,
 		Authentication:       didAuthentication,
 		KeyAgreement:         didKeyAgreement,
 		Created:              signKeyPair.CreatedAt,

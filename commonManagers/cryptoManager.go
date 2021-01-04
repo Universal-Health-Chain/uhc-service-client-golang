@@ -56,11 +56,11 @@ func CreateX25519EncryptKeyPair(walletId string, uhcOwnerId string, purposes []s
 		Type:           X25519KeyType,		// "X25519KeyAgreementKey2019"
 		CreatedAt:      &timestamp,
 		// Expires:        &time.Time{},
-		Controller:     DIDMethod + uhcOwnerId, // not uhcOwnerId
-		DidKeyId:       DIDMethod + uhcOwnerId + "#" + uuidv4String,
-		PublicKeyBase64:publicEncryptKeyBase64,
-		PrivateKeyBase64:secretEncryptKeyBase64,
-		Capability: 	purposes[0],		// TODO: Change to Purposes []string
+		ControllerDID:    DIDMethod + uhcOwnerId, // not uhcOwnerId
+		PublicKeyDID:     DIDMethod + uhcOwnerId + "#" + uuidv4String,
+		PublicKeyBase64:  publicEncryptKeyBase64,
+		PrivateKeyBase64: secretEncryptKeyBase64,
+		Capability:       purposes[0],		// TODO: Change to Purposes []string
 	}
 
 	return encryptKeyPair, nil
