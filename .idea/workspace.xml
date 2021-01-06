@@ -23,11 +23,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commonManagers/fhirManager.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commonManagers/fhirManager_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commonManagers/hashManager.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commonManagers/jwsManager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/jwsManager_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commonManagers/keysManager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/keysManager_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/key.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/key.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +89,7 @@
       <recent name="$PROJECT_DIR$/service" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestPushTokenUHCController_GetPushTokensByUHCId in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService">
+  <component name="RunManager" selected="Go Test.Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers">
     <configuration name="TestPushTokenUHCController_GetPushTokensByUHCId in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$/connectionsService" />
@@ -100,7 +101,7 @@
       <pattern value="^\QTestPushTokenUHCController_GetPushTokensByUHCId\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="Test_GenericJsonSignWithJCS in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
       <working_directory value="$PROJECT_DIR$/commonManagers" />
       <framework value="gotest" />
@@ -108,7 +109,7 @@
       <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTest_GenericJsonSignWithJCS\E$" />
+      <pattern value="^\QTest_FhirDocReferenceByAttachedBytesPDF\E$" />
       <method v="2" />
     </configuration>
     <configuration name="Test_GenericJsonSignWithJCS in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (2)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -146,11 +147,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
         <item itemvalue="Go Test.TestPushTokenUHCController_GetPushTokensByUHCId in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService" />
         <item itemvalue="Go Test.Test_VerifyProofValue in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
         <item itemvalue="Go Test.Test_GenericJsonSignWithJCS in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (3)" />
         <item itemvalue="Go Test.Test_GenericJsonSignWithJCS in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (2)" />
-        <item itemvalue="Go Test.Test_GenericJsonSignWithJCS in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (1)" />
       </list>
     </recent_temporary>
   </component>
