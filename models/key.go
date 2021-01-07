@@ -17,9 +17,9 @@ const (
 
 type Key struct {
 	ID               string     `bson:"id,omitempty" json:"id,omitempty"`
-	WalletKeyId      string     `bson:"walletKeyId,omitempty" json:"walletKeyId,omitempty"`
+	WalletKeyId      string     `bson:"walletKeyId,omitempty" json:"walletKeyId,omitempty"`	// Parent Wallet ID
 	Tag              string     `bson:"tag,omitempty" json:"tag,omitempty"`
-	Capability       string     `bson:"capability,omitempty" json:"capability,omitempty"`	// TODO: Change to Purposes []string
+	Purposes         []string   `bson:"capability,omitempty" json:"capability,omitempty"` // TODO: Change to []string
 	Type             string     `bson:"type,omitempty" json:"type,omitempty"`
 	Usage            string     `bson:"usage,omitempty" json:"usage,omitempty"`
 	PublicKeyBase64  string     `bson:"publicKeyBase64,omitempty" json:"publicKeyBase64,omitempty"`
@@ -31,10 +31,12 @@ type Key struct {
 	Expires          *time.Time `bson:"expires,omitempty" json:"expires,omitempty"`
 	Revoked          *time.Time `bson:"revoked,omitempty" json:"revoked,omitempty"`
 }
+
 type KeyRetrievalRequest struct {
 	AccessPassword  string `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
 	EncryptionKeyID string `bson:"encryptionKeyId,omitempty" json:"encryptionKeyId,omitempty"`
 }
+
 type KeyCreationRequest struct {
 	AccessPassword string `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
 	Tag            string `bson:"tag,omitempty" json:"tag,omitempty"`
@@ -52,6 +54,7 @@ type KeyResponse struct {
 	Message string `bson:"message,omitempty" json:"message,omitempty"`
 	Data    []Key  `bson:"data,omitempty" json:"data,omitempty"`
 }
+
 type PublicInfoFromActiveKey struct {
 	ID              string     `bson:"id,omitempty" json:"id,omitempty"`
 	Tag             string     `bson:"tag,omitempty" json:"tag,omitempty"`
@@ -60,6 +63,7 @@ type PublicInfoFromActiveKey struct {
 	CreatedAt       *time.Time `bson:"createdAt,omitempty" json:"createdAt,omitempty"`
 	UpdatedAt       *time.Time `bson:"updatedAt,omitempty" json:"updatedAt,omitempty"`
 }
+
 type PublicInfoFromKeyResponse struct {
 	Code    int                       `bson:"code,omitempty" json:"code,omitempty"`
 	Count   int64                     `bson:"count,omitempty" json:"count,omitempty"`
@@ -69,12 +73,12 @@ type PublicInfoFromKeyResponse struct {
 
 // Standard expected properties: id (did#id), type, controller, publicKeyBase58 (https://w3c-ccg.github.io/security-vocab/)
 type W3CPublicKeyExport struct { // controller is the blockchain's DID of the entity e.g. "did:v1:uuid:804c6ac3-ce3b-46ce-b134-17175d5bee74"
-	IdWithDid       string     	`bson:"id,omitempty" json:"id,omitempty"`				// Identifier of this public key in the owner's blockchain DID document
-	Controller		string		`bson:"controller,omitempty" json:"controller,omitempty"`	// didID already included in 'id'
-	Type            string     	`bson:"type,omitempty" json:"type,omitempty"`			// "Ed25519VerificationKey2018""
+	IdWithDid       string     	`bson:"id,omitempty" json:"id,omitempty"`							// Identifier of this public key in the owner's blockchain DID document
+	Controller		string		`bson:"controller,omitempty" json:"controller,omitempty"`			// didID already included in 'id'
+	Type            string     	`bson:"type,omitempty" json:"type,omitempty"`						// "Ed25519VerificationKey2018""
 	Expires			*time.Time	`bson:"expires,omitempty" json:"expires,omitempty"`
 	Revoked			*time.Time	`bson:"revoked,omitempty" json:"revoked,omitempty"`
 	PublicKeyBase64 string     	`bson:"publicKeyBase64,omitempty" json:"publicKeyBase64,omitempty"`
-	Context      	[]string		`bson:"@context,omitempty" json:"@context,omitempty"`		// "@context": ["https://w3id.org/security/v2"]
-	PublicKeyBase58 string     		`bson:"publicKeyBase58,omitempty" json:"publicKeyBase58,omitempty"`	// standard
+	Context      	[]string	`bson:"@context,omitempty" json:"@context,omitempty"`				// "@context": ["https://w3id.org/security/v2"]
+	PublicKeyBase58 string     	`bson:"publicKeyBase58,omitempty" json:"publicKeyBase58,omitempty"`	// standard
 }

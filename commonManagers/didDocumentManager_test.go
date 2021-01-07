@@ -18,9 +18,15 @@ import (
 const DefaultProofPurpose = "assertionMethod"
 
 func Test_CreateDefaultDID(t *testing.T) {
+	// 1 - Create wallet ID
+	// 2 - CreateEd25519SignKeyPair
+	// 3 - CreateX25519EncryptKeyPair
+	// 4
 	didDoc, err := CreateDefaultDID(Ed25519SignKeyPairForTesting, X25519EncryptKeyPairForTesting)
 	require.NoError(t, err)
 	fmt.Printf("default did with both sign and encryption public keys = %v \n", didDoc)
+	// 5 - Save didDoc in blockchain
+	// 6 - Store (write) keys and wallet in MongoDB
 }
 
 func Test_CreateSignedDidDocument(t *testing.T) {

@@ -1,16 +1,32 @@
-package commonManagers
+package models
+
+import (
+	b64 "encoding/base64"
+	"encoding/json"
+	"fmt"
+	"github.com/stretchr/testify/require"
+	"testing"
+)
 
 const BytesPngForTestingInBase64 = "iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEX///+nxBvIAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
 const BytesPngForTestingSHA1Hex = "2f5ba89f54930af881dbeab74599c3366fd37926"
 const BytesPngForTestingSHA1Base64 = "L1uon1STCviB2+q3RZnDNm/TeSY="
-/*
-func Test_FhirDocReferenceByAttachedBytesPDF(t *testing.T){
-	fileBytes, err := Base64StringToBytes(BytesPngForTestingInBase64)
-	require.NoError(t, err)
+
+func Test_FhirDocReferenceByAttachedBytes(t *testing.T){
 	mimeType := "image/png"
 	language := "es"
 	categoryCode := "test"
-	fhir, err := FhirDocReferenceByAttachedBytesPDF(&fileBytes, &mimeType, &language, &categoryCode )
+
+	baseDocRefParamsForTesting := &BaseDocumentReference{
+		FileMimeType: &mimeType,
+		Language: &language,
+		CategorySNOMED: &categoryCode,
+	}
+
+	fileBytes, err := b64.StdEncoding.DecodeString(BytesPngForTestingInBase64)
+	require.NoError(t, err)
+
+	fhir, err := baseDocRefParamsForTesting.CreateDocumentReferenceFHIR(&fileBytes) //FhirDocReferenceByAttachedBytesPDF(&fileBytes, &mimeType, &language, &categoryCode )
 	require.NoError(t, err)
 	// require.Equal(t, fhir.Language, language) // Expected :*string((*string)(0xc000173ce0)), Received :"es"
 
@@ -30,4 +46,3 @@ func Test_FhirDocReferenceByAttachedBytesPDF(t *testing.T){
 	require.Len(t, categoryCodeable, 1)
 
 }
-*/
