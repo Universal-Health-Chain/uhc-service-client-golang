@@ -15,7 +15,7 @@ func CreateEd25519SignKeyPair(walletId string, uhcOwnerId string, purposes []str
 	_, err = uuid.Parse(uhcOwnerId)
 	if err != nil {return nil, errors.New("Owner ID is mandatory")}
 
-	if len(purposes) == 0 { purposes = []string{""}}	// provisional while Capability isn't an array to avoid nil errors
+	if len(purposes) == 0 { purposes = []string{""}}	// provisional while Purposes isn't an array to avoid nil errors
 
 	// It generates public and private signing keys for Ed25519Signature2018
 	publicSingKeyBytes, secretSignKeyBytes, err := ed25519.GenerateKey(nil)
@@ -37,7 +37,7 @@ func CreateEd25519SignKeyPair(walletId string, uhcOwnerId string, purposes []str
 		PublicKeyDID:     DIDMethod + uhcOwnerId + "#" + uuidv4String,
 		PublicKeyBase64:  BytesToBase64String(publicSingKeyBytes),
 		PrivateKeyBase64: BytesToBase64String(secretSignKeyBytes),
-		Capability:       purposes[0],		// TODO: Change to Purposes []string
+		Purposes:         purposes,
 	}
 
 	return signKeyPair, nil

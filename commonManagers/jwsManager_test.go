@@ -311,7 +311,7 @@ var DigestForTesting = models.DigestToSign{
 	DigestValue:     "3b13152c7af2e840af8ffe981cd782faa2b8332ef80087d487a6a664cca62317",
 	DigestAlgorithm: "SHA3-256",
 	ProofPurpose:    DefaultProofPurpose,
-	// Capability:      "",
+	// Purposes:      "",
 }
 
 var DigestValueProofToSignForTesting = `
