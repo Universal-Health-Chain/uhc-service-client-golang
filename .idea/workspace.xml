@@ -23,10 +23,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/commonManagers/fhirManager.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/commonManagers/fhirManager_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/commonManagers/hashManager.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/documentReference.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/fhirManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/fhirManager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/fhirManager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/fhirManager_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/hashManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/hashManager.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
@@ -90,15 +91,48 @@
     </key>
   </component>
   <component name="RunManager" selected="Go Test.Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers">
-    <configuration name="TestPushTokenUHCController_GetPushTokensByUHCId in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (2)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="uhc-service-client-golang" />
-      <working_directory value="$PROJECT_DIR$/connectionsService" />
+      <working_directory value="$PROJECT_DIR$/commonManagers" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestPushTokenUHCController_GetPushTokensByUHCId\E$" />
+      <pattern value="^\QTest_FhirDocReferenceByAttachedBytesPDF\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (3)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="uhc-service-client-golang" />
+      <working_directory value="$PROJECT_DIR$/commonManagers" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTest_FhirDocReferenceByAttachedBytesPDF\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (4)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="uhc-service-client-golang" />
+      <working_directory value="$PROJECT_DIR$/commonManagers" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTest_FhirDocReferenceByAttachedBytesPDF\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (5)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="uhc-service-client-golang" />
+      <working_directory value="$PROJECT_DIR$/commonManagers" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTest_FhirDocReferenceByAttachedBytesPDF\E$" />
       <method v="2" />
     </configuration>
     <configuration name="Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -112,46 +146,13 @@
       <pattern value="^\QTest_FhirDocReferenceByAttachedBytesPDF\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="Test_GenericJsonSignWithJCS in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (2)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="uhc-service-client-golang" />
-      <working_directory value="$PROJECT_DIR$/commonManagers" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTest_GenericJsonSignWithJCS\E$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Test_GenericJsonSignWithJCS in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (3)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="uhc-service-client-golang" />
-      <working_directory value="$PROJECT_DIR$/commonManagers" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTest_GenericJsonSignWithJCS\E$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Test_VerifyProofValue in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="uhc-service-client-golang" />
-      <working_directory value="$PROJECT_DIR$/commonManagers" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTest_VerifyProofValue\E$" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Go Test.Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
-        <item itemvalue="Go Test.TestPushTokenUHCController_GetPushTokensByUHCId in github.com/Universal-Health-Chain/uhc-service-client-golang/connectionsService" />
-        <item itemvalue="Go Test.Test_VerifyProofValue in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers" />
-        <item itemvalue="Go Test.Test_GenericJsonSignWithJCS in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (3)" />
-        <item itemvalue="Go Test.Test_GenericJsonSignWithJCS in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (2)" />
+        <item itemvalue="Go Test.Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (5)" />
+        <item itemvalue="Go Test.Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (4)" />
+        <item itemvalue="Go Test.Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (3)" />
+        <item itemvalue="Go Test.Test_FhirDocReferenceByAttachedBytesPDF in github.com/Universal-Health-Chain/uhc-service-client-golang/commonManagers (2)" />
       </list>
     </recent_temporary>
   </component>
@@ -193,10 +194,11 @@
       <screen x="0" y="23" width="1680" height="954" />
     </state>
     <state x="637" y="392" key="#Go_Modules/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602749490418" />
-    <state x="100" y="123" width="1049" height="614" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1609092154324">
-      <screen x="0" y="23" width="1440" height="814" />
+    <state x="100" y="124" width="1049" height="620" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1609997169792">
+      <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state x="100" y="123" width="1049" height="614" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.23.1440.814@0.23.1440.814" timestamp="1609092154324" />
+    <state x="100" y="124" width="1049" height="620" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.23.1440.821@0.23.1440.821" timestamp="1609997169792" />
     <state x="375" y="143" key="#com.intellij.ide.util.MemberChooser" timestamp="1609088852436">
       <screen x="0" y="23" width="1440" height="814" />
     </state>
@@ -216,8 +218,8 @@
       <screen x="0" y="23" width="1440" height="816" />
     </state>
     <state x="100" y="123" width="1153" height="614" key="DiffContextDialog/0.23.1440.816@0.23.1440.816" timestamp="1609154494528" />
-    <state width="1112" height="240" key="GridCell.Tab.0.bottom" timestamp="1609764140216">
-      <screen x="0" y="23" width="1440" height="823" />
+    <state width="907" height="240" key="GridCell.Tab.0.bottom" timestamp="1610003205646">
+      <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="1161" height="208" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.947@-995.-2137.3840.2137" timestamp="1606139782236" />
     <state width="812" height="210" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.947@0.23.1680.947" timestamp="1607003714082" />
@@ -229,14 +231,14 @@
     <state width="692" height="167" key="GridCell.Tab.0.bottom/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957175" />
     <state width="1304" height="240" key="GridCell.Tab.0.bottom/0.23.1440.814@0.23.1440.814" timestamp="1609222380874" />
     <state width="1304" height="240" key="GridCell.Tab.0.bottom/0.23.1440.816@0.23.1440.816" timestamp="1609158149218" />
-    <state width="1112" height="240" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1609576749314" />
+    <state width="907" height="240" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1610003205646" />
     <state width="1112" height="240" key="GridCell.Tab.0.bottom/0.23.1440.822@0.23.1440.822" timestamp="1609688904820" />
     <state width="1112" height="240" key="GridCell.Tab.0.bottom/0.23.1440.823@0.23.1440.823" timestamp="1609764140216" />
     <state width="812" height="210" key="GridCell.Tab.0.bottom/0.23.1680.947@0.23.1680.947" timestamp="1606756182783" />
     <state width="810" height="210" key="GridCell.Tab.0.bottom/0.23.1680.956@0.23.1680.956" timestamp="1607541834218" />
     <state width="1878" height="243" key="GridCell.Tab.0.bottom/0.23.1920.1004@0.23.1920.1004" timestamp="1605701069447" />
-    <state width="1112" height="240" key="GridCell.Tab.0.center" timestamp="1609764140210">
-      <screen x="0" y="23" width="1440" height="823" />
+    <state width="907" height="240" key="GridCell.Tab.0.center" timestamp="1610003205645">
+      <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="1161" height="208" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.947@-995.-2137.3840.2137" timestamp="1606139782235" />
     <state width="812" height="210" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.947@0.23.1680.947" timestamp="1607003714073" />
@@ -248,14 +250,14 @@
     <state width="692" height="167" key="GridCell.Tab.0.center/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957174" />
     <state width="1304" height="240" key="GridCell.Tab.0.center/0.23.1440.814@0.23.1440.814" timestamp="1609222380874" />
     <state width="1304" height="240" key="GridCell.Tab.0.center/0.23.1440.816@0.23.1440.816" timestamp="1609158149217" />
-    <state width="1112" height="240" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1609576749313" />
+    <state width="907" height="240" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1610003205645" />
     <state width="1112" height="240" key="GridCell.Tab.0.center/0.23.1440.822@0.23.1440.822" timestamp="1609688904819" />
     <state width="1112" height="240" key="GridCell.Tab.0.center/0.23.1440.823@0.23.1440.823" timestamp="1609764140210" />
     <state width="812" height="210" key="GridCell.Tab.0.center/0.23.1680.947@0.23.1680.947" timestamp="1606756182783" />
     <state width="810" height="210" key="GridCell.Tab.0.center/0.23.1680.956@0.23.1680.956" timestamp="1607541834217" />
     <state width="1878" height="243" key="GridCell.Tab.0.center/0.23.1920.1004@0.23.1920.1004" timestamp="1605701069446" />
-    <state width="1112" height="240" key="GridCell.Tab.0.left" timestamp="1609764140209">
-      <screen x="0" y="23" width="1440" height="823" />
+    <state width="907" height="240" key="GridCell.Tab.0.left" timestamp="1610003205645">
+      <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="1161" height="208" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.947@-995.-2137.3840.2137" timestamp="1606139782234" />
     <state width="812" height="210" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.947@0.23.1680.947" timestamp="1607003714056" />
@@ -267,14 +269,14 @@
     <state width="692" height="167" key="GridCell.Tab.0.left/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957173" />
     <state width="1304" height="240" key="GridCell.Tab.0.left/0.23.1440.814@0.23.1440.814" timestamp="1609222380873" />
     <state width="1304" height="240" key="GridCell.Tab.0.left/0.23.1440.816@0.23.1440.816" timestamp="1609158149212" />
-    <state width="1112" height="240" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1609576749312" />
+    <state width="907" height="240" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1610003205645" />
     <state width="1112" height="240" key="GridCell.Tab.0.left/0.23.1440.822@0.23.1440.822" timestamp="1609688904817" />
     <state width="1112" height="240" key="GridCell.Tab.0.left/0.23.1440.823@0.23.1440.823" timestamp="1609764140209" />
     <state width="812" height="210" key="GridCell.Tab.0.left/0.23.1680.947@0.23.1680.947" timestamp="1606756182782" />
     <state width="810" height="210" key="GridCell.Tab.0.left/0.23.1680.956@0.23.1680.956" timestamp="1607541834216" />
     <state width="1878" height="243" key="GridCell.Tab.0.left/0.23.1920.1004@0.23.1920.1004" timestamp="1605701069446" />
-    <state width="1112" height="240" key="GridCell.Tab.0.right" timestamp="1609764140212">
-      <screen x="0" y="23" width="1440" height="823" />
+    <state width="907" height="240" key="GridCell.Tab.0.right" timestamp="1610003205646">
+      <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="1161" height="208" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.947@-995.-2137.3840.2137" timestamp="1606139782235" />
     <state width="812" height="210" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.947@0.23.1680.947" timestamp="1607003714075" />
@@ -286,7 +288,7 @@
     <state width="692" height="167" key="GridCell.Tab.0.right/-995.-2137.3840.2137/0.23.1680.956@0.23.1680.956" timestamp="1602757957174" />
     <state width="1304" height="240" key="GridCell.Tab.0.right/0.23.1440.814@0.23.1440.814" timestamp="1609222380874" />
     <state width="1304" height="240" key="GridCell.Tab.0.right/0.23.1440.816@0.23.1440.816" timestamp="1609158149218" />
-    <state width="1112" height="240" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1609576749314" />
+    <state width="907" height="240" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1610003205646" />
     <state width="1112" height="240" key="GridCell.Tab.0.right/0.23.1440.822@0.23.1440.822" timestamp="1609688904819" />
     <state width="1112" height="240" key="GridCell.Tab.0.right/0.23.1440.823@0.23.1440.823" timestamp="1609764140211" />
     <state width="812" height="210" key="GridCell.Tab.0.right/0.23.1680.947@0.23.1680.947" timestamp="1606756182783" />
@@ -358,6 +360,10 @@
     <state x="295" y="202" key="SettingsEditor/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602750889579" />
     <state x="225" y="35" key="SettingsEditor/0.23.1280.734@0.23.1280.734" timestamp="1605616059227" />
     <state x="253" y="36" key="SettingsEditor/0.23.1440.816@0.23.1440.816" timestamp="1608969516085" />
+    <state width="622" height="445" key="SwitcherDM" timestamp="1609996707630">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state width="622" height="445" key="SwitcherDM/0.23.1440.821@0.23.1440.821" timestamp="1609996707630" />
     <state x="523" y="181" key="VCS.ChangeListViewerDialog" timestamp="1608194770904">
       <screen x="0" y="23" width="1680" height="956" />
     </state>
@@ -394,11 +400,12 @@
       <screen x="0" y="23" width="1440" height="814" />
     </state>
     <state x="472" y="203" key="refactoring.ChangeSignatureDialog/0.23.1440.814@0.23.1440.814" timestamp="1609147662621" />
-    <state x="393" y="260" width="670" height="676" key="search.everywhere.popup" timestamp="1608807115972">
-      <screen x="0" y="23" width="1440" height="814" />
+    <state x="393" y="262" width="670" height="682" key="search.everywhere.popup" timestamp="1610016115899">
+      <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state x="458" y="301" key="search.everywhere.popup/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602750268660" />
     <state x="393" y="260" width="670" height="676" key="search.everywhere.popup/0.23.1440.814@0.23.1440.814" timestamp="1608807115972" />
+    <state x="393" y="262" width="670" height="682" key="search.everywhere.popup/0.23.1440.821@0.23.1440.821" timestamp="1610016115899" />
     <state x="458" y="299" key="search.everywhere.popup/0.23.1680.947@0.23.1680.947" timestamp="1605871513266" />
     <state x="307" y="274" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1609564835960">
       <screen x="0" y="23" width="1440" height="822" />

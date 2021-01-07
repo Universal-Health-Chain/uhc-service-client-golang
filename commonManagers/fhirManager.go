@@ -12,7 +12,7 @@ const (
 	hl7CodeSystemLOINC = "http://loinc.org"
 )
 
-func uhcMessageByFhirMessage(fhirMessageEncryptedBase64, recipientUhcUserId, userId string) (uhcMessage *models.MessageUHC){
+func UhcMessageByFhirMessage(fhirMessageEncryptedBase64, recipientUhcUserId, userId string) (uhcMessage *models.MessageUHC){
 
 	id, _ := uuid.NewRandom()
 	idStr := id.String()	// uhcMessage.ID = id.String() fails
@@ -30,19 +30,16 @@ func uhcMessageByFhirMessage(fhirMessageEncryptedBase64, recipientUhcUserId, use
 }
 
 func FhirDocReferenceByAttachedBytesPDF(fileBytes *[]byte, mimeType, language, categoryCodeSNOMED *string) (*fhir4.DocumentReference, error) {
+	// Preparing the data
 	randomUuid, _ := uuid.NewRandom()
 	idStr := randomUuid.String()
-
-	// get legacy hash SHA1 for the attached bytes
-	sha1,err := getHashLegacySHA1(*fileBytes)
-	if err != nil {return &fhir4.DocumentReference{}, err}
-
+	sha1 := GetHashLegacySHA1AsHexString(*fileBytes)	// Get legacy hash SHA1 for the attached bytes
 	dataBase64 := BytesToBase64String(*fileBytes)
 	size := len(*fileBytes)
 	time := time.Now().Format(time.RFC3339)
-
 	docStatus := fhir4.CompositionStatusFinal
 
+	// It creates a FHIR.DocumentReference.Content to be appended to the array of FHIR.DocumentReference.Content
 	documentReferenceContent := fhir4.DocumentReferenceContent{
 		Attachment: fhir4.Attachment{
 			ContentType: 	mimeType,
@@ -54,6 +51,7 @@ func FhirDocReferenceByAttachedBytesPDF(fileBytes *[]byte, mimeType, language, c
 		},
 	}
 
+	// It creates a FHIR.DocumentReference.Category.Coding to be appended to the array of FHIR.DocumentReference.Category
 	categoryCoding := &fhir4.Coding{Code: categoryCodeSNOMED}
 	categorySystem := hl7CodeSystemSNOMED
 	categoryUserSelected := false
@@ -63,6 +61,7 @@ func FhirDocReferenceByAttachedBytesPDF(fileBytes *[]byte, mimeType, language, c
 	categoryCodeable := fhir4.CodeableConcept{}
 	categoryCodeable.Coding = append(categoryCodeable.Coding, *categoryCoding)
 
+	// It creates the FHIR.DocumentReference and then puts the above created objects
 	fhirDocumentReference := &fhir4.DocumentReference{
 		Id: &idStr,
 		// Identifier: put the Id here,
@@ -75,6 +74,9 @@ func FhirDocReferenceByAttachedBytesPDF(fileBytes *[]byte, mimeType, language, c
 		Date:       &time,
 		Content:    nil,
 	}
+
 	fhirDocumentReference.Content = append(fhirDocumentReference.Content, documentReferenceContent)
+	fhirDocumentReference.Category = append(fhirDocumentReference.Category, categoryCodeable)
+
 	return fhirDocumentReference, nil
 }
