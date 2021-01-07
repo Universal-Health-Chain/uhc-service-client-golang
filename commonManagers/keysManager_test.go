@@ -89,7 +89,7 @@ func Test_CreateEd25519SignKeyPair(t *testing.T) {
 	// println("Ed25519PrivateKeyBytesForTesting = ", base64.StdEncoding.EncodeToString(Ed25519PrivateKeyBytesForTesting))
 	// println("Ed25519PublicKeyBytesForTesting = ", base64.StdEncoding.EncodeToString(Ed25519PublicKeyBytesForTesting))
 
-	signKeyPair,err := keyPairManager.CreateEd25519SignKeyPair(WalletIdForTesting, UhcUserIdForTesting, []string{"test"}, "")
+	signKeyPair,err := keyPairManager.CreateEd25519SignKeyPair(WalletIdForTesting, UhcUserIdForTesting, []string{DefaultProofPurpose}, "")
 	require.NoError(t, err)
 	require.NotEmpty(t, signKeyPair.ID)
 	require.NotEmpty(t, signKeyPair.CreatedAt)
@@ -97,7 +97,7 @@ func Test_CreateEd25519SignKeyPair(t *testing.T) {
 	require.NotEmpty(t, signKeyPair.WalletKeyId)
 	require.NotEmpty(t, signKeyPair.PrivateKeyBase64)
 	require.Equal(t, signKeyPair.Type, Ed25519KeyType) // "Ed25519VerificationKey2018"
-	require.Equal(t, signKeyPair.Purposes,[]string{DefaultProofPurpose})     // TODO: change to Purposes
+	require.Equal(t, signKeyPair.Purposes,[]string{DefaultProofPurpose})
 	require.Equal(t, signKeyPair.PublicKeyDID, DIDMethod + UhcUserIdForTesting + "#" + signKeyPair.ID)
 	require.Empty(t, signKeyPair.Tag)
 	require.Empty(t, signKeyPair.Expires)

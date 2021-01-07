@@ -37,7 +37,7 @@ func CreateEd25519SignKeyPair(walletId string, uhcOwnerId string, purposes []str
 		PublicKeyDID:     DIDMethod + uhcOwnerId + "#" + uuidv4String,
 		PublicKeyBase64:  BytesToBase64String(publicSingKeyBytes),
 		PrivateKeyBase64: BytesToBase64String(secretSignKeyBytes),
-		Purposes:         purposes[0], // TODO: Change to Purposes []string
+		Purposes:         purposes,
 	}
 
 	return signKeyPair, nil
