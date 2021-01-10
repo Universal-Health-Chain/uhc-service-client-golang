@@ -23,9 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/models/apiProcedure.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/response.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/response.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -409,12 +408,13 @@
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state x="662" y="23" width="702" height="820" key="dock-window-3/0.23.1440.821@0.23.1440.821" timestamp="1609348773662" />
-    <state x="303" y="186" width="586" height="576" key="find.popup" timestamp="1610035050225">
-      <screen x="0" y="23" width="1440" height="821" />
+    <state x="303" y="186" width="586" height="578" key="find.popup" timestamp="1610271992632">
+      <screen x="0" y="23" width="1440" height="823" />
     </state>
     <state x="303" y="185" width="586" height="490" key="find.popup/0.23.1440.814@0.23.1440.814" timestamp="1609072603993" />
     <state x="303" y="185" width="1030" height="548" key="find.popup/0.23.1440.816@0.23.1440.816" timestamp="1609156333201" />
     <state x="303" y="186" width="586" height="576" key="find.popup/0.23.1440.821@0.23.1440.821" timestamp="1610035050225" />
+    <state x="303" y="186" width="586" height="578" key="find.popup/0.23.1440.823@0.23.1440.823" timestamp="1610271992632" />
     <state x="472" y="203" key="refactoring.ChangeSignatureDialog" timestamp="1609147662621">
       <screen x="0" y="23" width="1440" height="814" />
     </state>
