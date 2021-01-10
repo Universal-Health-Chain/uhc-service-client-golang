@@ -23,9 +23,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/commonManagers/didDocumentManager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/didDocumentManager_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commonManagers/keysManager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/keysManager_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commonManagers/signManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/signManager.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/apiDocumentReference.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/apiHeaders.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/fhirManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/fhirManager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/documentReference.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/documentReference.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/documentReference_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/documentReference_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -373,6 +376,10 @@
       <screen x="0" y="23" width="1440" height="814" />
     </state>
     <state x="404" y="167" key="com.goide.refactor.move.GoMoveDeclarationDialog/0.23.1440.814@0.23.1440.814" timestamp="1609142859638" />
+    <state x="462" y="51" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1610086700731">
+      <screen x="0" y="23" width="1440" height="822" />
+    </state>
+    <state x="462" y="51" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1440.822@0.23.1440.822" timestamp="1610086700731" />
     <state x="0" y="187" width="912" height="527" key="dock-window-1" timestamp="1609764107803">
       <screen x="0" y="23" width="1440" height="823" />
     </state>

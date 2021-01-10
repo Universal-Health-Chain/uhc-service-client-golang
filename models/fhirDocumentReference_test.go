@@ -18,9 +18,9 @@ func Test_FhirDocReferenceByAttachedBytes(t *testing.T){
 	categoryCode := "test"
 
 	baseDocRefParamsForTesting := &BaseDocumentReference{
-		FileMimeType: &mimeType,
-		Language: &language,
-		CategorySNOMED: &categoryCode,
+		FileMimeContentType: &mimeType,
+		Language:            &language,
+		CategoryLOINC:       &categoryCode,
 	}
 
 	fileBytes, err := b64.StdEncoding.DecodeString(BytesPngForTestingInBase64)
