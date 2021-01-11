@@ -1,6 +1,10 @@
 /* Copyright 2021 Fundación UNID */
 package models
 
+import (
+	"strings"
+)
+
 const HeaderUHC = "x-uhc-"
 const HeaderFHIR = "x-fhir-"
 const HL7CodeSystemSNOMED = "http://snomed.info/sct"
@@ -101,3 +105,54 @@ const (
 	UhcApiRateQuantity 			= "rate-quantity"		// Dose quantity per unit of time with international unit separated by "|" e.g.: 1|mL
 )
 
+// Method returns the code after splitting paramCode by "|" (system|code): https://www.hl7.org/fhir/search.html#token
+func GetCodeByApiFhirParamToken(paramToken, system *string) *string {
+	if paramToken == nil { return nil }	// avoid *nil errors
+
+	splittedParamToken := strings.Split(*paramToken, "|")
+
+	// It gets the code for the system specified (if any) and returns the code or nil
+	if system != nil && strings.Compare(splittedParamToken[0], *system) != 0 {
+		return nil
+	}
+	return &splittedParamToken[1] // the code after splitting by "|"
+}
+
+func GeApiFhirParamTokenByCodeLOINC(paramToken *string) *string {
+	loincSystem := HL7CodeSystemLOINC
+	return GetCodeByApiFhirParamToken(paramToken, &loincSystem)
+}
+
+func GeApiFhirParamTokenByCodeSNOMED(paramToken *string) *string {
+	snomedSystem := HL7CodeSystemSNOMED
+	return GetCodeByApiFhirParamToken(paramToken, &snomedSystem)
+}
+
+// returns a date 'start' (false) or 'end' (true) from a Period date parameter removing boundaries
+func GetPeriodStartOrEndByApiFhirParamDate(paramDate *string, endPeriod bool) *string {
+	// e.g. "date=eq2010-01-01&date=eq2011-12-31" https://www.hl7.org/fhir/search.html#date
+	if paramDate == nil { return nil }	// avoid *nil errors
+
+	splittedParamDate := strings.Split(*paramDate, "&")
+
+	// it removes upper, lower and equal boundaries: eq, ne, lt, gt, ge, le, sa, eb, ap
+	if endPeriod == true {
+		if len(splittedParamDate) < 2 {return nil}
+		return RemoveFhirBoundariesFromDateString(&splittedParamDate[1]) // the end period
+	} else {
+		if len(splittedParamDate) < 1 {return nil}
+		return RemoveFhirBoundariesFromDateString(&splittedParamDate[0])// the start period
+	}
+}
+
+func RemoveFhirBoundariesFromDateString(date *string) *string {
+	if date == nil { return nil }	// avoid *nil errors
+	boundaries := []string{"eq", "ne", "lt", "gt", "ge", "le", "sa", "eb", "ap"}
+	result := *date		// it copies the data before being modified
+
+	// It cleans each boundary in the resulting date and returns the final result
+	for _, boundary := range boundaries {	// for {key}, {value} := range {list}
+		result = strings.ReplaceAll(result, boundary, "")
+	}
+	return &result
+}

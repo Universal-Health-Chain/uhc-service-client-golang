@@ -4,6 +4,7 @@ package models
 import (
 	"github.com/dgrijalva/jwt-go"
 	"net/http"
+	"strconv"
 )
 
 type ApiDocumentReferenceClaimsJWT struct {
@@ -39,8 +40,8 @@ type ApiDocumentReferenceOptions struct {
 	TypeLOINC             	string	// Additional more precise type of clinical document filed by practitioner or device
 }
 
-// Method GetDocumentReferenceApiHeaderTags returns the valid headers to be used for a FHIR DocumentReference API
-func (apiDocRef *ApiDocumentReferenceOptions) GetDocumentReferenceApiHeaderTags() ApiDocumentReferenceOptions{
+// Method GetDocumentReferenceApiTags returns the valid headers to be used for a FHIR DocumentReference API
+func (apiDocRef *ApiDocumentReferenceOptions) GetDocumentReferenceApiTags() ApiDocumentReferenceOptions{
 	documentReferenceApiHeaderTags := &ApiDocumentReferenceOptions{
 		ConnectionUHC:         	UhcApiConnection, // ID of an existing connection
 		DocStatus:             	UhcApiDocStatus,
@@ -69,39 +70,54 @@ func (apiDocRef *ApiDocumentReferenceOptions) GetDocumentReferenceApiHeaderTags(
 	return *documentReferenceApiHeaderTags
 }
 
-// Method BaseDocumentReferenceByApiHeaders returns a BaseDocumentReference created with the ApiOptions received by an API
-func (apiDocRef *ApiDocumentReferenceOptions) GetBaseDocumentReferenceByRequestHeaders(r *http.Request) BaseDocumentReference {
+// Method GetBaseDocumentReferenceByRequestForm returns a BaseDocumentReference created with the ApiOptions received by an API
+func (apiDocRef *ApiDocumentReferenceOptions) GetBaseDocumentReferenceByHttpRequest(r *http.Request) BaseDocumentReference {
 	docRefApiOptions := &ApiDocumentReferenceOptions{}
-	docRefHeaders := docRefApiOptions.GetDocumentReferenceApiHeaderTags()
+	docRefHeaders := docRefApiOptions.GetDocumentReferenceApiTags()
 
-	textTitle := r.Header.Get(docRefHeaders.TextTitle)
-	language := r.Header.Get(docRefHeaders.Language)
-	contentMimeType := r.Header.Get(docRefHeaders.ContentMimeType)
-	// statusCodeHL7 := r.Header.Get(docRefHeaders.StatusHL7)         // TODO: function to split and return fhir4.DocumentReferenceStatus
-	// docStatus := r.Header.Get(docRefHeaders.DocStatus)             // TODO: function to split and return fhir4.CompositionStatus
-	categoryCodeLOINC := r.Header.Get(docRefHeaders.CategoryLOINC) // TODO: function to split and return only the code
+	// statusCodeHL7 := r.Form.Get(docRefHeaders.StatusHL7)	// TODO: function to split and return fhir4.DocumentReferenceStatus
+	// docStatus := r.Form.Get(docRefHeaders.DocStatus)		// TODO: function to split and return fhir4.CompositionStatus
+
+	textTitle 			:= r.Form.Get(docRefHeaders.TextTitle)
+	language 			:= r.Form.Get(docRefHeaders.Language)
+	categoryParamToken 	:= r.Form.Get(docRefHeaders.CategoryLOINC)
+	dateParam 			:= r.Form.Get(docRefHeaders.DateTime)
+	docTypeParam 		:= r.Form.Get(docRefHeaders.TypeLOINC)
+	periodParam 		:= r.Form.Get(docRefHeaders.Period)
+	formatCodeSetParam 	:= r.Form.Get(docRefHeaders.FormatCodeSet)
+	facilityParam 		:= r.Form.Get(docRefHeaders.FacilityTypeSNOMED)
+	practiceSettingParam:= r.Form.Get(docRefHeaders.PracticeSettingSNOMED)
+
+	subjectParam 		:= r.Form.Get(docRefHeaders.Subject)
+	authenticatorParam 	:= r.Form.Get(docRefHeaders.Authenticator)
+	custodianOrgParam 	:= r.Form.Get(docRefHeaders.CustodianOrganization)
+
+	contentMimeType 	:= r.Form.Get(docRefHeaders.ContentMimeType)
+	sha1HexParam 		:= r.Form.Get(docRefHeaders.FileSHA1Hex)
+	fileSizeParam 		:= r.Form.Get(docRefHeaders.FileSize)
+	fileSizeInt, _ := strconv.Atoi(fileSizeParam)
 
 	baseDocRef := BaseDocumentReference{
 		TextTitle: &textTitle,
 		Language:  &language,
 		// Status:               statusCodeHL7,
 		// DocStatus:            docStatus,
-		CategoryLOINC:          &categoryCodeLOINC,
-		Date:                   nil,
+		CategoryLOINC:          GeApiFhirParamTokenByCodeLOINC(&categoryParamToken),
+		Date:                   &dateParam,
 		FileDataB64:            nil,
 		FileMimeContentType:    &contentMimeType,
-		FileHexSHA1:            nil,
-		FileSize:               nil,
-		TypeLOINC:              nil,
-		ContextPeriodStart:     nil,
-		ContextPeriodEnd:       nil,
-		ContentFormatCodeSet:   nil,
-		FacilitySNOMED:         nil,
-		PracticeSettingSNOMED:  nil,
+		FileHexSHA1:            &sha1HexParam,
+		FileSize:               &fileSizeInt,
+		TypeLOINC:              GeApiFhirParamTokenByCodeLOINC(&docTypeParam),
+		ContextPeriodStart:     GetPeriodStartOrEndByApiFhirParamDate(&periodParam, false),
+		ContextPeriodEnd:       GetPeriodStartOrEndByApiFhirParamDate(&periodParam, true),
+		ContentFormatCodeSet:   &formatCodeSetParam,
+		FacilitySNOMED:         GeApiFhirParamTokenByCodeSNOMED(&facilityParam),
+		PracticeSettingSNOMED:  GeApiFhirParamTokenByCodeSNOMED(&practiceSettingParam),
 		Description:            nil,
-		SubjectUHC:             nil,
-		AuthenticatorReference: nil,
-		CustodianReference:     nil,
+		SubjectUHC:             &subjectParam,
+		AuthenticatorReference: &authenticatorParam,
+		CustodianReference:     &custodianOrgParam,
 	}
 	return baseDocRef
 }
