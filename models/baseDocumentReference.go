@@ -4,7 +4,7 @@ package models
 import (
 	b64 "encoding/base64"
 	"errors"
-	fhir4 "github.com/Universal-Health-Chain/golang-fhir-models-uhc/fhir-models/fhir"
+	fhir4 "github.com/samply/golang-fhir-models/fhir-models/fhir"
 	"github.com/google/uuid"
 	"time"
 )
