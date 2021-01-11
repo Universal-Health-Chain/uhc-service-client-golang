@@ -7,6 +7,7 @@ github.com/PaesslerAG/jsonpath v0.1.0/go.mod h1:4BzmtoM/PI8fPO4aQGIusjGxGir2BzcV
 github.com/PaesslerAG/jsonpath v0.1.1/go.mod h1:lVboNxFGal/VwW6d9JzIy56bUsYAP6tH/x80vjnCseY=
 github.com/Universal-Health-Chain/JcsEd25519Signature2020/signature-suite-impls/golang v0.0.0-20210102050447-d3ca5b135a5e h1:gtfBK4drHrnQ+w+s+Rq+A8OBb0PK0OjWeBvH4Y0Qv6c=
 github.com/Universal-Health-Chain/JcsEd25519Signature2020/signature-suite-impls/golang v0.0.0-20210102050447-d3ca5b135a5e/go.mod h1:ix8dyT6svd2hhoRp7h2lGKn7byGMoRtSchBsuA5wGY8=
+github.com/Universal-Health-Chain/golang-fhir-models-uhc v0.0.0-20200703144736-b1999eacab32 h1:guqWOU6FFQZZK3RmmjyDYgcQMwyC1M56EmrOnTCo/A8=
 github.com/Universal-Health-Chain/golang-fhir-models-uhc/fhir-models v0.0.0-20200703144736-b1999eacab32 h1:lz787HOjspMsLNog8EUlgnv9o2IDrA256ZnqNyRAi8o=
 github.com/Universal-Health-Chain/golang-fhir-models-uhc/fhir-models v0.0.0-20200703144736-b1999eacab32/go.mod h1:9l0UrXDcTAqKbqcqJqwJTNmGR/UeUYsTCwVCZ8GrqR4=
 github.com/VictoriaMetrics/fastcache v1.5.7 h1:4y6y0G8PRzszQUYIQHHssv/jgPHAb5qQuuDNdCbyAgw=

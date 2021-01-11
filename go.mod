@@ -4,7 +4,6 @@ go 1.15
 
 require (
 	github.com/Universal-Health-Chain/JcsEd25519Signature2020/signature-suite-impls/golang v0.0.0-20210102050447-d3ca5b135a5e
-	github.com/Universal-Health-Chain/golang-fhir-models-uhc/fhir-models v0.0.0-20200703144736-b1999eacab32
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/google/go-cmp v0.5.2 // indirect

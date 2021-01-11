@@ -2,7 +2,7 @@
 package models
 
 import (
-	fhir4 "github.com/Universal-Health-Chain/golang-fhir-models-uhc/fhir-models/fhir"
+	fhir4 "github.com/samply/golang-fhir-models/fhir-models/fhir"
 )
 
 type OrganizationUHC struct {

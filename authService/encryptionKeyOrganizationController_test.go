@@ -2,7 +2,7 @@
 package authService
 
 import (
-	fhir4 "github.com/Universal-Health-Chain/golang-fhir-models-uhc/fhir-models/fhir"
+	fhir4 "github.com/samply/golang-fhir-models/fhir-models/fhir"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
