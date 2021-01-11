@@ -15,16 +15,11 @@ import (
 type CryptoManager struct {
 }
 
-// TODO: use 'CreateX25519KeyPair' instead of 'GenerateKeyPair'
-func (manager *CryptoManager) GenerateKeyPair() (publicKeyBase64 string, privateKeyBase64 string, err error) {
-	return GenerateKeyPair()
-}
-
 func (manager *CryptoManager) CreateX25519KeyPair(walletId string, uhcUserId string, purposes []string, tag string) (*models.Key, error) {
 	return CreateX25519EncryptKeyPair(walletId, uhcUserId, purposes, tag)
 }
 
-func GenerateKeyPair() (publicKeyBase64 string, privateKeyBase64 string, err error) {
+func GenerateX25519KeyPair() (publicKeyBase64 string, privateKeyBase64 string, err error) {
 	publicKeyBytes, privateKeysBytes, err := box.GenerateKey(rand.Reader)
 	if err != nil {
 		return "", "", err
@@ -34,34 +29,37 @@ func GenerateKeyPair() (publicKeyBase64 string, privateKeyBase64 string, err err
 
 func CreateX25519EncryptKeyPair(walletId string, uhcOwnerId string, purposes []string, tag string) (*models.Key, error) {
 	_, err := uuid.Parse(walletId)
-	if err != nil {return nil, errors.New("Wallet ID is mandatory")}
+	if err != nil {
+		return nil, errors.New("Wallet ID is mandatory")
+	}
 
 	_, err = uuid.Parse(uhcOwnerId)
-	if err != nil {return nil, errors.New("Owner ID is mandatory")}
+	if err != nil {
+		return nil, errors.New("Owner ID is mandatory")
+	}
 
-	// if len(purposes) == 0 { purposes = []string{""}}	// provisional while Purposes isn't an array to avoid nil errors
+	publicEncryptKeyBase64, secretEncryptKeyBase64, err := GenerateX25519KeyPair()
+	if err != nil {
+		return nil, err
+	}
 
-	// It generates public and private signing keys for Ed25519Signature2018
-	publicEncryptKeyBase64, secretEncryptKeyBase64, err := GenerateKeyPair()
-	if err != nil {return nil, err}
-
-	// uhcOwnerId and purposes should be optional
 	uuidRandomv4, _ := uuid.NewRandom()
 	uuidv4String := uuidRandomv4.String()
 	timestamp := time.Now()
 
 	encryptKeyPair := &models.Key{
-		ID:        		uuidv4String,
-		WalletKeyId:	walletId,
-		Tag:			tag,
-		Type:           X25519KeyType,		// "X25519KeyAgreementKey2019"
-		CreatedAt:      &timestamp,
+		ID:          uuidv4String,
+		WalletKeyId: walletId,
+		Tag:         tag,
+		Type:        X25519KeyType, // "X25519KeyAgreementKey2019"
+		CreatedAt:   &timestamp,
 		// Expires:        &time.Time{},
-		ControllerDID:    DIDMethod + uhcOwnerId, // not uhcOwnerId
+		ControllerDID:    DIDMethod + uhcOwnerId,
 		PublicKeyDID:     DIDMethod + uhcOwnerId + "#" + uuidv4String,
 		PublicKeyBase64:  publicEncryptKeyBase64,
 		PrivateKeyBase64: secretEncryptKeyBase64,
 		Purposes:         purposes,
+		Usage:            models.KeyUsageEncryption,
 	}
 
 	return encryptKeyPair, nil
@@ -80,13 +78,13 @@ func BytesToStringUTF8(b []byte) string {
 }
 
 func base64StringToBytes32(str string) ([32]byte, error) {
-	b, err:= b64.StdEncoding.DecodeString(str)
+	b, err := b64.StdEncoding.DecodeString(str)
 	var bytes [32]byte
 	copy(bytes[:], b)
 	return bytes, err
 }
 
-func bytesToString (b []byte) string {
+func bytesToString(b []byte) string {
 	return string(b[:])
 }
 
@@ -116,9 +114,9 @@ func (manager *CryptoManager) EncryptMessage(recipientPublicKey, senderPrivateKe
 	}
 
 	var sharedKey [32]byte
-	box.Precompute(&sharedKey, &recipientPublicKeyBytes,&senderPrivateKeyBytes)
+	box.Precompute(&sharedKey, &recipientPublicKeyBytes, &senderPrivateKeyBytes)
 
-	encrypted := box.SealAfterPrecomputation(nonce[:],  msg, &nonce, &sharedKey)
+	encrypted := box.SealAfterPrecomputation(nonce[:], msg, &nonce, &sharedKey)
 	//encrypted := box.Seal(nonce[:], msg, &nonce, &recipientPublicKeyBytes, &senderPrivateKeyBytes)
 	return BytesToBase64String(encrypted), nil
 }
@@ -137,8 +135,8 @@ func (manager *CryptoManager) DecryptUsingEncryptionKey(encryptionKey *models.Ke
 func (manager *CryptoManager) DecryptMessage(senderPublicKeyBase64, recipientPrivateKeyBase64, encryptedMessageBase64 string) (decryptedMessage string, err error) {
 
 	encryptedMessageBytes, err := Base64StringToBytes(encryptedMessageBase64)
-	recipientPrivateKeyBytes,  err1 := base64StringToBytes32(recipientPrivateKeyBase64)
-	senderPublicKeyBytes , err2 := base64StringToBytes32(senderPublicKeyBase64)
+	recipientPrivateKeyBytes, err1 := base64StringToBytes32(recipientPrivateKeyBase64)
+	senderPublicKeyBytes, err2 := base64StringToBytes32(senderPublicKeyBase64)
 
 	if err != nil || err1 != nil || err2 != nil {
 		return "", errors.New("error converting to base 64")
@@ -148,9 +146,9 @@ func (manager *CryptoManager) DecryptMessage(senderPublicKeyBase64, recipientPri
 	copy(decryptNonce[:], encryptedMessageBytes[:24])
 
 	var sharedKey [32]byte
-	box.Precompute(&sharedKey, &senderPublicKeyBytes,&recipientPrivateKeyBytes)
+	box.Precompute(&sharedKey, &senderPublicKeyBytes, &recipientPrivateKeyBytes)
 
-	decrypted, ok :=box.OpenAfterPrecomputation(nil, encryptedMessageBytes[24:], &decryptNonce, &sharedKey)
+	decrypted, ok := box.OpenAfterPrecomputation(nil, encryptedMessageBytes[24:], &decryptNonce, &sharedKey)
 
 	//decrypted, ok := box.Open(nil, encryptedMessageBytes[24:], &decryptNonce, &senderPublicKeyBytes, &recipientPrivateKeyBytes)
 	if !ok {
@@ -159,7 +157,7 @@ func (manager *CryptoManager) DecryptMessage(senderPublicKeyBase64, recipientPri
 	return bytesToString(decrypted), nil
 }
 
-func (manager *CryptoManager) GetSharedEncryptionKey (recipientPublicKey, senderPrivateKey string) (sharedKey64String string, err error) {
+func (manager *CryptoManager) GetSharedEncryptionKey(recipientPublicKey, senderPrivateKey string) (sharedKey64String string, err error) {
 
 	recipientPublicKeyBytes, err1 := base64StringToBytes32(recipientPublicKey)
 	senderPrivateKeyBytes, err2 := base64StringToBytes32(senderPrivateKey)
@@ -169,17 +167,21 @@ func (manager *CryptoManager) GetSharedEncryptionKey (recipientPublicKey, sender
 	}
 
 	var sharedKey [32]byte
-	box.Precompute(&sharedKey, &recipientPublicKeyBytes,&senderPrivateKeyBytes)
+	box.Precompute(&sharedKey, &recipientPublicKeyBytes, &senderPrivateKeyBytes)
 
 	return BytesToBase64String(sharedKey[:]), nil
 }
 
-func (manager *CryptoManager) GetSharedKeyInBytesByBase64Keys(recipientPublicKey, senderSecretKey *string) (sharedKey [32]byte, err error){
+func (manager *CryptoManager) GetSharedKeyInBytesByBase64Keys(recipientPublicKey, senderSecretKey *string) (sharedKey [32]byte, err error) {
 	var sharedKeyBytes [32]byte
 	recipientPublicKeyBytes, err := base64StringToBytes32(*recipientPublicKey)
-	if err != nil {return sharedKeyBytes, err}	// empty and error
+	if err != nil {
+		return sharedKeyBytes, err
+	} // empty and error
 	senderPrivateKeyBytes, err := base64StringToBytes32(*senderSecretKey)
-	if err != nil {return sharedKeyBytes, err}	// empty and error
+	if err != nil {
+		return sharedKeyBytes, err
+	} // empty and error
 	box.Precompute(&sharedKeyBytes, &recipientPublicKeyBytes, &senderPrivateKeyBytes)
 	return sharedKeyBytes, nil
 }
@@ -191,7 +193,7 @@ func (manager *CryptoManager) EncryptToBase64WithSharedKeyInBase64(message, shar
 		return "", err
 	}
 
-	encryptedBytes,err := manager.EncryptBytesWithSharedKey(&messageBytes, &sharedKeyBytes)
+	encryptedBytes, err := manager.EncryptBytesWithSharedKey(&messageBytes, &sharedKeyBytes)
 	return BytesToBase64String(encryptedBytes), err
 }
 
@@ -202,7 +204,7 @@ func (manager *CryptoManager) EncryptBytesWithSharedKey(messageBytes *[]byte, sh
 	}
 
 	encryptedBytes := box.SealAfterPrecomputation(nonce[:], *messageBytes, &nonce, sharedKeyBytes)
-	return encryptedBytes, err	// nonce error
+	return encryptedBytes, err // nonce error
 }
 
 func (manager *CryptoManager) EncryptToStringUTF8(recipientPublicKey, senderSecretKey, message string) (encryptedMessage string, err error) {
