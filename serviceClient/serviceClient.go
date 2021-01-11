@@ -1,3 +1,4 @@
+/* Copyright 2021 Fundación UNID */
 package serviceClient
 
 import (

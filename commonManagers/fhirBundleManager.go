@@ -1,4 +1,10 @@
+/* Copyright 2021 Fundación UNID */
 package commonManagers
+
+// FHIR JSON Canonization Rules: https://www.hl7.org/fhir/json.html#canonical
+// FHIR JSON Signature Rules: https://www.hl7.org/fhir/datatypes.html#JSON
+// Invoking REST operations via FHIR messages: https://www.hl7.org/fhir/datatypes.html#JSON
+// Asynchronous Messaging using REST API: https://www.hl7.org/fhir/datatypes.html#JSON
 
 import (
 	"encoding/json"
@@ -7,6 +13,12 @@ import (
 	"github.com/google/uuid"
 	fhir4 "github.com/samply/golang-fhir-models/fhir-models/fhir"
 	"time"
+)
+
+const(
+	MessagingSystemName 	= "UNID"
+	MessagingSoftwareName 	= "UHC"
+	MessagingEventSystem 	= "http://unid.es/fhir/message-events"
 )
 
 const (
@@ -102,12 +114,12 @@ func (fhirManager *FhirManager) CreateDefaultComposition(authorID, subjectID, ca
 	return fhirComposition, nil
 }
 
-// TODO: It does not add entry[].fullUrl
-func (fhirManager *FhirManager) AddRawResourceToBundleFHIR(fhirBundle *fhir4.Bundle, resourceRaw *json.RawMessage) error{
-	// It prepares and inserts the new Bundle.Entry
-	newBundleEntry := fhir4.BundleEntry{
-		// TODO: fullUrl: "urn:uhc:...:uuid"
-		Resource: *resourceRaw,
+// Method AddRawResourceToBundleFHIR puts 'urn:uuid:<resourceID>' to BundleEntry.FullUrl
+func (fhirManager *FhirManager) AddRawResourceToBundleFHIR(fhirBundle *fhir4.Bundle, resourceRaw *json.RawMessage, resourceID *string) error{
+	newBundleEntry := fhir4.BundleEntry{ Resource: *resourceRaw }
+	if resourceID != nil {
+		fullURN := "urn:uuid:" + *resourceID
+		newBundleEntry.FullUrl = &fullURN
 	}
 	fhirBundle.Entry = append(fhirBundle.Entry, newBundleEntry)
 	return nil
@@ -115,25 +127,74 @@ func (fhirManager *FhirManager) AddRawResourceToBundleFHIR(fhirBundle *fhir4.Bun
 
 // Method CreateBundleDocument creates FHIR.Bundle with mandatory authorID
 func (fhirManager *FhirManager) CreateBundleDocument(authorID, subjectID, categoryCodeLOINC, language *string) (fhir4.Bundle, error){
-	// It creates the FHIR.Composition with mandatory authorID or error
+	fhirBundleDocument :=fhirManager.CreateBundleWithType(fhir4.BundleTypeDocument)
+
 	fhirComposition, err := fhirManager.CreateDefaultComposition(authorID, subjectID, categoryCodeLOINC)
 	if err != nil { return fhir4.Bundle{}, err}
 
+	// It converts the FHIR resource to json.RawMessage type of BundleEntry.Resource
 	fhirCompositionBytes, _ := json.Marshal(fhirComposition)
 	fhirCompositionRaw, err := fhirManager.ResourceBytesToRawJson(&fhirCompositionBytes)
+	if err != nil { return fhir4.Bundle{}, err}
 
-	fhirBundleDocument :=fhirManager.CreateBundleWithType(fhir4.BundleTypeDocument)
-	err = fhirManager.AddRawResourceToBundleFHIR(&fhirBundleDocument, &fhirCompositionRaw)
-	return fhirBundleDocument, nil
+	err = fhirManager.AddRawResourceToBundleFHIR(&fhirBundleDocument, &fhirCompositionRaw, nil)
+	return fhirBundleDocument, err
 }
 
-func (fhirManager *FhirManager) CreateFhirMessage() (fhir4.Bundle, error){
-	// TODO: CreateDefaultHeaderMessage with mandatory eventCoding and sourceMessageID, URL or URN
-	// fhirHeaderMessage, err := fhirManager.CreateDefaultHeaderMessage(authorID, subjectID, categoryCodeLOINC)
-	// if err != nil { return fhir4.Bundle{}, err}
+// TODO: Bundle resource fails not having eventCoding, eventUri, _eventUri (create pull request)
+func (fhirManager *FhirManager) createDefaultMessageHeaderFHIR(eventCodeUHC, messageID, authorID, entererID,
+	responsibleID, senderID, receiverID, targetDeviceID, focusResourceID *string) fhir4.MessageHeader {
+
+	messagingSystemName := MessagingSystemName
+	messagingSoftwareName := MessagingSoftwareName
+	messageHeader := fhir4.MessageHeader{
+		Id: messageID, // The same as the UHC Message ID
+		Source: 	fhir4.MessageHeaderSource{	// mandatory: Message source application
+			Name:		&messagingSystemName,
+			Software: 	&messagingSoftwareName,
+			Endpoint: 	*messageID, // mandatory: Actual message source address or id
+		},
+		Destination: []fhir4.MessageHeaderDestination{
+			fhir4.MessageHeaderDestination{
+				Endpoint:	*receiverID,		// Mandatory: actual destination address or id
+				Target:		&fhir4.Reference{
+					Reference: targetDeviceID,	//Device reference: particular delivery destination within the destination
+				},
+				Receiver:	&fhir4.Reference{
+					Reference: receiverID,		// Intended "real-world" recipient for the data
+				},
+			},
+		},
+		Sender: 	&fhir4.Reference{ Reference: senderID },		// Real world sender of the message
+		Enterer: 	&fhir4.Reference{ Reference: entererID },		// PractitionerRole source of the data entry
+		Author: 	&fhir4.Reference{ Reference: authorID },		// The source of the decision
+		Responsible:&fhir4.Reference{ Reference: responsibleID },	// Final responsibility for event
+		Focus:	[]fhir4.Reference{
+			fhir4.Reference{
+				Reference: focusResourceID,	// Reference to the resource ID with the actual content of the message
+			},
+		},
+		Definition: nil, // defines a type of message that can be exchanged between systems: events, content and responses
+	}
+
+	return messageHeader
+}
+
+// 'authorID' is the source of the decision and 'entererID' is the PractitionerRole source of the data entry
+func (fhirManager *FhirManager) CreateFhirMessage(messageID, authorID, entererID,
+	responsibleID, senderID, receiverID, targetDeviceID, focusResourceID *string) (fhir4.Bundle, error){
 
 	fhirBundleMessage:=fhirManager.CreateBundleWithType(fhir4.BundleTypeMessage)
-	// AddResourcesToBundleFHIR
+
+	// TODO: createDefaultHeaderMessage with mandatory eventCoding
+	fhirHeaderMessage := fhirManager.createDefaultMessageHeaderFHIR(nil, messageID, nil, nil, nil, nil, nil, nil, nil)
+
+	// It converts the FHIR resource to json.RawMessage type of BundleEntry.Resource
+	fhirHeaderMessageBytes, _ := json.Marshal(fhirHeaderMessage)
+	fhirHeaderMessageRaw, err := fhirManager.ResourceBytesToRawJson(&fhirHeaderMessageBytes)
+	if err != nil { return fhir4.Bundle{}, err}
+
+	err = fhirManager.AddRawResourceToBundleFHIR(&fhirBundleMessage, &fhirHeaderMessageRaw, nil)
 	return fhirBundleMessage, nil
 }
 

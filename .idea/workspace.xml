@@ -24,7 +24,87 @@
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commonManagers/fhirManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/fhirManager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/authController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/authController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/authController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/authController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/authService.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/authService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/cryptoController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/cryptoController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/cryptoController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/cryptoController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyOrganizationController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/encryptionKeyOrganizationController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyOrganizationController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/encryptionKeyOrganizationController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyUserController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/encryptionKeyUserController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyUserController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/encryptionKeyUserController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/externalTokenUserActionsController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/externalTokenUserActionsController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/externalTokenUserActionsController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/externalTokenUserActionsController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/organizationTokenUHCController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/organizationTokenUHCController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/organizationTokenUHCController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/organizationTokenUHCController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/organizationUhcController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/organizationUhcController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/organizationUhcController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/organizationUhcController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/organizationVerifiableCredentialController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/organizationVerifiableCredentialController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/organizationVerifiableCredentialController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/organizationVerifiableCredentialController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/paths.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/paths.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/userAdminController.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/userAdminController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/userAdminController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/authService/userAdminController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/cryptoManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/cryptoManager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/cryptoManager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/cryptoManager_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/didDocumentManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/didDocumentManager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/didDocumentManager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/didDocumentManager_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/fhirManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/fhirBundleManager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/fhirManager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/fhirBundleManager_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/hashManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/hashManager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/jwsManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/jwsManager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/jwsManager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/jwsManager_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/keysManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/keysManager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/keysManager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/keysManager_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/signManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/signManager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonManagers/signManager_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/commonManagers/signManager_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectionsService/connectionUhcController.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/connectionUhcController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectionsService/connectionUhcController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/connectionUhcController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectionsService/connectionsService.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/connectionsService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectionsService/externalConnectionTokenActionsController.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/externalConnectionTokenActionsController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectionsService/externalConnectionTokenActionsController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/externalConnectionTokenActionsController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectionsService/messageUhcController.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/messageUhcController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectionsService/messageUhcController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/messageUhcController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectionsService/paths.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/paths.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/InvitationUhc.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/InvitationUhc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/apiDocumentReference.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/apiDocumentReference.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/apiOptions.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/apiOptions.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/connectionExternalCreationRequest.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/connectionExternalCreationRequest.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/connectionUhc.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/connectionUhc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/device.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/device.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/didDocument.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/didDocument.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/digestAndSignature.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/digestAndSignature.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/encryptionRequest.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/encryptionRequest.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/externalBase64MessageCreationRequest.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/externalBase64MessageCreationRequest.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/externalFhirMessageCreationRequest.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/externalFhirMessageCreationRequest.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/externalMessageCreationResult.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/externalMessageCreationResult.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/fhirDocumentReference.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/baseDocumentReference.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/fhirDocumentReference_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/baseDocumentReference_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/key.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/key.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/messageUhc.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/messageUhc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/organizationUHC.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/organizationUHC.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/organizationUHCAccess.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/organizationUHCAccess.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/organizationUHCToken.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/organizationUHCToken.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/organizationUHCToken_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/organizationUHCToken_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/organizationVerifiableCredential.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/organizationVerifiableCredential.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/proof.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/proof.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/pushTokenUHC.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/pushTokenUHC.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/response.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/response.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/sharedKey.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/sharedKey.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/termsAndConditions.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/termsAndConditions.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/token.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/userConfigUHC.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/userConfigUHC.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/userCreationRequest.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/userCreationRequest.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/walletKey.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/walletKey.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/serviceClient/serviceClient.go" beforeDir="false" afterPath="$PROJECT_DIR$/serviceClient/serviceClient.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/serviceClient/serviceClient_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/serviceClient/serviceClient_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usersService/paths.go" beforeDir="false" afterPath="$PROJECT_DIR$/usersService/paths.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usersService/pushTokenUHCController.go" beforeDir="false" afterPath="$PROJECT_DIR$/usersService/pushTokenUHCController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usersService/pushTokenUHCController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/usersService/pushTokenUHCController_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usersService/usersService.go" beforeDir="false" afterPath="$PROJECT_DIR$/usersService/usersService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/dataForTesting.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/dataForTesting.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/dataForTesting_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/dataForTesting_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -408,12 +488,12 @@
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state x="662" y="23" width="702" height="820" key="dock-window-3/0.23.1440.821@0.23.1440.821" timestamp="1609348773662" />
-    <state x="303" y="186" width="586" height="578" key="find.popup" timestamp="1610271992632">
-      <screen x="0" y="23" width="1440" height="823" />
+    <state x="303" y="186" width="628" height="580" key="find.popup" timestamp="1610338085808">
+      <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state x="303" y="185" width="586" height="490" key="find.popup/0.23.1440.814@0.23.1440.814" timestamp="1609072603993" />
     <state x="303" y="185" width="1030" height="548" key="find.popup/0.23.1440.816@0.23.1440.816" timestamp="1609156333201" />
-    <state x="303" y="186" width="586" height="576" key="find.popup/0.23.1440.821@0.23.1440.821" timestamp="1610035050225" />
+    <state x="303" y="186" width="628" height="580" key="find.popup/0.23.1440.821@0.23.1440.821" timestamp="1610338085808" />
     <state x="303" y="186" width="586" height="578" key="find.popup/0.23.1440.823@0.23.1440.823" timestamp="1610271992632" />
     <state x="472" y="203" key="refactoring.ChangeSignatureDialog" timestamp="1609147662621">
       <screen x="0" y="23" width="1440" height="814" />
@@ -437,32 +517,32 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/authService/cryptoController_test.go</url>
-          <line>40</line>
+          <line>41</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/authService/authController_test.go</url>
-          <line>36</line>
+          <line>37</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/authService/authController_test.go</url>
-          <line>35</line>
+          <line>36</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/authService/userAdminController_test.go</url>
-          <line>27</line>
+          <line>28</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/connectionsService/connectionUhcController.go</url>
-          <line>59</line>
+          <line>60</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/models/organizationUHCToken.go</url>
-          <line>71</line>
+          <line>72</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
@@ -472,7 +552,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/commonManagers/jwsManager.go</url>
-          <line>65</line>
+          <line>66</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
       </breakpoints>
