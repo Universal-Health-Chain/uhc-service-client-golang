@@ -9,6 +9,7 @@ package commonManagers
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 	"github.com/google/uuid"
 	fhir4 "github.com/samply/golang-fhir-models/fhir-models/fhir"
@@ -56,10 +57,52 @@ func (fhirManager *FhirManager) createEmptyBundle(bundleType fhir4.BundleType) f
 	return *fhirBundle
 }
 
-func (fhirManager *FhirManager) CreateBundleWithType(bundleType fhir4.BundleType) fhir4.Bundle{
-	fhirBundle:= fhirManager.createEmptyBundle(bundleType)
-	return fhirBundle
+// Method AddRawResourcesToBundle adds resources to FHIR Bundle with 'fullUrl'
+func (fhirManager *FhirManager) AddRawResourcesToBundle(fhirBundle *fhir4.Bundle, rawResources *[]json.RawMessage) {
+	if rawResources==nil || len(*rawResources)<1 { return }
+	// It loop for each json.RawMessage to get the 'id'
+	for _, resourceRaw := range *rawResources {	// for {key}, {value} := range {list}
+		bundleEntry := fhir4.BundleEntry{}
+		// It gets the 'id' (if exists) from each json.RawMessage
+		var resourceJsonMap map[string]interface{}
+		err := json.Unmarshal(resourceRaw, &resourceJsonMap)
+		if err == nil {
+			// it gets the 'id' (if exists), creates and puts 'fullUrl'
+			resourceIdIface, ok := resourceJsonMap["id"]
+			if ok {
+				id := fmt.Sprintf("%v", resourceIdIface)
+				fullUrl := "urn:uuid:" + id
+				bundleEntry.FullUrl = &fullUrl
+			}
+		}
+		// It adds the resource to the BundleEntry and the BundleEntry to the FHIR.Bundle
+		bundleEntry.Resource = resourceRaw
+		fhirBundle.Entry = append(fhirBundle.Entry, bundleEntry)
+	}
+}
 
+// Method AddRawResourceToBundle puts 'urn:uuid:<resourceID>' to BundleEntry.FullUrl
+func (fhirManager *FhirManager) AddRawResourceToBundle(fhirBundle *fhir4.Bundle, resourceRaw *json.RawMessage) {
+	rawResources := []json.RawMessage{*resourceRaw}
+	fhirManager.AddRawResourcesToBundle(fhirBundle, &rawResources)
+	return
+	/*
+		newBundleEntry := fhir4.BundleEntry{ Resource: *resourceRaw }
+		if resourceID != nil {
+			fullURN := "urn:uuid:" + *resourceID
+			newBundleEntry.FullUrl = &fullURN
+		}
+		fhirBundle.Entry = append(fhirBundle.Entry, newBundleEntry)
+		return nil
+	*/
+}
+
+// Method CreateBundleWithTypeAndResources creates a FHIR Bundle with the specified type and resources, adding 'fullUrl' to each BundleEntry from resource.id
+func (fhirManager *FhirManager) CreateBundleWithTypeAndResources(bundleType fhir4.BundleType, rawResources *[]json.RawMessage) fhir4.Bundle{
+	fhirBundle:= fhirManager.createEmptyBundle(bundleType)
+	fhirManager.AddRawResourcesToBundle(&fhirBundle, rawResources)
+	// Finally it returns the FHIR Bundle with every resource contained in a BundleEntry with 'fullUrl'
+	return fhirBundle
 }
 
 // Method CreateDefaultComposition creates FHIR.Composition with Author (urn:uuid:<uuid>) as mandatory, Type (11503-0), Status (preliminary), Date (timestamp in ISO format) but without ID
@@ -114,20 +157,9 @@ func (fhirManager *FhirManager) CreateDefaultComposition(authorID, subjectID, ca
 	return fhirComposition, nil
 }
 
-// Method AddRawResourceToBundleFHIR puts 'urn:uuid:<resourceID>' to BundleEntry.FullUrl
-func (fhirManager *FhirManager) AddRawResourceToBundleFHIR(fhirBundle *fhir4.Bundle, resourceRaw *json.RawMessage, resourceID *string) error{
-	newBundleEntry := fhir4.BundleEntry{ Resource: *resourceRaw }
-	if resourceID != nil {
-		fullURN := "urn:uuid:" + *resourceID
-		newBundleEntry.FullUrl = &fullURN
-	}
-	fhirBundle.Entry = append(fhirBundle.Entry, newBundleEntry)
-	return nil
-}
-
 // Method CreateBundleDocument creates FHIR.Bundle with mandatory authorID
-func (fhirManager *FhirManager) CreateBundleDocument(authorID, subjectID, categoryCodeLOINC, language *string) (fhir4.Bundle, error){
-	fhirBundleDocument :=fhirManager.CreateBundleWithType(fhir4.BundleTypeDocument)
+func (fhirManager *FhirManager) CreateBundleDocument(rawResources *[]json.RawMessage, authorID, subjectID, categoryCodeLOINC, language *string) (fhir4.Bundle, error){
+	fhirBundleDocument := fhirManager.createEmptyBundle(fhir4.BundleTypeDocument)
 
 	fhirComposition, err := fhirManager.CreateDefaultComposition(authorID, subjectID, categoryCodeLOINC)
 	if err != nil { return fhir4.Bundle{}, err}
@@ -137,8 +169,11 @@ func (fhirManager *FhirManager) CreateBundleDocument(authorID, subjectID, catego
 	fhirCompositionRaw, err := fhirManager.ResourceBytesToRawJson(&fhirCompositionBytes)
 	if err != nil { return fhir4.Bundle{}, err}
 
-	err = fhirManager.AddRawResourceToBundleFHIR(&fhirBundleDocument, &fhirCompositionRaw, nil)
-	return fhirBundleDocument, err
+	// First it adds the composition to the Bundle document
+	fhirManager.AddRawResourceToBundle(&fhirBundleDocument, &fhirCompositionRaw)
+	// Then adds the other raw resources to the Bundle document and returns
+	fhirManager.AddRawResourcesToBundle(&fhirBundleDocument, rawResources)
+	return fhirBundleDocument, nil
 }
 
 // TODO: Bundle resource fails not having eventCoding, eventUri, _eventUri (create pull request)
@@ -181,10 +216,10 @@ func (fhirManager *FhirManager) createDefaultMessageHeaderFHIR(eventCodeUHC, mes
 }
 
 // 'authorID' is the source of the decision and 'entererID' is the PractitionerRole source of the data entry
-func (fhirManager *FhirManager) CreateFhirMessage(messageID, authorID, entererID,
+func (fhirManager *FhirManager) CreateDefaultFhirMessage(messageID, authorID, entererID,
 	responsibleID, senderID, receiverID, targetDeviceID, focusResourceID *string) (fhir4.Bundle, error){
 
-	fhirBundleMessage:=fhirManager.CreateBundleWithType(fhir4.BundleTypeMessage)
+	fhirBundleMessage:=fhirManager.CreateBundleWithTypeAndResources(fhir4.BundleTypeMessage, nil)
 
 	// TODO: createDefaultHeaderMessage with mandatory eventCoding
 	fhirHeaderMessage := fhirManager.createDefaultMessageHeaderFHIR(nil, messageID, nil, nil, nil, nil, nil, nil, nil)
@@ -194,9 +229,23 @@ func (fhirManager *FhirManager) CreateFhirMessage(messageID, authorID, entererID
 	fhirHeaderMessageRaw, err := fhirManager.ResourceBytesToRawJson(&fhirHeaderMessageBytes)
 	if err != nil { return fhir4.Bundle{}, err}
 
-	err = fhirManager.AddRawResourceToBundleFHIR(&fhirBundleMessage, &fhirHeaderMessageRaw, nil)
+	fhirManager.AddRawResourceToBundle(&fhirBundleMessage, &fhirHeaderMessageRaw)
 	return fhirBundleMessage, nil
 }
+
+// 'authorID' is the source of the decision and 'entererID' is the PractitionerRole source of the data entry
+func (fhirManager *FhirManager) CreateFhirMessageWithRawResources(rawResources *[]json.RawMessage, messageID, authorID, entererID,
+	responsibleID, senderID, receiverID, targetDeviceID, focusResourceID *string) (fhir4.Bundle, error){
+
+	// It creates the FHIR Message with the MessageHeader
+	fhirBundleMessage, err := fhirManager.CreateDefaultFhirMessage(messageID, authorID, entererID, responsibleID, senderID, receiverID, targetDeviceID, focusResourceID)
+	if err != nil { return fhir4.Bundle{}, errors.New("error creating default FHIR Message")}
+
+	// It adds every raw resource as BundleEntry in the FHIR Message and returns
+	fhirManager.AddRawResourcesToBundle(&fhirBundleMessage, rawResources)
+	return fhirBundleMessage, nil
+}
+
 
 func (fhirManager *FhirManager) ResourceBytesToRawJson(bytes *[]byte) (json.RawMessage, error) {
 	if bytes == nil {return json.RawMessage{}, errors.New("no data to convert")}
