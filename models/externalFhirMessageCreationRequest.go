@@ -15,7 +15,7 @@ type ExternalMessageDirectives struct {
 }
 
 type ExternalSenderUserDetails struct {
-	Email               string  `json:"email,omitempty" bson:"email,omitempty"`
+	FromEmail           string  `json:"fromEmail,omitempty" bson:"fromEmail,omitempty"`
 	FirstName           string  `json:"firstName,omitempty" bson:"firstName,omitempty"`
 	LastName            string  `json:"lastName,omitempty" bson:"lastName,omitempty"`
 	TitleInOrganization *string `json:"titleInOrganization,omitempty" bson:"titleInOrganization,omitempty"`
