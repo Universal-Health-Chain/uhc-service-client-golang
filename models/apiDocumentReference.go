@@ -91,6 +91,7 @@ func (apiDocRef *ApiDocumentReferenceOptions) GetBaseDocumentReferenceByHttpRequ
 	subjectParam 		:= r.Form.Get(docRefHeaders.Subject)
 	authenticatorParam 	:= r.Form.Get(docRefHeaders.Authenticator)
 	custodianOrgParam 	:= r.Form.Get(docRefHeaders.CustodianOrganization)
+	authorParam			:= r.Form.Get(docRefHeaders.Author)
 
 	contentMimeType 	:= r.Form.Get(docRefHeaders.ContentMimeType)
 	sha1HexParam 		:= r.Form.Get(docRefHeaders.FileSHA1Hex)
@@ -116,6 +117,7 @@ func (apiDocRef *ApiDocumentReferenceOptions) GetBaseDocumentReferenceByHttpRequ
 		PracticeSettingSNOMED:  GeApiFhirParamTokenByCodeSNOMED(&practiceSettingParam),
 		Description:            nil,
 		SubjectUHC:             &subjectParam,
+		AuthorReference:		&authorParam,
 		AuthenticatorReference: &authenticatorParam,
 		CustodianReference:     &custodianOrgParam,
 	}
