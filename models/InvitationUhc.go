@@ -34,7 +34,7 @@ type InvitationUHC struct {
 }
 type ExternalInvitationDetails struct {
 	ExternalSenderUserDetails *ExternalSenderUserDetails `json:"externalSenderUserDetails,omitempty" bson:"externalSenderUserDetails,omitempty"`
-	organizationId   string                     `json:"initiatorOrganizationId,omitempty" bson:"initiatorOrganizationId,omitempty"`
+	OrganizationId   string                     `json:"organizationId,omitempty" bson:"organizationId,omitempty"`
 }
 
 
