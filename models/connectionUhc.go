@@ -9,7 +9,6 @@ type ConnectionUHC struct {
 	ID                        string                   `json:"id" bson:"id"`
 	InvitationUhcId           string                   `json:"invitationUhcId,omitempty" bson:"invitationUhcID,omitempty"`
 	InitiatorUserId           string                   `json:"initiatorUserId,omitempty" bson:"initiatorUserId,omitempty"`
-	InitiatorOrganizationId   string                   `json:"initiatorOrganizationId,omitempty" bson:"initiatorOrganizationId,omitempty"`
 	InvitedUserId             string                   `json:"invitedUserId,omitempty" bson:"invitedUserId,omitempty"`
 	EncryptionRequirements    EncryptionRequirements   `json:"encryptionRequirements" bson:"encryptionRequirements"`
 	ActivePermissions         *[]PermissionsUHC        `json:"activePermissions" bson:"activePermissions"`
@@ -17,6 +16,7 @@ type ConnectionUHC struct {
 	CreatedAt                 *time.Time               `json:"createdAt" bson:"createdAt"`
 	UpdatedAt                 *time.Time               `json:"updatedAt" bson:"updatedAt"`
 	Status                    string                   `json:"status" bson:"status"`
+	ExternalInvitationDetails *ExternalInvitationDetails `json:"externalInvitationDetails,omitempty" bson:"externalInvitationDetails,omitempty"`
 }
 
 type EncryptionRequirements struct {

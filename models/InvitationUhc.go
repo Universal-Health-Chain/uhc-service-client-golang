@@ -16,22 +16,27 @@ type Invitation struct {
 }
 
 type InvitationUHC struct {
-	ID                      string                 `json:"id" bson:"id"`
-	ShortId                 string                 `json:"shortId" bson:"shortId"`
-	Type                    string                 `json:"type" bson:"type"`
-	Label                   string                 `json:"label,omitempty" bson:"label,omitempty"`
-	Goal                    string                 `json:"goal,omitempty" bson:"goal,omitempty"`
-	GoalCode                string                 `json:"goal-code,omitempty" bson:"goal-code,omitempty"`
-	Protocols               []string               `json:"protocols" bson:"protocols"`
-	Password                string                 `json:"password" bson:"password"`
-	Status                  string                 `json:"status" bson:"status"`
-	InitiatorUserId         string                 `json:"initiatorUserId,omitempty" bson:"initiatorUserId,omitempty"`
-	InitiatorOrganizationId string                 `json:"initiatorOrganizationId,omitempty" bson:"initiatorOrganizationId,omitempty"`
-	InvitedUserId           string                 `json:"invitedUserId,omitempty" bson:"invitedUserId,omitempty"`
-	CreatedAt               *time.Time             `json:"createdAt" bson:"createdAt"`
-	UpdatedAt               *time.Time             `json:"updatedAt" bson:"updatedAt"`
-	EncryptionRequirements  EncryptionRequirements `json:"encryptionRequirements" bson:"encryptionRequirements"`
+	ID                        string                     `json:"id" bson:"id"`
+	ShortId                   string                     `json:"shortId" bson:"shortId"`
+	Type                      string                     `json:"type" bson:"type"`
+	Label                     string                     `json:"label,omitempty" bson:"label,omitempty"`
+	Goal                      string                     `json:"goal,omitempty" bson:"goal,omitempty"`
+	GoalCode                  string                     `json:"goal-code,omitempty" bson:"goal-code,omitempty"`
+	Protocols                 []string                   `json:"protocols" bson:"protocols"`
+	Password                  string                     `json:"password" bson:"password"`
+	Status                    string                     `json:"status" bson:"status"`
+	InitiatorUserId           string                     `json:"initiatorUserId,omitempty" bson:"initiatorUserId,omitempty"`
+	InvitedUserId             string                     `json:"invitedUserId,omitempty" bson:"invitedUserId,omitempty"`
+	CreatedAt                 *time.Time                 `json:"createdAt" bson:"createdAt"`
+	UpdatedAt                 *time.Time                 `json:"updatedAt" bson:"updatedAt"`
+	EncryptionRequirements    EncryptionRequirements     `json:"encryptionRequirements" bson:"encryptionRequirements"`
+	ExternalInvitationDetails *ExternalInvitationDetails `json:"externalInvitationDetails,omitempty" bson:"externalInvitationDetails,omitempty"`
 }
+type ExternalInvitationDetails struct {
+	ExternalSenderUserDetails *ExternalSenderUserDetails `json:"externalSenderUserDetails,omitempty" bson:"externalSenderUserDetails,omitempty"`
+	organizationId   string                     `json:"initiatorOrganizationId,omitempty" bson:"initiatorOrganizationId,omitempty"`
+}
+
 
 type InvitationCreationRequest struct {
 	Type                    string  `json:"type" bson:"type"`
