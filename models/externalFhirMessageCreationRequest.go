@@ -9,14 +9,14 @@ type ExternalFhirMessageCreationRequest struct {
 }
 
 type ExternalMessageDirectives struct {
-	ToEmail  string  `json:"toEmail,omitempty" bson:"toEmail,omitempty"`
-	ToUserId *string `json:"toUserId,omitempty" bson:"toUserId,omitempty"`
+	ToEmail                   string                     `json:"toEmail,omitempty" bson:"toEmail,omitempty"`
+	ToUserId                  *string                    `json:"toUserId,omitempty" bson:"toUserId,omitempty"`
 	ExternalSenderUserDetails *ExternalSenderUserDetails `json:"externalSenderUserDetails,omitempty" bson:"externalSenderUserDetails,omitempty"`
 }
 
 type ExternalSenderUserDetails struct {
 	Email               string  `json:"toEmail,omitempty" bson:"toEmail,omitempty"`
-	FirstName           string  `json:"fromOrganizationEmail,omitempty" bson:"fromOrganizationEmail,omitempty"`
-	LastName            string  `json:"toUserId,omitempty" bson:"toUserId,omitempty"`
-	TitleInOrganization *string `json:"toUserId,omitempty" bson:"toUserId,omitempty"`
+	FirstName           string  `json:"firstName,omitempty" bson:"firstName,omitempty"`
+	LastName            string  `json:"lastName,omitempty" bson:"lastName,omitempty"`
+	TitleInOrganization *string `json:"titleInOrganization,omitempty" bson:"titleInOrganization,omitempty"`
 }
