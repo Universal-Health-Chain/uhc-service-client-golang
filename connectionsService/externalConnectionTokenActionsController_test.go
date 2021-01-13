@@ -53,7 +53,8 @@ func TestExternalConectionTokenActionsController_CreateConnectionUHCExternally(t
 	assert.NotNil(t, respToken)
 
 	creationRequest := models.ConnectionExternalCreationRequest{}
-	creationRequest.OrganizationCreatorId = respToken.Data[0].OrganizationOwnerId
+	creationRequest.ExternalInvitationDetails = &models.ExternalInvitationDetails{}
+	creationRequest.ExternalInvitationDetails.OrganizationId = respToken.Data[0].OrganizationOwnerId
 	creationRequest.InvitedUserEmail = user.Email
 
 	externalConnectionTokenActions.ServiceToken = organizationTokenForTesting
@@ -78,7 +79,8 @@ func TestExternalConectionTokenActionsController_SendMessageUhcExternally(t *tes
 	assert.NotNil(t, respToken)
 
 	creationRequest := models.ConnectionExternalCreationRequest{}
-	creationRequest.OrganizationCreatorId = respToken.Data[0].OrganizationOwnerId
+	creationRequest.ExternalInvitationDetails = &models.ExternalInvitationDetails{}
+	creationRequest.ExternalInvitationDetails.OrganizationId = respToken.Data[0].OrganizationOwnerId
 	creationRequest.InvitedUserEmail = user.Email
 
 	externalConnectionTokenActions.ServiceToken = organizationTokenForTesting
@@ -91,7 +93,7 @@ func TestExternalConectionTokenActionsController_SendMessageUhcExternally(t *tes
 	message := models.MessageUHC{}
 	message.ConnectionUhcId = connection.ID
 	message.ToUserId = connection.InvitedUserId
-	message.FromOrganizationId = connection.InitiatorOrganizationId
+	message.FromOrganizationId = connection.ExternalInvitationDetails.OrganizationId
 	message.Label = "test"
 
 	messResp, err := externalConnectionTokenActions.SendMessageUhcExternally(message)

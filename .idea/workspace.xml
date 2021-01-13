@@ -23,9 +23,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/InvitationUhc.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/InvitationUhc.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/connectionUhc.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/connectionUhc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyController.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/authService/encryptionKeyController_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectionsService/externalConnectionTokenActionsController_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/connectionsService/externalConnectionTokenActionsController_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +40,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="/usr/local/Cellar/go/1.13.4/libexec" />
+  <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -71,7 +72,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="go.sdk" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -153,19 +154,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="e3b0894b-be07-4726-bc14-516eff6fb76a" name="Default Changelist" comment="" />
@@ -177,20 +166,19 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -364,10 +352,11 @@
     <state width="1157" height="208" key="GridCell.Tab.1.right/0.23.1680.947@0.23.1680.947" timestamp="1606688907637" />
     <state width="1229" height="260" key="GridCell.Tab.1.right/0.23.1680.956@0.23.1680.956" timestamp="1607540081311" />
     <state width="1878" height="243" key="GridCell.Tab.1.right/0.23.1920.1004@0.23.1920.1004" timestamp="1605701070590" />
-    <state x="253" y="36" key="SettingsEditor" timestamp="1608969516085">
-      <screen x="0" y="23" width="1440" height="816" />
+    <state x="295" y="38" key="SettingsEditor" timestamp="1610546287519">
+      <screen x="0" y="23" width="1680" height="961" />
     </state>
     <state x="295" y="202" key="SettingsEditor/-995.-2137.3840.2137/0.23.1680.954@0.23.1680.954" timestamp="1602750889579" />
+    <state x="295" y="38" key="SettingsEditor/-995.-2137.3840.2137/0.23.1680.961@0.23.1680.961" timestamp="1610546287519" />
     <state x="225" y="35" key="SettingsEditor/0.23.1280.734@0.23.1280.734" timestamp="1605616059227" />
     <state x="253" y="36" key="SettingsEditor/0.23.1440.816@0.23.1440.816" timestamp="1608969516085" />
     <state x="523" y="181" key="VCS.ChangeListViewerDialog" timestamp="1608194770904">
