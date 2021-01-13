@@ -1,3 +1,4 @@
+/* Copyright 2021 Fundación UNID */
 package models
 type SharedKey struct {
 	EncryptionKeyId     	*string   `bson:"encryptionKeyId,omitempty" json:"encryptionKeyId,omitempty"`

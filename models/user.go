@@ -1,4 +1,10 @@
+/* Copyright 2021 Fundación UNID */
 package models
+
+import (
+	"encoding/json"
+	"net/http"
+)
 
 var collectionNameUsers = "Users"
 
@@ -44,14 +50,6 @@ type OrganizationPermission struct {
 	ConfirmedRole    bool   `bson:"confirmedRole" json:"confirmedRole"`
 }
 
-type UserResponse struct {
-	Code    int    `bson:"code,omitempty" json:"code,omitempty"`
-	Count   int64  `bson:"count,omitempty" json:"count,omitempty"`
-	Message string `bson:"message,omitempty" json:"message,omitempty"`
-	Data    []User `bson:"data,omitempty" json:"data,omitempty"`
-	Token   Token  `bson:"token,omitempty" json:"token,omitempty"`
-}
-
 type ConfirmUserData struct {
 	Email string `bson:"email,omitempty" json:"email,omitempty"`
 	Code  string `bson:"code,omitempty" json:"code,omitempty"`
@@ -61,4 +59,26 @@ type ChangePasswordRequest struct {
 	Email       string `bson:"email,omitempty" json:"email,omitempty"`
 	Code        string `bson:"code,omitempty" json:"code,omitempty"`
 	NewPassword string `bson:"newPassword,omitempty" json:"newPassword,omitempty"`
+}
+
+type UserResponse struct {
+	Code    int    `bson:"code,omitempty" json:"code,omitempty"`
+	Count   int64  `bson:"count,omitempty" json:"count,omitempty"`
+	Message string `bson:"message,omitempty" json:"message,omitempty"`
+	Data    []User `bson:"data,omitempty" json:"data,omitempty"`
+	Token   Token  `bson:"token,omitempty" json:"token,omitempty"`
+}
+
+func (userResponse *UserResponse) ReturnCustomResponse(w http.ResponseWriter, code int, customCode int, customMessage string, data *[]User) {
+	var response UserResponse
+
+	if data != nil {
+		response = UserResponse{Code: customCode, Message: customMessage, Data: *data}
+	} else {
+		response = UserResponse{Code: customCode, Message: customMessage, Data: nil}
+	}
+
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(code)
+	json.NewEncoder(w).Encode(response)
 }

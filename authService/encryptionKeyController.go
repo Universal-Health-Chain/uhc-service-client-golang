@@ -1,4 +1,3 @@
-/* Copyright 2021 Fundación UNID */
 package authService
 
 import (
@@ -12,17 +11,17 @@ import (
 	"strings"
 )
 
-type EncryptionKeyUserController struct {
+type EncryptionKeyController struct {
 	models.Service
 }
 
 
-func (encryptionKeyController *EncryptionKeyUserController) CreateUserEncryptionKey(encryptionKeyRequest models.KeyCreationRequest) (*models.KeyResponse, error) {
+func (encryptionKeyController *EncryptionKeyController) CreateEncryptionKey(encryptionKeyRequest models.EncryptionKeyCreationRequest) (*models.EncryptionKeyResponse, error) {
 
-	var encryptionKeyResponse *models.KeyResponse
+	var encryptionKeyResponse *models.EncryptionKeyResponse
 	jsonValue, _ := json.Marshal(encryptionKeyRequest)
 
-	url := encryptionKeyController.BackendUrl + authRoute + CreateUserEncryptionKey
+	url := encryptionKeyController.BackendUrl + authRoute + CreateEncryptionKey
 	request, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer " + encryptionKeyController.Token)
@@ -50,7 +49,7 @@ func (encryptionKeyController *EncryptionKeyUserController) CreateUserEncryption
 }
 
 
-func (encryptionKeyController *EncryptionKeyUserController) GetUserPublicInfoOfActiveKey(uhcId string) (*models.PublicInfoFromKeyResponse, error) {
+func (encryptionKeyController *EncryptionKeyController) GetUserPublicInfoOfActiveKey(uhcId string) (*models.PublicInfoFromKeyResponse, error) {
 	publicInfoResponse := models.PublicInfoFromKeyResponse{}
 	url := strings.ReplaceAll(encryptionKeyController.BackendUrl + authRoute + GetUserPublicInfoOfActiveKey, "{userId}", uhcId)
 
@@ -75,19 +74,18 @@ func (encryptionKeyController *EncryptionKeyUserController) GetUserPublicInfoOfA
 
 	_ = json.Unmarshal(body, &publicInfoResponse)
 
-	if response.StatusCode != 200 && response.StatusCode != 204 {
+	if response.StatusCode != 200 {
 		message := fmt.Sprintf("the transaction failed with code %v", response.StatusCode)
 		return &publicInfoResponse, errors.New(message)
 	}
-
 	return &publicInfoResponse, nil
 
 }
 
 
-func (encryptionKeyController *EncryptionKeyUserController) GetPublicInfoOfEncryptionKey(encryptionKey string) (*models.PublicInfoFromKeyResponse, error) {
+func (encryptionKeyController *EncryptionKeyController) GetPublicInfoOfEncryptionKey(encryptionKey string) (*models.PublicInfoFromKeyResponse, error) {
 	publicInfoResponse := models.PublicInfoFromKeyResponse{}
-	url := strings.ReplaceAll(encryptionKeyController.BackendUrl + authRoute + GetPublicInfoOfEncryptionKey, "{encryptionKeyUserController}", encryptionKey)
+	url := strings.ReplaceAll(encryptionKeyController.BackendUrl + authRoute + GetPublicInfoOfEncryptionKey, "{encryptionKey}", encryptionKey)
 
 	request, _ := http.NewRequest("GET", url, nil)
 	request.Header.Set("Content-Type", "application/json")

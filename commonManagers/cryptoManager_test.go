@@ -1,3 +1,4 @@
+/* Copyright 2021 Fundación UNID */
 package commonManagers
 
 import (
@@ -24,12 +25,12 @@ func TestEncryptionManager_StringByte(t *testing.T) {
 
 func TestCryptoManager_EncryptUsingEncryptionKey_Decrypt(t *testing.T) {
 	keySender := encryptionKeys[0]
-	public, private, _ := encryptionManager.GenerateKeyPair()
+	public, private, _ := GenerateX25519KeyPair()
 	keySender.PublicKeyBase64 = public
 	keySender.PrivateKeyBase64 = private
 
 	keyReciever := encryptionKeys[0]
-	publicReciever, privateReciever, _ := encryptionManager.GenerateKeyPair()
+	publicReciever, privateReciever, _ := GenerateX25519KeyPair()
 	keyReciever.PublicKeyBase64 = publicReciever
 	keyReciever.PrivateKeyBase64 = privateReciever
 
@@ -59,8 +60,8 @@ func TestCryptoManager_EncryptUsingEncryptionKey_Decrypt(t *testing.T) {
 func TestEncryptionManager_Decrypt(t *testing.T) {
 	message := "Hello world"
 
-	senderPublicKey, senderPrivateKey, _ := encryptionManager.GenerateKeyPair()
-	recipientPublicKey, recipientPrivateKey, _ := encryptionManager.GenerateKeyPair()
+	senderPublicKey, senderPrivateKey, _ := GenerateX25519KeyPair()
+	recipientPublicKey, recipientPrivateKey, _ := GenerateX25519KeyPair()
 
 	// real flow using each others keys
 	encrypted,err1 := encryptionManager.EncryptMessage(recipientPublicKey,senderPrivateKey, message)
@@ -80,12 +81,12 @@ func TestEncryptionManager_Decrypt(t *testing.T) {
 
 func TestCryptoManager_GetSharedEncryptionKey(t *testing.T) {
 	keySender := encryptionKeys[0]
-	public, private, _ := encryptionManager.GenerateKeyPair()
+	public, private, _ := GenerateX25519KeyPair()
 	keySender.PublicKeyBase64 = public
 	keySender.PrivateKeyBase64 = private
 
 	keyRecipient := encryptionKeys[0]
-	publicRecipient, privateRecipient, _ := encryptionManager.GenerateKeyPair()
+	publicRecipient, privateRecipient, _ := GenerateX25519KeyPair()
 	keyRecipient.PublicKeyBase64 = publicRecipient
 	keyRecipient.PrivateKeyBase64 = privateRecipient
 
@@ -108,12 +109,12 @@ func TestCryptoManager_GetSharedEncryptionKey(t *testing.T) {
 
 func TestCryptoManager_EncryptBytesWithSharedKey(t *testing.T) {
 	keySender := encryptionKeys[0]
-	public, private, _ := encryptionManager.GenerateKeyPair()
+	public, private, _ := GenerateX25519KeyPair()
 	keySender.PublicKeyBase64 = public
 	keySender.PrivateKeyBase64 = private
 
 	keyRecipient := encryptionKeys[0]
-	publicRecipient, privateRecipient, _ := encryptionManager.GenerateKeyPair()
+	publicRecipient, privateRecipient, _ := GenerateX25519KeyPair()
 	keyRecipient.PublicKeyBase64 = publicRecipient
 	keyRecipient.PrivateKeyBase64 = privateRecipient
 

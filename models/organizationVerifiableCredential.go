@@ -1,7 +1,8 @@
+/* Copyright 2021 Fundación UNID */
 package models
 
 import (
-	fhir4 "github.com/Universal-Health-Chain/golang-fhir-models-uhc/fhir-models/fhir"
+	fhir4 "github.com/samply/golang-fhir-models/fhir-models/fhir"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/proof"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/verifiable"
 	"time"

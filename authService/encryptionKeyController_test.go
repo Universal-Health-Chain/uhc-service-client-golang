@@ -1,4 +1,3 @@
-/* Copyright 2021 Fundación UNID */
 package authService
 
 import (
@@ -9,12 +8,12 @@ import (
 	"testing"
 )
 
-var encryptionKeyUserController EncryptionKeyUserController
+var encryptionKey EncryptionKeyController
 
 func init() {
 	godotenv.Load("../.env")
 	backendUrl = os.Getenv("BACKENDURL")
-	encryptionKeyUserController = EncryptionKeyUserController{models.Service{BackendUrl: backendUrl}}
+	encryptionKey = EncryptionKeyController{models.Service{BackendUrl: backendUrl}}
 	usernameTesting = os.Getenv("USERNAMETEST")
 	userPwTesting = os.Getenv("PASSWORDTEST")
 }
@@ -25,10 +24,10 @@ func Test_EncryptionKeyCreationController(t *testing.T) {
 	token := userResp.Data[0].Token
 	assert.NotEqual(t, token, "")
 
-	encryptionKeyUserController.Token = userResp.Data[0].Token
+	encryptionKey.Token = userResp.Data[0].Token
 
-	encryptionKeyRequest := models.KeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
-	_, errata := encryptionKeyUserController.CreateUserEncryptionKey(encryptionKeyRequest)
+	encryptionKeyRequest := models.EncryptionKeyCreationRequest{AccessPassword: "sharedTest", Tag: "tag test"}
+	_, errata := encryptionKey.CreateEncryptionKey(encryptionKeyRequest)
 	assert.Nil(t, errata, "errata should be nil")
 }
 
@@ -38,9 +37,9 @@ func TestEncryptionKeyController_GetUserPublicInfoOfActiveKeyController(t *testi
 	token := userResp.Data[0].Token
 	assert.NotEqual(t, token, "")
 
-	encryptionKeyUserController.Token = userResp.Data[0].Token
+	encryptionKey.Token = userResp.Data[0].Token
 
-	resp, errata := encryptionKeyUserController.GetUserPublicInfoOfActiveKey(userResp.Data[0].ID)
+	resp, errata := encryptionKey.GetUserPublicInfoOfActiveKey(userResp.Data[0].ID)
 	assert.Nil(t, errata, "errata should be nil")
 	assert.NotNil(t, resp)
 }

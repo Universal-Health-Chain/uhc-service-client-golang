@@ -1,3 +1,4 @@
+/* Copyright 2021 Fundación UNID */
 package models
 
 import "time"
@@ -10,7 +11,7 @@ const (
 type WalletKey struct {		// TODO: It should be 'Wallet' or 'WalletEntry' but not 'WalletKey'
 	AccessPassword        string     `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
 	ID                    string     `bson:"id,omitempty" json:"id,omitempty"`
-	BlockchainDID			string		`bson:"did,omitempty" json:"did,omitempty"`
+	ControllerDID			string		`bson:"did,omitempty" json:"did,omitempty"`	// Key.ControllerDID = "did:v1:uuid:" + uhcUserId
 	OwnerId               string     `bson:"ownerId,omitempty" json:"ownerId,omitempty"`
 	OwnerType             string     `bson:"ownerType,omitempty" json:"ownerType,omitempty"`
 	Type                  string     `bson:"type,omitempty" json:"type,omitempty"`
