@@ -31,6 +31,7 @@ type InvitationUHC struct {
 	UpdatedAt                 *time.Time                 `json:"updatedAt" bson:"updatedAt"`
 	EncryptionRequirements    EncryptionRequirements     `json:"encryptionRequirements" bson:"encryptionRequirements"`
 	ExternalInvitationDetails *ExternalInvitationDetails `json:"externalInvitationDetails,omitempty" bson:"externalInvitationDetails,omitempty"`
+	ReadStatus          	  string                     `json:"readStatus,omitempty" bson:"readStatus,omitempty"`
 }
 type ExternalInvitationDetails struct {
 	ExternalSenderUserDetails *ExternalSenderUserDetails `json:"externalSenderUserDetails,omitempty" bson:"externalSenderUserDetails,omitempty"`

@@ -5,6 +5,9 @@ import (
 	"time"
 )
 
+const ReadStatus = "READ"
+const UnreadStatus = "UNREAD"
+
 type ConnectionUHC struct {
 	ID                        string                   `json:"id" bson:"id"`
 	InvitationUhcId           string                   `json:"invitationUhcId,omitempty" bson:"invitationUhcID,omitempty"`
@@ -17,6 +20,7 @@ type ConnectionUHC struct {
 	UpdatedAt                 *time.Time               `json:"updatedAt" bson:"updatedAt"`
 	Status                    string                   `json:"status" bson:"status"`
 	ExternalInvitationDetails *ExternalInvitationDetails `json:"externalInvitationDetails,omitempty" bson:"externalInvitationDetails,omitempty"`
+	ReadStatus          	  string                     `json:"readStatus,omitempty" bson:"readStatus,omitempty"`
 }
 
 type EncryptionRequirements struct {
