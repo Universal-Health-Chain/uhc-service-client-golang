@@ -18,6 +18,9 @@ type CryptoManager struct {
 func (manager *CryptoManager) CreateX25519KeyPair(walletId string, uhcUserId string, purposes []string, tag string) (*models.Key, error) {
 	return CreateX25519EncryptKeyPair(walletId, uhcUserId, purposes, tag)
 }
+func (manager *CryptoManager) GenerateX25519KeyPair() (publicKeyBase64 string, privateKeyBase64 string, err error){
+	return GenerateX25519KeyPair()
+}
 
 func GenerateX25519KeyPair() (publicKeyBase64 string, privateKeyBase64 string, err error) {
 	publicKeyBytes, privateKeysBytes, err := box.GenerateKey(rand.Reader)
