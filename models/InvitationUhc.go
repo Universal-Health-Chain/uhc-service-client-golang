@@ -30,6 +30,7 @@ type InvitationUHC struct {
 	CreatedAt               *time.Time             `json:"createdAt" bson:"createdAt"`
 	UpdatedAt               *time.Time             `json:"updatedAt" bson:"updatedAt"`
 	EncryptionRequirements  EncryptionRequirements `json:"encryptionRequirements" bson:"encryptionRequirements"`
+	ReadNotification        bool                   `json:"readNotification" bson:"readNotification"`
 }
 
 type InvitationCreationRequest struct {

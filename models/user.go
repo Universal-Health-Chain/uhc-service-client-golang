@@ -10,8 +10,6 @@ type User struct {
 	Username string `bson:"username,omitempty" json:"username,omitempty"`
 	Password string `bson:"password,omitempty" json:"password,omitempty"`
 
-	DidController string `bson:"did,omitempty" json:"did,omitempty"`	// 	Blockchain's DID e.g.
-
 	Token                       string  `bson:"token,omitempty" json:"token,omitempty"`
 	RefreshToken                string  `bson:"refreshToken,omitempty" json:"refreshToken,omitempty"`
 	ConfirmationAccountToken    *string `bson:"confirmationAccountToken" json:"confirmationAccountToken"`

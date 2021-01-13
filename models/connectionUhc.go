@@ -16,6 +16,7 @@ type ConnectionUHC struct {
 	CreatedAt                 *time.Time               `json:"createdAt" bson:"createdAt"`
 	UpdatedAt                 *time.Time               `json:"updatedAt" bson:"updatedAt"`
 	Status                    string                   `json:"status" bson:"status"`
+	ReadNotification          bool                     `json:"readNotification" bson:"readNotification"`
 }
 
 type EncryptionRequirements struct {
