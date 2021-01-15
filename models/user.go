@@ -43,6 +43,15 @@ type UserDeletionRequest struct {
 	Email         string `bson:"email,omitempty" json:"email,omitempty"`
 }
 
+type UserRegisterRequest struct {
+	Username 		string `bson:"username,omitempty" json:"username,omitempty"`
+	FirstName		string `bson:"firstName,omitempty" json:"firstName,omitempty"`
+	LastName		string `bson:"lastName,omitempty" json:"lastName,omitempty"`
+	Email			string `bson:"email,omitempty" json:"email,omitempty"`
+	LoginPassword	string `bson:"loginPassword,omitempty" json:"loginPassword,omitempty"`
+	WalletPassword	string `bson:"walletPassword,omitempty" json:"walletPassword,omitempty"`
+}
+
 // Practitioner can be: administrative, driver, director, techoperator, researcher, pharmacist, doctor, nurse, paramedic, fireman, policeman ...
 type OrganizationPermission struct {
 	OrganizationId   string `bson:"organizationId,omitempty" json:"organizationId,omitempty"`
