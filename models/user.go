@@ -48,6 +48,7 @@ type UserRegisterRequest struct {
 	FirstName		string `bson:"firstName,omitempty" json:"firstName,omitempty"`
 	LastName		string `bson:"lastName,omitempty" json:"lastName,omitempty"`
 	Email			string `bson:"email,omitempty" json:"email,omitempty"`
+	AppId 			*string `bson:"appId,omitempty" json:"appId,omitempty"`
 	LoginPassword	string `bson:"loginPassword,omitempty" json:"loginPassword,omitempty"`
 	WalletPassword	string `bson:"walletPassword,omitempty" json:"walletPassword,omitempty"`
 }
