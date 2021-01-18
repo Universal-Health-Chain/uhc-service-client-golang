@@ -48,7 +48,7 @@ type CredentialFHIR struct {
 }
 
 type CredentialVerifiableFHIR struct {
-	BundleFHIR fhir4.Bundle `json:"fhir,omitempty" bson:"fhir,omitempty"`
+	BundleFHIR fhir4.Bundle `json:"fhir,omitempty" bson:"fhir,omitempty"`	// The bundle document
 }
 
 type CustomFields map[string]interface{} // CustomFields is a map of extra fields of struct build when unmarshalling JSON which are not mapped to the struct fields.
