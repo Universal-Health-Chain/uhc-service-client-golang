@@ -4,6 +4,7 @@ package authService
 const (
 	Login                                = "/api/v1/user/login"
 	EncryptPayloadUsingEncryptionRequest = "/api/v1/crypto/encrypt"
+	DecryptPayloadUsingDecryptionRequest = "/api/v1/crypto/decrypt"
 	GetSharedEncryptionKey               = "/api/v1/crypto/shared/key"
 
 	CreateUserEncryptionKey      = "/api/v1/key/new"

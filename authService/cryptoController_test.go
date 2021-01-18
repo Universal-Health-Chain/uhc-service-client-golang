@@ -46,3 +46,28 @@ func Test_GetSharedEncryptionKeyRequest(t *testing.T) {
 
 
 }
+
+
+func TestCryptoController_EncryptPayloadUsingEncryptionRequest(t *testing.T) {
+	userResp, err := authController.Login(usernameTesting, userPwTesting)
+
+	assert.Nil(t, err, "err should be nil")
+	token := userResp.Data[0].Token
+	assert.NotEqual(t, token, "")
+
+	encryptionKeyUserController.Token = userResp.Data[0].Token
+
+	encryptionKeyRequest := models.KeyCreationRequest{AccessPassword: "sharedTest",Tag: "tag test"}
+	encryptedKey, errata := encryptionKeyUserController.CreateUserEncryptionKey(encryptionKeyRequest)
+	assert.Nil(t, errata, "errata should be nil")
+
+	cryptoController.Token = userResp.Data[0].Token
+	payload := "1234"
+	encryptionRequest := models.EncryptionRequest{EncryptionKeyId:encryptedKey.Data[0].ID, AccessPassword: encryptionKeyRequest.AccessPassword, Payload: payload, OtherPartPublicKeyBase64: encryptedKey.Data[0].PublicKeyBase64}
+	encryptedResp, error := cryptoController.EncryptPayloadUsingEncryptionRequest(encryptionRequest)
+
+	assert.Nil(t, error, "error should be nil")
+	assert.NotNil(t,  encryptedResp.Data)
+	assert.NotNil(t,  encryptedResp.Data[0])
+	assert.NotEqual(t, encryptedResp.Data[0].EncryptedMessageBase64, "")
+}
