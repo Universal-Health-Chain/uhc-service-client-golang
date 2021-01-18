@@ -9,68 +9,68 @@ import (
 
 // A UHC form includes the neccesary fields to create both a FHIR Bundle (such as mediaContents) and a UHC Biography Entry
 type BiographyUHC struct {
-	ID                	string      // uuid
-	UhcUserId			string      // Who is the owner of this registry
-	ResourceLanguage	string      // Language of the content
-	Title             	string      // BiographyEntry.title replaces health_entry.title
-	Description			string      // BiographyEntry.description replaces health_entry.description
-	Section				string      // e.g. Health/Laboratory Results
+	ID               string `json:"id,omitempty" bson:"id,omitempty"`
+	UhcUserId        string `json:"uhcUserId,omitempty" bson:"uhcUserId,omitempty"`
+	ResourceLanguage string `json:"resourceLanguage,omitempty" bson:"resourceLanguage,omitempty"`
+	Title            string `json:"title,omitempty" bson:"title,omitempty"`
+	Description      string `json:"description,omitempty" bson:"description,omitempty"`
+	Section          string `json:"section,omitempty" bson:"section,omitempty"`
 	// frontendPath      string      // BiographyEntry.frontendPath replaces health_entry.entry_type (e.g. "Analysis")
-	UhcCodeTag			[]string
-	LastUpdated       	string      // date time in ISO format
+	UhcCodeTags []string `json:"uhcCodeTags,omitempty" bson:"uhcCodeTags,omitempty"`
+	LastUpdated string   `json:"lastUpdated,omitempty" bson:"lastUpdated,omitempty"`
 	// backupUrl     	string
-	SectionUSCDI   		string  // e.g. Laboratory
-	SectionIPS     		string  // e.g. Results
-	presentation 		PresentationWithBundleInVC
+	SectionUSCDI string                     `json:"sectionUSCDI,omitempty" bson:"sectionUSCDI,omitempty"`
+	SectionIPS   string                     `json:"sectionIPS,omitempty" bson:"sectionIPS,omitempty"`
+	Presentation PresentationWithBundleInVC `json:"presentation,omitempty" bson:"presentation,omitempty"`
 }
 
 type PresentationWithBundleInVC struct {
-	Context			[]string			`json:"@context,omitempty"`
+	Context []string `json:"@context,omitempty"`
 	// CustomContext	[]interface{}
-	ID				string				`json:"id,omitempty"`
-	Type          	[]string			`json:"type,omitempty"`
-	Credential		[]CredentialFHIR	`json:"verifiableCredential"`
-	Holder        	string				`json:"holder,omitempty"`
-	Proof        	[]proof.Proof		`json:"proof,omitempty"`
-	CustomFields  	CustomFields		`json:"-"`
+	ID           string           `json:"id,omitempty"`
+	Type         []string         `json:"type,omitempty"`
+	Credential   []CredentialFHIR `json:"verifiableCredential"`
+	Holder       string           `json:"holder,omitempty"`
+	Proof        []proof.Proof    `json:"proof,omitempty"`
+	CustomFields CustomFields     `json:"-"`
 }
 
 type CredentialFHIR struct {
-	Context       []string							`json:"@context,omitempty"`
-	ID            string							`json:"id,omitempty"`
-	Types         []string							`json:"type,omitempty"`
+	Context []string `json:"@context,omitempty"`
+	ID      string   `json:"id,omitempty"`
+	Types   []string `json:"type,omitempty"`
 	// Issuer         Issuer
-	Issued         string
-	Expired        string
-	Proofs         []proof.Proof
+	Issued  string
+	Expired string
+	Proofs  []proof.Proof
 	// Status         *TypedID
 	// Schemas        []TypedID
 	// Evidence       Evidence
 	// TermsOfUse     []TypedID
 	// RefreshService []TypedID
 	// CustomFields CustomFields
-	CredentialVerifiableFHIR			`json:"credentialSubject,omitempty"`
+	CredentialVerifiableFHIR `json:"credentialSubject,omitempty"`
 }
 
-type CredentialVerifiableFHIR struct{
-	BundleFHIR	fhir4.Bundle		`json:"fhir,omitempty" bson:"fhir,omitempty"`
+type CredentialVerifiableFHIR struct {
+	BundleFHIR fhir4.Bundle `json:"fhir,omitempty" bson:"fhir,omitempty"`
 }
 
 // rawCredential is a basic verifiable credential.
 type rawCredential struct {
-	Context        interface{}                    `json:"@context,omitempty"`
-	ID             string                         `json:"id,omitempty"`
-	Type           interface{}                    `json:"type,omitempty"`
-	Subject        json.RawMessage                `json:"credentialSubject,omitempty"`
-	Issued         *util.TimeWithTrailingZeroMsec `json:"issuanceDate,omitempty"`
-	Expired        *util.TimeWithTrailingZeroMsec `json:"expirationDate,omitempty"`
-	Proof          json.RawMessage                `json:"proof,omitempty"`
+	Context interface{}                    `json:"@context,omitempty"`
+	ID      string                         `json:"id,omitempty"`
+	Type    interface{}                    `json:"type,omitempty"`
+	Subject json.RawMessage                `json:"credentialSubject,omitempty"`
+	Issued  *util.TimeWithTrailingZeroMsec `json:"issuanceDate,omitempty"`
+	Expired *util.TimeWithTrailingZeroMsec `json:"expirationDate,omitempty"`
+	Proof   json.RawMessage                `json:"proof,omitempty"`
 	// Status         *TypedID                       `json:"credentialStatus,omitempty"`
-	Issuer         json.RawMessage                `json:"issuer,omitempty"`
-	Schema         interface{}                    `json:"credentialSchema,omitempty"`
+	Issuer json.RawMessage `json:"issuer,omitempty"`
+	Schema interface{}     `json:"credentialSchema,omitempty"`
 	// Evidence       Evidence                       `json:"evidence,omitempty"`
-	TermsOfUse     json.RawMessage                `json:"termsOfUse,omitempty"`
-	RefreshService json.RawMessage                `json:"refreshService,omitempty"`
+	TermsOfUse     json.RawMessage `json:"termsOfUse,omitempty"`
+	RefreshService json.RawMessage `json:"refreshService,omitempty"`
 
 	// All unmapped fields are put here.
 	CustomFields `json:"-"`
