@@ -3,11 +3,13 @@ package models
 
 import (
 	"github.com/dgrijalva/jwt-go"
+	//  "github.com/square/go-jose/v3/jwt"
 	"net/http"
 	"strconv"
 )
 
 type ApiDocumentReferenceClaimsJWT struct {
+	// gojwt.Claims
 	jwt.StandardClaims
 	ApiDocumentReferenceOptions
 }
@@ -41,7 +43,7 @@ type ApiDocumentReferenceOptions struct {
 }
 
 // Method GetDocumentReferenceApiTags returns the valid headers to be used for a FHIR DocumentReference API
-func (apiDocRef *ApiDocumentReferenceOptions) GetDocumentReferenceApiTags() ApiDocumentReferenceOptions{
+func (apiImmunization *ApiDocumentReferenceOptions) GetDocumentReferenceApiTags() ApiDocumentReferenceOptions{
 	documentReferenceApiHeaderTags := &ApiDocumentReferenceOptions{
 		ConnectionUHC:         	UhcApiConnection, // ID of an existing connection
 		DocStatus:             	UhcApiDocStatus,
@@ -71,7 +73,7 @@ func (apiDocRef *ApiDocumentReferenceOptions) GetDocumentReferenceApiTags() ApiD
 }
 
 // Method GetBaseDocumentReferenceByRequestForm returns a BaseDocumentReference created with the ApiOptions received by an API
-func (apiDocRef *ApiDocumentReferenceOptions) GetBaseDocumentReferenceByHttpRequest(r *http.Request) BaseDocumentReference {
+func (apiImmunization *ApiDocumentReferenceOptions) GetBaseDocumentReferenceByHttpRequest(r *http.Request) BaseDocumentReference {
 	docRefApiOptions := &ApiDocumentReferenceOptions{}
 	docRefHeaders := docRefApiOptions.GetDocumentReferenceApiTags()
 
