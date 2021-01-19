@@ -2,6 +2,8 @@ package models
 
 import "time"
 
+const UhcCodeTagCovidData = "COVID_DATA"
+
 type EncryptedEhr struct {
 	ID                     string     `bson:"id,omitempty" json:"id,omitempty"`
 	Type                   string     `bson:"type,omitempty" json:"type,omitempty"`
