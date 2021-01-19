@@ -25,6 +25,8 @@ type EncryptedEhrDecryptionRequest struct {
 	EncryptedEhrId *string   `bson:"encryptedEhrId,omitempty" json:"encryptedEhrId,omitempty"`
 	UhcCodeTags    *[]string `bson:"uhcCodeTags,omitempty" json:"uhcCodeTags,omitempty"`
 	AccessPassword string    `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
+	Limit          *int      `bson:"limit,omitempty" json:"limit,omitempty"`
+	Skip           *int      `bson:"skip,omitempty" json:"skip,omitempty"`
 }
 
 type EncryptedEhrResponse struct {
