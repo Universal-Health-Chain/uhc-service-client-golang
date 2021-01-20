@@ -38,6 +38,10 @@ type KeyRetrievalRequest struct {
 	EncryptionKeyID string `bson:"encryptionKeyId,omitempty" json:"encryptionKeyId,omitempty"`
 }
 
+type KeyEncryptedRetrieval struct {
+	ActiveKeysBase64 string `bson:"activeKeysBase64,omitempty" json:"activeKeysBase64,omitempty"`
+}
+
 type KeyCreationRequest struct {
 	AccessPassword string `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
 	Tag            string `bson:"tag,omitempty" json:"tag,omitempty"`
@@ -48,7 +52,7 @@ type KeyCreationOrganizationRequest struct {
 	OrganizationId string  `bson:"organizationId,omitempty" json:"organizationId,omitempty"`
 	AccessPassword *string `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
 	Tag            string  `bson:"tag,omitempty" json:"tag,omitempty"`
-	Usage          string `bson:"usage,omitempty" json:"usage,omitempty"`
+	Usage          string  `bson:"usage,omitempty" json:"usage,omitempty"`
 }
 
 type KeyResponse struct {
@@ -56,6 +60,13 @@ type KeyResponse struct {
 	Count   int64  `bson:"count,omitempty" json:"count,omitempty"`
 	Message string `bson:"message,omitempty" json:"message,omitempty"`
 	Data    []Key  `bson:"data,omitempty" json:"data,omitempty"`
+}
+
+type KeyEncryptedRetrievalResponse struct {
+	Code    int                     `bson:"code,omitempty" json:"code,omitempty"`
+	Count   int64                   `bson:"count,omitempty" json:"count,omitempty"`
+	Message string                  `bson:"message,omitempty" json:"message,omitempty"`
+	Data    []KeyEncryptedRetrieval `bson:"data,omitempty" json:"data,omitempty"`
 }
 
 type PublicInfoFromActiveKey struct {
