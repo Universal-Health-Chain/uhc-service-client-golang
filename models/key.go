@@ -39,7 +39,7 @@ type KeyRetrievalRequest struct {
 }
 
 type KeyEncryptedRetrieval struct {
-	ActiveKeysBase64 string `bson:"activeKeysBase64,omitempty" json:"activeKeysBase64,omitempty"`
+	ActiveKeysEncrypted string `bson:"activeKeysEncrypted,omitempty" json:"activeKeysEncrypted,omitempty"`
 }
 
 type KeyCreationRequest struct {
