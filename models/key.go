@@ -42,6 +42,12 @@ type KeyEncryptedRetrieval struct {
 	ActiveKeysEncrypted string `bson:"activeKeysEncrypted,omitempty" json:"activeKeysEncrypted,omitempty"`
 }
 
+type KeysRetrieval struct {
+	Keys []Key `bson:"keys,omitempty" json:"keys,omitempty"`
+	ActiveEncryptionKeyId string `bson:"activeEncryptionKeyId,omitempty" json:"activeEncryptionKeyId,omitempty"`
+	ActiveSigningKeyId string `bson:"activeSigningKeyId,omitempty" json:"activeSigningKeyId,omitempty"`
+}
+
 type KeyCreationRequest struct {
 	AccessPassword string `bson:"accessPassword,omitempty" json:"accessPassword,omitempty"`
 	Tag            string `bson:"tag,omitempty" json:"tag,omitempty"`
