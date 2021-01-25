@@ -7,16 +7,17 @@ import (
 )
 
 type BiographyUHC struct {
-	ID               string `json:"id,omitempty" bson:"id,omitempty"`	// It should be the same as...
-	UhcUserId        string `json:"uhcUserId,omitempty" bson:"uhcUserId,omitempty"`
-	ResourceLanguage string `json:"resourceLanguage,omitempty" bson:"resourceLanguage,omitempty"`
-	Title            string `json:"title,omitempty" bson:"title,omitempty"`
-	Description      string `json:"description,omitempty" bson:"description,omitempty"`
-	Section          string `json:"section,omitempty" bson:"section,omitempty"`
-	UhcCodeTags 	[]string`json:"uhcCodeTags,omitempty" bson:"uhcCodeTags,omitempty"`
-	LastUpdated 	string	`json:"lastUpdated,omitempty" bson:"lastUpdated,omitempty"`
-	SectionUSCDI 	string	`json:"sectionUSCDI,omitempty" bson:"sectionUSCDI,omitempty"`
-	SectionIPS   	string	`json:"sectionIPS,omitempty" bson:"sectionIPS,omitempty"`
+	ID               	string 		`json:"id,omitempty" bson:"id,omitempty"`	// It should be the same as...
+	UhcUserId        	string 		`json:"uhcUserId,omitempty" bson:"uhcUserId,omitempty"`
+	ResourceLanguage 	string 		`json:"resourceLanguage,omitempty" bson:"resourceLanguage,omitempty"`
+	Title            	string 		`json:"title,omitempty" bson:"title,omitempty"`
+	Description      	string 		`json:"description,omitempty" bson:"description,omitempty"`
+	LastUpdated 		string		`json:"lastUpdated,omitempty" bson:"lastUpdated,omitempty"`
+	SectionCodeLOINC	string		`json:"sectionCodeLOINC,omitempty" bson:"sectionCodeLOINC,omitempty"`
+	UhcCodeTags 		[]string	`json:"uhcCodeTags,omitempty" bson:"uhcCodeTags,omitempty"`
+	SectionNameUSCDI 	string		`json:"sectionNameUSCDI,omitempty" bson:"sectionNameUSCDI,omitempty"`
+	SectionNameIPS   	string		`json:"sectionNameIPS,omitempty" bson:"sectionNameIPS,omitempty"`
+	SectionPathUHC      string 		`json:"sectionPathUHC,omitempty" bson:"sectionPathUHC,omitempty"`
 	Presentation PresentationWithBundleInVC `json:"presentation,omitempty" bson:"presentation,omitempty"`
 }
 

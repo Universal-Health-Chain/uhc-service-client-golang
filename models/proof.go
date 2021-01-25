@@ -1,9 +1,8 @@
-/* Copyright 2021 Fundación UNID */
-package models
 /*
 Copyright SecureKey Technologies Inc. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0
 */
+package models
 
 //nolint:gochecknoglobals
 var JsonldCache = map[string]interface{}{

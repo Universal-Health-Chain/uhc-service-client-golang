@@ -2,6 +2,7 @@
 package models
 
 import (
+	"github.com/google/tink/go/keyset"
 	"time"
 )
 
@@ -23,6 +24,7 @@ type Key struct {
 	Purposes         []string   `bson:"capability,omitempty" json:"capability,omitempty"` // TODO: Change to []string
 	Type             string     `bson:"type,omitempty" json:"type,omitempty"`
 	Usage            string     `bson:"usage,omitempty" json:"usage,omitempty"`
+	KeysetHandle	keyset.Handle	`bson:"kh,omitempty" json:"kh,omitempty"`
 	PublicKeyBase64  string     `bson:"publicKeyBase64,omitempty" json:"publicKeyBase64,omitempty"`
 	PrivateKeyBase64 string     `bson:"privateKeyBase64,omitempty" json:"privateKeyBase64,omitempty"`
 	CreatedAt        *time.Time `bson:"createdAt,omitempty" json:"createdAt,omitempty"`

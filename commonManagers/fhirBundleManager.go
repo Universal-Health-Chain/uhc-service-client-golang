@@ -255,10 +255,6 @@ func (fhirManager *FhirBundleManager) CreateFhirMessageWithBundleDocument(fhirBu
 	bundleDocumentRaw, err := fhirManager.ResourceBytesToRawJson(&bundleDocumentBytes)
 	if err != nil { return fhir4.Bundle{}, errors.New("error getting Bundle Document raw data")}
 
-	// It creates the FHIR message with the FHIR Document into an array of resources of type json.RawMessage
-	// rawResources := []json.RawMessage{bundleDocumentRaw}
-	// fhirBundleMessage, err := fhirManager.CreateFhirMessageWithRawResources(&rawResources, messageID, authorID, entererID, responsibleID, senderID, receiverID, targetDeviceID, focusResourceID)
-
 	// It creates the FHIR Message with the MessageHeader
 	fhirBundleMessage, err := fhirManager.CreateDefaultFhirMessage(messageID, authorID, entererID, responsibleID, senderID, receiverID, targetDeviceID, focusResourceID)
 	if err != nil { return fhir4.Bundle{}, errors.New("error creating default FHIR Message")}
