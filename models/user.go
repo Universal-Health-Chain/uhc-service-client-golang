@@ -50,7 +50,7 @@ type UserRegisterRequest struct {
 	Email			string `bson:"email,omitempty" json:"email,omitempty"`
 	AppId 			string `bson:"appId,omitempty" json:"appId,omitempty"`
 	LoginPassword	string `bson:"loginPassword,omitempty" json:"loginPassword,omitempty"`
-	WalletPassword	string `bson:"walletPassword,omitempty" json:"walletPassword,omitempty"`
+
 }
 
 // Practitioner can be: administrative, driver, director, techoperator, researcher, pharmacist, doctor, nurse, paramedic, fireman, policeman ...
