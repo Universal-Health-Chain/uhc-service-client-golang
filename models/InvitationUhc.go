@@ -40,15 +40,15 @@ type ExternalInvitationDetails struct {
 
 
 type InvitationCreationRequest struct {
-	Type                    string  `json:"type" bson:"type"`
-	Label                   string  `json:"label,omitempty" bson:"label,omitempty"`
-	Goal                    string  `json:"goal,omitempty" bson:"goal,omitempty"`
-	GoalCode                string  `json:"goal-code,omitempty" bson:"goal-code,omitempty"`
-	Password                string  `json:"password" bson:"password"`
-	InitiatorUserId         string  `json:"initiatorUserId" bson:"initiatorUserId"`
-	InvitedUserId           string  `json:"invitedUserId" bson:"invitedUserId"`
-	InitiatorPublicKey      string  `bson:"initiatorPublicKey,omitempty" json:"initiatorPublicKey,omitempty"`
-	InitiatorEncyptionKeyId *string `json:"initiatorEncyptionKeyId" bson:"initiatorEncyptionKeyId"`
+	Type                     string  `json:"type" bson:"type"`
+	Label                    string  `json:"label,omitempty" bson:"label,omitempty"`
+	Goal                     string  `json:"goal,omitempty" bson:"goal,omitempty"`
+	GoalCode                 string  `json:"goal-code,omitempty" bson:"goal-code,omitempty"`
+	Password                 string  `json:"password" bson:"password"`
+	InitiatorUserId          string  `json:"initiatorUserId" bson:"initiatorUserId"`
+	InvitedUserId            string  `json:"invitedUserId" bson:"invitedUserId"`
+	InitiatorPublicKey       string  `bson:"initiatorPublicKey,omitempty" json:"initiatorPublicKey,omitempty"`
+	InitiatorEncryptionKeyId *string `json:"initiatorEncryptionKeyId" bson:"initiatorEncryptionKeyId"`
 }
 
 type InvitationAcceptationRequest struct {
