@@ -1,7 +1,6 @@
 package commonManagers
 
 import (
-	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -9,7 +8,6 @@ import (
 	"github.com/btcsuite/btcutil/base58"
 	"github.com/golang/protobuf/proto"
 	"github.com/google/tink/go/aead"
-	"github.com/google/tink/go/keyset"
 	"github.com/google/tink/go/mac"
 	commonpb "github.com/google/tink/go/proto/common_go_proto"
 	ecdsapb "github.com/google/tink/go/proto/ecdsa_go_proto"
@@ -20,13 +18,14 @@ import (
 	"github.com/hyperledger/aries-framework-go/pkg/didcomm/common/transport"
 	"github.com/hyperledger/aries-framework-go/pkg/didcomm/packer/authcrypt"
 	"strings"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
 	// "github.com/hyperledger/aries-framework-go/pkg/common/log"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/jose"
 	// "github.com/hyperledger/aries-framework-go/pkg/didcomm/packer"
 	// "github.com/hyperledger/aries-framework-go/pkg/kms"
 	// "github.com/hyperledger/aries-framework-go/pkg/storage"
 )
+
+/* TODO: clean tests */
 
 // Package authcrypt includes a Packer implementation to build and parse JWE messages using Authcrypt. It allows sending
 // messages between parties with non-repudiation messages, ie the sender identity is revealed (and therefore
@@ -106,66 +105,7 @@ func UnpackMessage(encMessage []byte) (*transport.Envelope, error) {
 func GetDID(key string) (string, error) {
 	return "did:v1:uuid:test", nil
 }
-/*
-// Authcrypt: ECDH-1PU key wrapping mode to encrypt for a given list of recipients keys
-func PackAuthcryptECDH1PU(messageEnvelope *transport.Envelope) {
-	if messageEnvelope == nil {
-		return nil, errors.New("packMessage: envelope argument is nil")
-	}
 
-	// var keyManager KeyPairManager
-
-	// It creates an array of publicKeys of recipients to encrypt for
-	var recipientCompositePublicKeys []*composite.PublicKey
-	recipientCompositePublicKeys = append(recipientCompositePublicKeys, recipientCompositePublicKey)
-
-	// It creates an array of Handlers only for testing an array of recipients
-	var recipientsPublicKeyHandlers []*keyset.Handle
-	recipientsPublicKeyHandlers = append(recipientsPublicKeyHandlers, recipientPublicKH)
-
-	// It creates the JWE message
-	mockSenderID := "1234"
-	jweEnc, err := ariesjose.NewJWEEncrypt(ariesjose.A256GCM, composite.DIDCommEncType, mockSenderID, senderPublicKH, recipientCompositePublicKeys)
-	require.NoError(t, err)
-	require.NotEmpty(t, jweEnc)
-
-	// It encrypts the JWE message: ECDH1PU / authcrypt
-	pt := []byte("plaintext payload")
-	jwEncrypted, err := jweEnc.Encrypt(pt)
-	require.NoError(t, err)
-
-	// It serializes the encrypted JWE message to be sent
-	var serializedJWE string
-	if len(recipientCompositePublicKeys) == 1 {
-		serializedJWE, err = jwEncrypted.CompactSerialize(json.Marshal)
-	} else {
-		serializedJWE, err = jwEncrypted.FullSerialize(json.Marshal)
-	}
-	require.NoError(t, err)
-	require.NotEmpty(t, serializedJWE)
-	fmt.Printf("Serialized JWE = %v \n", serializedJWE)
-
-	// Now it deserializes the received message
-	jweReceived, err := ariesjose.Deserialize(serializedJWE)
-	require.NoError(t, err)
-
-	// Test ECDH-1PU decrypt for every recipient
-	for i, recKH := range recipientsPublicKeyHandlers {
-		recipientKH := recKH
-
-		t.Run(fmt.Sprintf("%d: Decrypting JWE message test success", i), func(t *testing.T) {
-			jd := ariesjose.NewJWEDecrypt(nil, recipientKH)
-			require.NotEmpty(t, jd)
-
-			var msg []byte
-
-			msg, err = jd.Decrypt(jweReceived)
-			require.NoError(t, err)
-			require.EqualValues(t, pt, msg)
-		})
-	}
-}
-*/
 type envelopeStub struct {
 	Protected string `json:"protected,omitempty"`
 }
@@ -229,196 +169,6 @@ type Packer struct {
 	// store  storage.Store
 }
 
-/*
-// Unpack will decode the envelope using a standard format.
-// It unpacks the packedMsg not for all recipients but only for a sole given recipient (recipientKeys)
-func (p *Packer) UnpackByKID(serializedBytes []byte, recipientKID string, recipientKeyBytes []byte) (*transport.Envelope, error) {
-	jweReceived, err := jose.Deserialize(string(serializedBytes))
-	if err != nil {
-		return nil, fmt.Errorf("authcrypt Unpack: failed to deserialize JWE message: %w", err)
-	}
-
-	var senderCompositePublicKey *composite.PublicKey
-	err := json.Unmarshal(key, &senderCompositePublicKey)
-	if err != nil {
-		return nil, err
-	}
-
-	// Test ECDH-1PU decrypt for every recipient
-	jd := ariesjose.NewJWEDecrypt(nil, recipientKH)
-	// require.NotEmpty(t, jd)
-
-	var msg []byte
-	msg, err = jd.Decrypt(jweReceived)
-	// require.NoError(t, err)
-	// require.EqualValues(t, pt, msg)
-
-	// TODO get mapped verKey for the recipient encryption key (kid)
-	ecdh1puPubKeyByes, err = exportPubKeyBytes(keyHandle)
-	if err != nil {
-		return nil, fmt.Errorf("authcrypt Unpack: failed to export public key bytes: %w", err)
-	}
-
-	return &transport.Envelope{
-		Message: pt,
-		ToKey:   ecdh1puPubKeyByes,
-	}, nil
-
-	// return nil, fmt.Errorf("authcrypt Unpack: no matching recipient in packedMsg")
-}
-
-// CompositeDecrypt will decrypt a `ciphertext` representing a composite encryption with a protected cek for the
-// recipient caller of this interface. In order to get the plaintext embedded, this type is configured with the
-// recipient key type that will decrypt the embedded cek first. This type is used mainly for repudiation requests where
-// the sender identity remains unknown using ECDH-ES key wrapping with an ephemeral sender key.
-type CompositeDecrypt interface {
-	// Decrypt operation: decrypts ciphertext representing a serialized EncryptedData (mainly extracted from a
-	// JWE message) for a given recipient. It extracts the underlying secure material then executes key unwrapping of
-	// the cek and the AEAD decrypt primitive.
-	// returns resulting plaintext extracted from the serialized object.
-	Decrypt(cipherText, additionalData []byte) ([]byte, error)
-}
-
-// New will create an Packer instance to 'AuthCrypt' payloads for a given sender and list of recipients keys.
-// It will open a store (fetch cached one) that will contain third party keys. This store must be pre-populated with
-// the sender key required by a recipient to Unpack a JWE envelope. It is not needed by the sender (as the sender packs
-// the envelope with its own key).
-// The returned Packer contains all the information required to pack and unpack payloads.
-
-// func New(ctx packer.Provider, encAlg jose.EncAlg) (*Packer, error) {}
-// func New(ctx packer.Provider, encAlg jose.EncAlg) (*Packer, error) {}
-
-// Pack will encode the payload argument
-// Using the protocol defined by the Authcrypt message of Aries RFC 0334
-// with the following arguments:
-// payload: the payload message that will be protected
-// senderID: the key id of the sender (stored in the KMS)
-// recipientsPubKeys: public keys.
-// func (p *Packer) Pack(payload, senderID []byte, recipientsPubKeys [][]byte) ([]byte, error) {
-
-func (p *Packer) Pack(payload, senderID []byte, kh *keyset.Handle, recipientsPubKeys [][]byte) ([]byte, error) {
-	if len(recipientsPubKeys) == 0 {
-		return nil, fmt.Errorf("authcrypt Pack: empty recipientsPubKeys")
-	}
-
-	recECKeys, err := unmarshalRecipientKeys(recipientsPubKeys)
-	if err != nil {
-		return nil, fmt.Errorf("authcrypt Pack: failed to convert recipient keys: %w", err)
-	}
-
-	// kh, err := p.Get(string(senderID))	// pass KeyHandle in params
-	// if err != nil { return nil, fmt.Errorf("authcrypt Pack: failed to get sender key from KMS: %w", err)}
-
-	jweEncrypter, err := jose.NewJWEEncrypt(p.encAlg, encodingType, string(senderID), kh, recECKeys)
-	if err != nil {
-		return nil, fmt.Errorf("authcrypt Pack: failed to new JWEEncrypt instance: %w", err)
-	}
-
-	jwe, err := jweEncrypter.Encrypt(payload)
-	if err != nil {
-		return nil, fmt.Errorf("authcrypt Pack: failed to encrypt payload: %w", err)
-	}
-
-	var s string
-
-	if len(recipientsPubKeys) == 1 {
-		s, err = jwe.CompactSerialize(json.Marshal)
-	} else {
-		s, err = jwe.FullSerialize(json.Marshal)
-	}
-
-	if err != nil {
-		return nil, fmt.Errorf("authcrypt Pack: failed to serialize JWE message: %w", err)
-	}
-
-	return []byte(s), nil
-}
-
-func unmarshalRecipientKeys(keys [][]byte) ([]*composite.PublicKey, error) {
-	var pubKeys []*composite.PublicKey
-
-	for _, key := range keys {
-		var ecKey *composite.PublicKey
-
-		err := json.Unmarshal(key, &ecKey)
-		if err != nil {
-			return nil, err
-		}
-
-		pubKeys = append(pubKeys, ecKey)
-	}
-
-	return pubKeys, nil
-}
-
-
-// Unpack will decode the envelope using a standard format.
-// It unpacks the packedMsg not for all recipients but only for a sole given recipient (recipientKeys)
-func (p *Packer) Unpack(packedMsg []byte, recipientKeys *keyset.Handle) (*transport.Envelope, error) {
-	jwe, err := jose.Deserialize(string(packedMsg))
-	if err != nil {
-		return nil, fmt.Errorf("authcrypt Unpack: failed to deserialize JWE message: %w", err)
-	}
-
-	for i := range jwe.Recipients {
-		var (
-			kid                   string
-			kh                    interface{}
-			pt, ecdh1puPubKeyByes []byte
-		)
-
-		kid, err = getKID(i, jwe)
-		if err != nil {
-			return nil, fmt.Errorf("authcrypt Unpack: %w", err)
-		}
-
-		// TODO: get publicSignKey By KID (DID KeyID)
-		kh, err = p.kms.Get(kid)
-		if err != nil {
-			if errors.Is(err, ErrDataNotFound) {
-				retriesMsg := ""
-
-				if i < len(jwe.Recipients) {
-					retriesMsg = ", will try another recipient"
-				}
-
-				// logger.Debugf("authcrypt Unpack: recipient keyID not found in KMS: %v%s", kid, retriesMsg)
-				fmt.Printf("authcrypt Unpack: recipient keyID not found in KMS: %v%s", kid, retriesMsg)
-				continue
-			}
-
-			return nil, fmt.Errorf("authcrypt Unpack: failed to get key from kms: %w", err)
-		}
-
-		keyHandle, ok := kh.(*keyset.Handle)
-		if !ok {
-			return nil, fmt.Errorf("authcrypt Unpack: invalid keyset handle")
-		}
-
-		jweDecrypter := NewJWEDecrypt(keyHandle)
-
-		pt, err = jweDecrypter.Decrypt(jwe)
-		if err != nil {
-			return nil, fmt.Errorf("authcrypt Unpack: failed to decrypt JWE packedMsg: %w", err)
-		}
-
-		// TODO get mapped verKey for the recipient encryption key (kid)
-		ecdh1puPubKeyByes, err = exportPubKeyBytes(keyHandle)
-		if err != nil {
-			return nil, fmt.Errorf("authcrypt Unpack: failed to export public key bytes: %w", err)
-		}
-
-		return &transport.Envelope{
-			Message: pt,
-			ToKey:   ecdh1puPubKeyByes,
-		}, nil
-	}
-
-	return nil, fmt.Errorf("authcrypt Unpack: no matching recipient in packedMsg")
-}
-
- */
-
 func getKID(i int, jwe *jose.JSONWebEncryption) (string, error) {
 	var kid string
 
@@ -436,48 +186,6 @@ func getKID(i int, jwe *jose.JSONWebEncryption) (string, error) {
 	return kid, nil
 }
 
-func exportPubKeyBytes(keyHandle *keyset.Handle) ([]byte, error) {
-	pubKH, err := keyHandle.Public()
-	if err != nil {
-		return nil, err
-	}
-
-	buf := new(bytes.Buffer)
-	pubKeyWriter := keyio.NewWriter(buf)
-
-	err = pubKH.WriteWithNoSecrets(pubKeyWriter)
-	if err != nil {
-		return nil, err
-	}
-
-	return buf.Bytes(), nil
-}
-
-// EncodingType for didcomm.
-func (p *Packer) EncodingType() string {
-	return encodingType
-}
-/*
-func (p *Packer) CreateKeys(kt KeyType) (string, interface{}, error) {
-	if kt == "" {
-		return "", nil, fmt.Errorf("failed to create new key, missing key type")
-	}
-
-	keyTemplate, err := getKeyTemplate(kt)
-	if err != nil {
-		return "", nil, fmt.Errorf("create: failed to getKeyTemplate: %w", err)
-	}
-
-	kh, err := keyset.NewHandle(keyTemplate)
-	if err != nil {
-		return "", nil, fmt.Errorf("create: failed to create new keyset handle: %w", err)
-	}
-
-	// kID, err := l.storeKeySet(kh, kt)
-	// if err != nil { return "", nil, fmt.Errorf("create: failed to store keyset: %w", err) }
-	kID := keyset.
-	return kID, kh, nil
-}*/
 
 //case ECDSAP521TypeDER:
 

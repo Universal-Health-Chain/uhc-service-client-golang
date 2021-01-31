@@ -23,32 +23,18 @@ import (
 	"testing"
 )
 
-/* https://github.com/google/tink/blob/master/docs/KEY-MANAGEMENT.md
-Tink provides support for key management features like key versioning, key rotation, and storing keysets
-	or encrypting with master keys in remote key management systems (KMS).
-
-Envelope encryption: Via the AEAD interface, Tink supports envelope encryption in tandem with GCP and AWS KMS.
-You first create a key encryption key (KEK) in a Key Management System (KMS) such as AWS KMS or Google Cloud KMS.
-To encrypt some data, you then locally generate a data encryption key (DEK), encrypt data (e.g. private keys) with the DEK,
-	ask the KMS to encrypt the DEK with the KEK, and store the encrypted DEK with the encrypted data in a secure way.
-At a later point, you can retrieve the encrypted data and the encrypted DEK, ask the KMS to decrypt the DEK, and use the decrypted DEK to decrypt the data.
-
-Tink performs cryptographic tasks via so-called primitives,
-	each of which is defined via a corresponding interface that specifies the functionality of the primitive.
-
-Tink/Tinkey can encrypt or decrypt keysets with master keys residing in remote KMSes. Currently, the following KMSes are supported:
-	- Google Cloud KMS
-	- AWS KMS
-	- Android Keystore
-	- On iOS, Tink can also directly load or store keysets in iOS KeyChain.
-*/
-
-// Package tinkcrypto includes the default implementation of pkg/crypto. It uses Tink for executing crypto primitives
+// Package Aries tinkcrypto includes the default implementation of pkg/crypto. It uses Tink for executing crypto primitives
 // New creates a new Crypto instance.
 // Encrypt will encrypt msg using the implementation's corresponding encryption key and primitive in kh of a public key.
 // Decrypt will decrypt cipher using the implementation's corresponding encryption key referenced by kh of a private key.
 // Sign will sign msg using the implementation's corresponding signing key referenced by kh of a private key.
 // Verify will verify sig signature of msg using the implementation's corresponding signing key referenced by kh of a public key.
+
+// Package ecdh1pu provides implementations of payload encryption using ECDH-1PU KW key wrapping with AEAD primitives.
+// The functionality of ecdh1pu Encryption is represented as a pair of primitives (interfaces):
+// - ECDH1PUEncrypt for encryption of data and aad for a given list of recipients keys
+// - ECDH1PUDecrypt for decryption of data for a certain recipient key and returning decrypted plaintext
+// e.g. authcryptTemplate := ecdh1pu.ECDH1PU256KWAES256GCMKeyTemplate()
 
 // WrapKey will do ECDH (ES or 1PU) key wrapping of cek using apu, apv and recipient public key 'recPubKey'.
 // The optional 'wrapKeyOpts' specifies the sender kh for 1PU key wrapping.
@@ -83,23 +69,27 @@ const UnpackedJWEForTesting =  `{ message: '{"data":"some data"}',
       senderKey: 'BPMn8PXPuoogu9Ko18sJJXsw2ea2eLFdMgdBgkZibALX',
       nonRepudiableVerification: false }`
 
+func PublicKeyToKeysetHandle() {
+}
+
+// FAILS Pack message with DID with error "failed to convert recipient keys"
 /*
 func Test_PackMessage(t *testing.T) {
 	payloadBytes := []byte("test")
-	fromKeyBytes, _ := Base64StringToBytes(SignPairAPublicKeyB64ForTesting)
+	fromKeyBytes, _ := Base64StringToBytes(SignPairAPrivateKeyB64ForTesting)
 	toKeyBytes, _ := Base64StringToBytes(SignPairBPublicKeyForB64ForTesting)
 
 	// Packing with 'Envelope'
 	messageEnvelope := &transport.Envelope{
 		Message: payloadBytes,
 		FromKey: fromKeyBytes,
-		// ToKeys:  []string{"key1", "key2"},	// ToKeys stores keys for an outbound message packing
+		ToKeys:  []string{base58.Encode(toKeyBytes)},	// base58 public keys for an outbound message packing
 		ToKey:   toKeyBytes,	// ToKey holds the key that was used to decrypt an inbound message
-		FromDID: "",
-		ToDID:   "",
+		FromDID: "did:test:sender",
+		ToDID:   "did:test:receiver",
 	}
 
-	jwEncryptedBytes, err := PackMessage(messageEnvelope)
+	jwEncryptedBytes, err := PackMessage(messageEnvelope) // failed to pack: authcrypt Pack: failed to convert recipient keys: invalid character '¬' looking for beginning of value
 	require.NoError(t, err)
 	fmt.Printf("Unpacked Message = %v \n", jwEncryptedBytes)
 
@@ -111,6 +101,7 @@ func Test_PackMessage(t *testing.T) {
 	// jwe, err := UnpackMessage(jwEncrypted)
 	// require.NoError(t, err)
 }
+*/
 
 func Test_UnpackMessage(t *testing.T) {
 	// UnpackMessage
@@ -128,7 +119,7 @@ func Test_ECDH1PU(t *testing.T) {
 	// recipientCompositePublicKeys, recKHs := createECDHEntities(t, 2, false)
 	recipientPublicKH, err := keyManager.CreateAuthcryptKeysetHandle()
 	require.NoError(t, err)
-	recipientCompositePublicKey, err := keyManager.GetCompositePublicKey(recipientPublicKH)
+	recipientCompositePublicKey, err := keyManager.GetCompositePublicKeyByKeyset(recipientPublicKH)
 	require.NoError(t, err)
 
 	// It creates an array of publicKeys of recipients to encrypt for
@@ -164,7 +155,10 @@ func Test_ECDH1PU(t *testing.T) {
 	// Now it deserializes the received message
 	jweReceived, err := ariesjose.Deserialize(serializedJWE)
 	require.NoError(t, err)
+	fmt.Printf("Deserialized JWE = %v \n", jweReceived)
 
+
+	/* TODO: test Unpack ECDH-1PU
 	// Test ECDH-1PU decrypt for every recipient
 	for i, recKH := range recipientsPublicKeyHandlers {
 		recipientKH := recKH
@@ -181,10 +175,13 @@ func Test_ECDH1PU(t *testing.T) {
 
 		})
 	}
+
+	 */
 }
 
-*/
+
 // ----------- from Aries 0.1.4 -------------
+
 func TestJWEEncryptRoundTrip(t *testing.T) {
 	_, err := ariesjose.NewJWEEncrypt("", "", "", nil, nil)
 	require.EqualError(t, err, "empty recipientsPubKeys list",
