@@ -1,7 +1,11 @@
 package commonManagers
 
 import (
+	"crypto/ecdsa"
 	"errors"
+	"fmt"
+	"github.com/google/tink/go/subtle/random"
+	"math/big"
 	"testing"
 
 	// "github.com/google/tink/go/subtle"
@@ -11,7 +15,7 @@ import (
 
 	"github.com/google/tink/go/aead"
 	aeadsubtle "github.com/google/tink/go/aead/subtle"
-	// hybrid "github.com/google/tink/go/hybrid/subtle"
+	hybrid "github.com/google/tink/go/hybrid/subtle"
 	"github.com/google/tink/go/keyset"
 	// "github.com/google/tink/go/mac"
 	"github.com/google/tink/go/signature"
@@ -21,8 +25,20 @@ import (
 
 	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto"
 	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
-	// "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
 )
+
+/*
+	// if AES then NIST-P256
+	encT := aead.AES256GCMKeyTemplate()
+	keyURL := nistPECDHKWPublicKeyTypeURL
+
+	if !isAES is XChaCha20Poly1305 and then X25519 (CURVE25519 OKP)
+	encT = aead.XChaCha20Poly1305KeyTemplate()
+	keyURL = x25519ECDHKWPublicKeyTypeURL
+	}
+ */
+
 var errBadKeyHandleFormat = errors.New("bad key handle format")
 const testMessage = "test message"
 
@@ -42,7 +58,7 @@ func TestCrypto_EncryptDecrypt(t *testing.T) {
 		badKH, err := keyset.NewHandle(aead.KMSEnvelopeAEADKeyTemplate("babdUrl", nil))
 		require.NoError(t, err)
 
-		badKH2, err := keyset.NewHandle(ecdh.ECDH256KWAES256GCMKeyTemplate())
+		badKH2, err := keyset.NewHandle(signature.ECDSAP256KeyTemplate())
 		require.NoError(t, err)
 
 		c := tinkcrypto.Crypto{}
@@ -180,6 +196,329 @@ func TestCrypto_SignVerify(t *testing.T) {
 		err = c.Verify(s, msg, badKH)
 		require.Error(t, err)
 	})
+}
+
+// X25519ECDHKWKeyTemplate is a KeyTemplate that generates a key that accepts a CEK for JWE content
+// encryption. CEK wrapping is done outside of this Tink key (in the tinkcrypto service).
+// Keys from this template represent a valid recipient public/private key pairs and can be stored in the KMS.The
+// recipient key represented in this key template uses the following key wrapping curve:
+//  - Curve25519
+
+func TestCrypto_ECDH1PU_Wrap_Unwrap_X25519ECDHKWKey(t *testing.T) {
+	recipientKeyHandle, err := keyset.NewHandle(ecdh.X25519ECDHKWKeyTemplate())
+	require.NoError(t, err)
+
+	recipientKey, err := keyio.ExtractPrimaryPublicKey(recipientKeyHandle)
+	require.NoError(t, err)
+
+	senderKH, err := keyset.NewHandle(ecdh.X25519ECDHKWKeyTemplate())
+	require.NoError(t, err)
+
+	c, err := tinkcrypto.New()
+	require.NoError(t, err)
+
+	cek := random.GetRandomBytes(uint32(crypto.DefKeySize))
+	apu := random.GetRandomBytes(uint32(10)) // or sender name
+	apv := random.GetRandomBytes(uint32(10)) // or recipient name
+
+	// test with bad senderKH value
+	_, err = c.WrapKey(cek, apu, apv, recipientKey, crypto.WithSender("badKey"))
+	require.Error(t,err)
+	fmt.Printf("error is OK: %v \n", err)
+
+	// now test WrapKey with good key
+	wrappedKey, err := c.WrapKey(cek, apu, apv, recipientKey, crypto.WithSender(senderKH))
+	require.NoError(t, err)
+	require.NotEmpty(t, wrappedKey.EncryptedCEK)
+	require.NotEmpty(t, wrappedKey.EPK)
+	require.EqualValues(t, wrappedKey.APU, apu)
+	require.EqualValues(t, wrappedKey.APV, apv)
+	require.Equal(t, wrappedKey.Alg, tinkcrypto.ECDH1PUA256KWAlg)
+
+	// test with valid wrappedKey, senderKH (public key) and recipientKey
+	senderPubKH, err := senderKH.Public()
+	require.NoError(t, err)
+
+	uCEK, err := c.UnwrapKey(wrappedKey, recipientKeyHandle, crypto.WithSender(senderPubKH))
+	require.NoError(t, err)
+	require.EqualValues(t, cek, uCEK)
+
+	// extract sender public key and try Unwrap using extracted key
+	senderPubKey, err := keyio.ExtractPrimaryPublicKey(senderKH)
+	require.NoError(t, err)
+	fmt.Printf("senderPubKey %v\n", senderPubKey)
+	/*
+	crv, err := hybrid.GetCurve(senderPubKey.Curve)
+	require.NoError(t, err)
+
+	senderECPubKey := &ecdsa.PublicKey{
+		Curve: crv,
+		X:     new(big.Int).SetBytes(senderPubKey.X),
+		Y:     new(big.Int).SetBytes(senderPubKey.Y),
+	}
+
+	uCEK, err = c.UnwrapKey(wrappedKey, recipientKeyHandle, crypto.WithSender(senderECPubKey))
+	require.NoError(t, err)
+	require.EqualValues(t, cek, uCEK)
+
+	 */
+}
+
+func TestCrypto_ECDH1PU_Wrap_Unwrap_X25519ECDHKWKey_Using_CryptoPubKey_as_SenderKey(t *testing.T) {
+	recipientKeyHandle, err := keyset.NewHandle(ecdh.X25519ECDHKWKeyTemplate())
+	require.NoError(t, err)
+
+	recipientKey, err := keyio.ExtractPrimaryPublicKey(recipientKeyHandle)
+	require.NoError(t, err)
+
+	senderKH, err := keyset.NewHandle(ecdh.X25519ECDHKWKeyTemplate())
+	require.NoError(t, err)
+
+	c, err := tinkcrypto.New()
+	require.NoError(t, err)
+
+	cek := random.GetRandomBytes(uint32(crypto.DefKeySize))
+	apu := random.GetRandomBytes(uint32(10)) // or sender name
+	apv := random.GetRandomBytes(uint32(10)) // or recipient name
+
+	// extract sender public key as crypto.Public key to be used in WithSender()
+	senderPubKey, err := keyio.ExtractPrimaryPublicKey(senderKH)
+	require.NoError(t, err)
+
+	// test WrapKey with extacted crypto.PublicKey above directly
+	// WrapKey() only accepts senderKH as keyset.Handle because it will use its private key.
+	wrappedKey, err := c.WrapKey(cek, apu, apv, recipientKey, crypto.WithSender(senderKH))
+	require.NoError(t, err)
+	require.NotEmpty(t, wrappedKey.EncryptedCEK)
+	require.NotEmpty(t, wrappedKey.EPK)
+	require.EqualValues(t, wrappedKey.APU, apu)
+	require.EqualValues(t, wrappedKey.APV, apv)
+	require.Equal(t, wrappedKey.Alg, tinkcrypto.ECDH1PUA256KWAlg)
+
+	// UnwrapKey require sender public key used here or keyset.Handle which was tested in the previous function above
+	uCEK, err := c.UnwrapKey(wrappedKey, recipientKeyHandle, crypto.WithSender(senderPubKey))
+	require.NoError(t, err)
+	require.EqualValues(t, cek, uCEK)
+
+	/*
+	crv, err := hybrid.GetCurve(senderPubKey.Curve)
+	require.NoError(t, err)
+
+	senderECPubKey := &ecdsa.PublicKey{
+		Curve: crv,
+		X:     new(big.Int).SetBytes(senderPubKey.X),
+		Y:     new(big.Int).SetBytes(senderPubKey.Y),
+	}
+
+	uCEK, err = c.UnwrapKey(wrappedKey, recipientKeyHandle, crypto.WithSender(senderECPubKey))
+	require.NoError(t, err)
+	require.EqualValues(t, cek, uCEK)
+
+	 */
+}
+
+
+// X25519ECDHXChachaKeyTemplateWithCEK is similar to X25519ECDHKWKeyTemplate but adding the cek to execute the
+// CompositeEncrypt primitive for encrypting a message targeted to one ore more recipients.
+// Keys from this template offer valid CompositeEncrypt primitive execution only and should not be stored in the KMS.
+// The key created from this template has no recipient key info linked to it. It is exclusively used for primitive
+// execution using content encryption algorithm:
+//  - XChacha20Poly1305
+
+//  TODO: not enough arguments in call to ecdh.X25519ECDHXChachaKeyTemplateWithCEK
+//	have ()
+//	want ([]byte)
+/*
+func TestCrypto_ECDH1PU_Wrap_Unwrap_X25519ECDHXChachaKeyTemplateWithCEK(t *testing.T) {
+	recipientKeyHandle, err := keyset.NewHandle(ecdh.X25519ECDHXChachaKeyTemplateWithCEK())
+	require.NoError(t, err)
+
+	recipientKey, err := keyio.ExtractPrimaryPublicKey(recipientKeyHandle)
+	require.NoError(t, err)
+
+	senderKH, err := keyset.NewHandle(ecdh.X25519ECDHXChachaKeyTemplateWithCEK())
+	require.NoError(t, err)
+
+	c, err := tinkcrypto.New()
+	require.NoError(t, err)
+
+	cek := random.GetRandomBytes(uint32(crypto.DefKeySize))
+	apu := random.GetRandomBytes(uint32(10)) // or sender name
+	apv := random.GetRandomBytes(uint32(10)) // or recipient name
+
+	// test with bad senderKH value
+	_, err = c.WrapKey(cek, apu, apv, recipientKey, crypto.WithSender("badKey"))
+	require.Error(t,err)
+	fmt.Printf("error is OK: %v \n", err)
+
+	// now test WrapKey with good key
+	wrappedKey, err := c.WrapKey(cek, apu, apv, recipientKey, crypto.WithSender(senderKH))
+	require.NoError(t, err)
+	require.NotEmpty(t, wrappedKey.EncryptedCEK)
+	require.NotEmpty(t, wrappedKey.EPK)
+	require.EqualValues(t, wrappedKey.APU, apu)
+	require.EqualValues(t, wrappedKey.APV, apv)
+	require.Equal(t, wrappedKey.Alg, tinkcrypto.ECDH1PUXC20PKWAlg)
+
+	// test with valid wrappedKey, senderKH (public key) and recipientKey
+	senderPubKH, err := senderKH.Public()
+	require.NoError(t, err)
+
+	uCEK, err := c.UnwrapKey(wrappedKey, recipientKeyHandle, crypto.WithSender(senderPubKH))
+	require.NoError(t, err)
+	require.EqualValues(t, cek, uCEK)
+
+	// extract sender public key and try Unwrap using extracted key
+	senderPubKey, err := keyio.ExtractPrimaryPublicKey(senderKH)
+	require.NoError(t, err)
+	fmt.Printf("senderPubKey %v\n", senderPubKey)
+}
+
+func TestCrypto_ECDH1PU_Wrap_Unwrap_X25519ECDHXChachaKeyTemplateWithCEK_Using_CryptoPubKey_as_SenderKey(t *testing.T) {
+	recipientKeyHandle, err := keyset.NewHandle(ecdh.X25519ECDHXChachaKeyTemplateWithCEK())
+	require.NoError(t, err)
+
+	recipientKey, err := keyio.ExtractPrimaryPublicKey(recipientKeyHandle)
+	require.NoError(t, err)
+
+	senderKH, err := keyset.NewHandle(ecdh.X25519ECDHXChachaKeyTemplateWithCEK())
+	require.NoError(t, err)
+
+	c, err := tinkcrypto.New()
+	require.NoError(t, err)
+
+	cek := random.GetRandomBytes(uint32(crypto.DefKeySize))
+	apu := random.GetRandomBytes(uint32(10)) // or sender name
+	apv := random.GetRandomBytes(uint32(10)) // or recipient name
+
+	// extract sender public key as crypto.Public key to be used in WithSender()
+	senderPubKey, err := keyio.ExtractPrimaryPublicKey(senderKH)
+	require.NoError(t, err)
+
+	// test WrapKey with extacted crypto.PublicKey above directly
+	// WrapKey() only accepts senderKH as keyset.Handle because it will use its private key.
+	wrappedKey, err := c.WrapKey(cek, apu, apv, recipientKey, crypto.WithSender(senderKH))
+	require.NoError(t, err)
+	require.NotEmpty(t, wrappedKey.EncryptedCEK)
+	require.NotEmpty(t, wrappedKey.EPK)
+	require.EqualValues(t, wrappedKey.APU, apu)
+	require.EqualValues(t, wrappedKey.APV, apv)
+	require.Equal(t, wrappedKey.Alg, tinkcrypto.ECDH1PUXC20PKWAlg)
+
+	// UnwrapKey require sender public key used here or keyset.Handle which was tested in the previous function above
+	uCEK, err := c.UnwrapKey(wrappedKey, recipientKeyHandle, crypto.WithSender(senderPubKey))
+	require.NoError(t, err)
+	require.EqualValues(t, cek, uCEK)
+}
+
+ */
+
+func TestCrypto_ECDH1PU_Wrap_Unwrap_Key(t *testing.T) {
+	recipientKeyHandle, err := keyset.NewHandle(ecdh.NISTP256ECDHKWKeyTemplate())
+	require.NoError(t, err)
+
+	recipientKey, err := keyio.ExtractPrimaryPublicKey(recipientKeyHandle)
+	require.NoError(t, err)
+
+	senderKH, err := keyset.NewHandle(ecdh.NISTP256ECDHKWKeyTemplate())
+	require.NoError(t, err)
+
+	c, err := tinkcrypto.New()
+	require.NoError(t, err)
+
+	cek := random.GetRandomBytes(uint32(crypto.DefKeySize))
+	apu := random.GetRandomBytes(uint32(10)) // or sender name
+	apv := random.GetRandomBytes(uint32(10)) // or recipient name
+
+	// test with bad senderKH value
+	_, err = c.WrapKey(cek, apu, apv, recipientKey, crypto.WithSender("badKey"))
+	require.EqualError(t, err, "wrapKey: deriveKEKAndWrap: error ECDH-1PU kek derivation: derive1PUKEK: EC key"+
+		" derivation error derive1PUWithECKey: failed to retrieve sender key: ksToPrivateECDSAKey: bad key handle "+
+		"format")
+
+	// now test WrapKey with good key
+	wrappedKey, err := c.WrapKey(cek, apu, apv, recipientKey, crypto.WithSender(senderKH))
+	require.NoError(t, err)
+	require.NotEmpty(t, wrappedKey.EncryptedCEK)
+	require.NotEmpty(t, wrappedKey.EPK)
+	require.EqualValues(t, wrappedKey.APU, apu)
+	require.EqualValues(t, wrappedKey.APV, apv)
+	require.Equal(t, wrappedKey.Alg, tinkcrypto.ECDH1PUA256KWAlg)
+
+	// test with valid wrappedKey, senderKH (public key) and recipientKey
+	senderPubKH, err := senderKH.Public()
+	require.NoError(t, err)
+
+	uCEK, err := c.UnwrapKey(wrappedKey, recipientKeyHandle, crypto.WithSender(senderPubKH))
+	require.NoError(t, err)
+	require.EqualValues(t, cek, uCEK)
+
+	// extract sender public key and try Unwrap using extracted key
+	senderPubKey, err := keyio.ExtractPrimaryPublicKey(senderKH)
+	require.NoError(t, err)
+
+	crv, err := hybrid.GetCurve(senderPubKey.Curve)
+	require.NoError(t, err)
+
+	senderECPubKey := &ecdsa.PublicKey{
+		Curve: crv,
+		X:     new(big.Int).SetBytes(senderPubKey.X),
+		Y:     new(big.Int).SetBytes(senderPubKey.Y),
+	}
+
+	uCEK, err = c.UnwrapKey(wrappedKey, recipientKeyHandle, crypto.WithSender(senderECPubKey))
+	require.NoError(t, err)
+	require.EqualValues(t, cek, uCEK)
+}
+
+func TestCrypto_ECDH1PU_Wrap_Unwrap_Key_Using_CryptoPubKey_as_SenderKey(t *testing.T) {
+	recipientKeyHandle, err := keyset.NewHandle(ecdh.NISTP256ECDHKWKeyTemplate())
+	require.NoError(t, err)
+
+	recipientKey, err := keyio.ExtractPrimaryPublicKey(recipientKeyHandle)
+	require.NoError(t, err)
+
+	senderKH, err := keyset.NewHandle(ecdh.NISTP256ECDHKWKeyTemplate())
+	require.NoError(t, err)
+
+	c, err := tinkcrypto.New()
+	require.NoError(t, err)
+
+	cek := random.GetRandomBytes(uint32(crypto.DefKeySize))
+	apu := random.GetRandomBytes(uint32(10)) // or sender name
+	apv := random.GetRandomBytes(uint32(10)) // or recipient name
+
+	// extract sender public key as crypto.Public key to be used in WithSender()
+	senderPubKey, err := keyio.ExtractPrimaryPublicKey(senderKH)
+	require.NoError(t, err)
+
+	// test WrapKey with extacted crypto.PublicKey above directly
+	// WrapKey() only accepts senderKH as keyset.Handle because it will use its private key.
+	wrappedKey, err := c.WrapKey(cek, apu, apv, recipientKey, crypto.WithSender(senderKH))
+	require.NoError(t, err)
+	require.NotEmpty(t, wrappedKey.EncryptedCEK)
+	require.NotEmpty(t, wrappedKey.EPK)
+	require.EqualValues(t, wrappedKey.APU, apu)
+	require.EqualValues(t, wrappedKey.APV, apv)
+	require.Equal(t, wrappedKey.Alg, tinkcrypto.ECDH1PUA256KWAlg)
+
+	// UnwrapKey require sender public key used here or keyset.Handle which was tested in the previous function above
+	uCEK, err := c.UnwrapKey(wrappedKey, recipientKeyHandle, crypto.WithSender(senderPubKey))
+	require.NoError(t, err)
+	require.EqualValues(t, cek, uCEK)
+
+	crv, err := hybrid.GetCurve(senderPubKey.Curve)
+	require.NoError(t, err)
+
+	senderECPubKey := &ecdsa.PublicKey{
+		Curve: crv,
+		X:     new(big.Int).SetBytes(senderPubKey.X),
+		Y:     new(big.Int).SetBytes(senderPubKey.Y),
+	}
+
+	uCEK, err = c.UnwrapKey(wrappedKey, recipientKeyHandle, crypto.WithSender(senderECPubKey))
+	require.NoError(t, err)
+	require.EqualValues(t, cek, uCEK)
 }
 
 

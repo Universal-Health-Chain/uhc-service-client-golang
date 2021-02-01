@@ -4,7 +4,6 @@ go 1.15
 
 require (
 	cloud.google.com/go/pubsub v1.3.1
-	github.com/PaesslerAG/gval v1.1.0 // indirect
 	github.com/Universal-Health-Chain/JcsEd25519Signature2020/signature-suite-impls/golang v0.0.0-20210102050447-d3ca5b135a5e
 	github.com/Universal-Health-Chain/aries-framework-go v0.1.6-0.20210201095152-5c25bcb6352a
 	github.com/btcsuite/btcutil v1.0.1

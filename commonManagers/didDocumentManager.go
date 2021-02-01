@@ -3,13 +3,14 @@ package commonManagers
 
 import (
 	"errors"
-	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 	didDocument "github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/did"
 	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/jsonld"
 	documentSigner "github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/signer"
 	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/suite"
 	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/suite/ed25519signature2018"
 	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/util/signature"
+	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
+	"time"
 )
 
 const (
@@ -66,66 +67,94 @@ func CreateDefaultDID(signKeyPair models.Key, encryptKeyPair models.Key) (*didDo
 		return nil, errors.New("No valid KeyPair")
 	}
 	// encryptPublicKeyBase58 := base58.Encode(encryptPublicKeyBytes)
-
-	/*
-	eService := didDocument.Service{
-		ID:              signKeyPair.PublicKeyInfo.ControllerDID + "#" + "did-communication",
-		Type:            "did-communication",
-		ServiceEndpoint: "https://agent.example.com/",
-		RecipientKeys:   []string{signKeyPair.PublicKeyInfo.ControllerDID},
-		Priority:        0,
-	}*/
 	// createdTime := time.Now()
-	
-	didAuthentication := []didDocument.VerificationMethod{
-		{
-			PublicKey: *didDocument.NewPublicKeyFromBytes(
-				signKeyPair.PublicKeyDID,
-				signKeyPair.Type,
-				signKeyPair.ControllerDID,
-				signPublicKeyBytes),
-			Relationship: didDocument.Authentication,
-		},
-	}
 
-	didKeyAgreement := []didDocument.VerificationMethod{
+	didKeyAgreement := []didDocument.Verification{
 		{
-			PublicKey: *didDocument.NewPublicKeyFromBytes(
-				encryptKeyPair.PublicKeyDID,
-				encryptKeyPair.Type,
-				encryptKeyPair.ControllerDID,
-				encryptPublicKeyBytes),
+			VerificationMethod: didDocument.VerificationMethod{
+				ID:          "did:example:123456789abcdefghi#keys-1",
+				Type:        "Secp256k1VerificationKey2018",
+				Controller:  "did:example:123456789abcdefghi",
+				Value:       encryptPublicKeyBytes,
+			},
 			Relationship: didDocument.KeyAgreement,
 		},
 	}
 
-	didPublicKeys := []didDocument.PublicKey{
+	eAuthentication := []didDocument.Verification{
 		{
-			ID:         signKeyPair.PublicKeyDID,	// signKeyPair.ControllerDID + "#" + signKeyPair.ID
-			Controller: signKeyPair.ControllerDID,	// DIDMethod + UhcUserId
-			Type:       signKeyPair.Type,
-			Value:      signPublicKeyBytes,
-		},
-		{
-			ID:         encryptKeyPair.PublicKeyDID,	// encryptKeyPair.ControllerDID + "#" + encryptKeyPair.ID
-			Controller: encryptKeyPair.ControllerDID,	// DIDMethod + UhcUserId
-			Type:       encryptKeyPair.Type,
-			Value:      encryptPublicKeyBytes,
+			VerificationMethod: didDocument.VerificationMethod{
+				ID:          "did:example:123456789abcdefghi#key3",
+				Controller:  "did:example:123456789abcdefghi",
+				Type:        "RsaVerificationKey2018",
+				Value:       signPublicKeyBytes,
+			},
+			Relationship: didDocument.Authentication,
+			Embedded: true,
 		},
 	}
 
+	eAssertion := []didDocument.Verification{
+		{
+			VerificationMethod: didDocument.VerificationMethod{
+				ID:          "did:example:123456789abcdefghi#key3",
+				Controller:  "did:example:123456789abcdefghi",
+				Type:        "RsaVerificationKey2018",
+				Value:       signPublicKeyBytes,
+			},
+			Relationship: didDocument.AssertionMethod,
+			Embedded: true,
+		},
+	}
+
+	// test public key
+	ePubKey := []didDocument.VerificationMethod{
+		{
+			ID:          encryptKeyPair.PublicKeyDID,
+			Controller:  encryptKeyPair.ControllerDID,
+			Type:        encryptKeyPair.Type,
+			Value:       encryptPublicKeyBytes,
+		},
+		{
+			ID:          encryptKeyPair.PublicKeyDID,
+			Controller:  encryptKeyPair.ControllerDID,
+			Type:        encryptKeyPair.Type,
+			Value:       signPublicKeyBytes,
+		},
+	}
+
+	// test services
+	eServices := []didDocument.Service{
+		{
+			ID:              signKeyPair.ControllerDID + "#" + "ipsSection" + "&" + "uhcCodeTag",
+			Type:            "SocialWebInboxService",
+			ServiceEndpoint: "https://api.unid.es/v1/gateway/",
+			Properties:      map[string]interface{}{"some": map[string]interface{}{"value": "data1", "value2": "data2"}},
+		},
+		{
+			ID:                       signKeyPair.ControllerDID + "#" + "did-communication",
+			Type:                     "did-communication",
+			Priority:                 0,
+			RecipientKeys:            []string{"did:v1:uuid:<uuid>#Key2Base58"},
+			RoutingKeys:              []string{"did:v1:uuid:<uuid>#Key2Base58"},
+			ServiceEndpoint:          "https://agent.example.com/",
+			Properties:               map[string]interface{}{},
+		},
+	}
+
+
 	return &didDocument.Doc{
 		Context:              []string{DidContext, SecurityContext},
-		ID:                   signKeyPair.ControllerDID,	// DIDMethod + UhcUserId
-		PublicKey:            didPublicKeys,
-		Authentication:       didAuthentication,
+		ID:                   signKeyPair.ControllerDID, // DIDMethod + UhcUserId
+		VerificationMethod:   ePubKey,
+		Service:              eServices,
+		Authentication:       eAuthentication,
+		AssertionMethod:      eAssertion,
+		CapabilityDelegation: nil,
+		CapabilityInvocation: nil,
 		KeyAgreement:         didKeyAgreement,
 		Created:              signKeyPair.CreatedAt,
-		// AssertionMethod:      nil,
-		// CapabilityDelegation: nil,
-		// CapabilityInvocation: nil,
-		// Service:              eService, // []didDocument.Service{service},
-		// Updated:              nil,
-		// Proof:                nil,
+		Updated:              &time.Time{},
+		Proof:                nil,
 	}, nil
 }
