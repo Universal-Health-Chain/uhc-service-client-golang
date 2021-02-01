@@ -89,7 +89,7 @@ func Test_TinkKeySetHandle(t *testing.T) {
 	err = keysetHandle1.Write(memKeyset, masterKey)
 	require.NoError(t, err)
 
-	publicKeyKH1,err := keyPairManager.GetCompositePublicKeyByKeyset(keysetHandle1)
+	publicKeyKH1,err := keyPairManager.GetPublicCompositeKeyByKeyset(keysetHandle1)
 	require.NotEmpty(t, publicKeyKH1)
 
 	// Read reads the encrypted keyset handle back from the io.Reader implementation
@@ -97,12 +97,12 @@ func Test_TinkKeySetHandle(t *testing.T) {
 	kh2, err := keyset.Read(memKeyset, masterKey)
 	require.NoError(t, err)
 
-	publicKeyKH2,err := keyPairManager.GetCompositePublicKeyByKeyset(kh2)
+	publicKeyKH2,err := keyPairManager.GetPublicCompositeKeyByKeyset(kh2)
 	require.NotEmpty(t, publicKeyKH2)
 	require.Equal(t, publicKeyKH1, publicKeyKH2) // "key handlers are equal
 
-	// Test ExportKeysetHandlePubKeyBytes
-	publicKeyBytes,err := keyPairManager.ExportKeysetHandlePubKeyBytes(keysetHandle1)
+	// Test GetPublicKeyBytesByKeyset
+	publicKeyBytes,err := keyPairManager.GetPublicKeyBytesByKeyset(keysetHandle1)
 	require.NoError(t, err)
 	require.NotNil(t, publicKeyBytes)
 }

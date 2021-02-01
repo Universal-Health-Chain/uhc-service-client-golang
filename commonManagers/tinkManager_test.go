@@ -82,22 +82,6 @@ import (
 	"github.com/google/tink/go/insecurecleartextkeyset"
 )
 
-func Test_CreateLibsodiumKeyBySeed(t *testing.T) {
-	/*  pkg-config --cflags  -- libsodium libsodium libsodium libsodium libsodium libsodium libsodium libsodium libsodium libsodium libsodium libsodium libsodium libsodium
-	pkg-config: exec: "pkg-config": executable file not found in $PATH
-	seed := sodium.BoxSeed{}
-	sodium.Randomize(&seed)
-	kp1 := sodium.SeedBoxKP(seed)
-	kp2 := sodium.SeedBoxKP(seed)
-	s1 := kp1.SecretKey
-	s2 := kp2.SecretKey
-
-	fmt.Println(sodium.MemCmp(s1.Bytes, s2.Bytes, s1.Length()) == 0)
-	require.Equal(t, s1.Bytes, s2.Bytes)
-
-	 */
-}
-
 // Example based on https://gist.github.com/salrashid123/2e5f6e7cc8e479fad0909412a86892eb
 // and https://medium.com/google-cloud/google-cloud-kms-tink-1e106156bb4e
 func Test_TinkGoogleKMS(t *testing.T) {

@@ -1,27 +1,187 @@
 package commonManagers
 
 import (
-	"bytes"
-	"crypto/ecdsa"
-	"crypto/rand"
-	"encoding/json"
-	"fmt"
+	"errors"
+	"testing"
+
+	// "github.com/google/tink/go/subtle"
+	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto"
+
+	// "github.com/square/go-jose/v3"
+
 	"github.com/google/tink/go/aead"
 	aeadsubtle "github.com/google/tink/go/aead/subtle"
+	// hybrid "github.com/google/tink/go/hybrid/subtle"
 	"github.com/google/tink/go/keyset"
+	// "github.com/google/tink/go/mac"
 	"github.com/google/tink/go/signature"
-	"github.com/google/tink/go/subtle"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh1pu"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdhes"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
-	ariesjose "github.com/hyperledger/aries-framework-go/pkg/doc/jose"
-	"github.com/square/go-jose/v3"
+	// "github.com/google/tink/go/subtle/random"
 	"github.com/stretchr/testify/require"
-	"math/big"
-	"testing"
+	chacha "golang.org/x/crypto/chacha20poly1305"
+
+	"github.com/hyperledger/aries-framework-go/pkg/crypto"
+	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
+	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
 )
+var errBadKeyHandleFormat = errors.New("bad key handle format")
+const testMessage = "test message"
+
+// Assert that Crypto implements the Crypto interface.
+var _ crypto.Crypto = (*tinkcrypto.Crypto)(nil)
+
+func TestNew(t *testing.T) {
+	_, err := tinkcrypto.New()
+	require.NoError(t, err)
+}
+
+func TestCrypto_EncryptDecrypt(t *testing.T) {
+	t.Run("test XChacha20Poly1305 encryption", func(t *testing.T) {
+		kh, err := keyset.NewHandle(aead.XChaCha20Poly1305KeyTemplate())
+		require.NoError(t, err)
+
+		badKH, err := keyset.NewHandle(aead.KMSEnvelopeAEADKeyTemplate("babdUrl", nil))
+		require.NoError(t, err)
+
+		badKH2, err := keyset.NewHandle(ecdh.ECDH256KWAES256GCMKeyTemplate())
+		require.NoError(t, err)
+
+		c := tinkcrypto.Crypto{}
+		msg := []byte(testMessage)
+		aad := []byte("some additional data")
+		cipherText, nonce, err := c.Encrypt(msg, aad, kh)
+		require.NoError(t, err)
+		require.NotEmpty(t, nonce)
+		require.Equal(t, chacha.NonceSizeX, len(nonce))
+
+		// encrypt with bad key handle - should fail
+		_, _, err = c.Encrypt(msg, aad, badKH)
+		require.Error(t, err)
+
+		// encrypt with another bad key handle - should fail
+		_, _, err = c.Encrypt(msg, aad, badKH2)
+		require.Error(t, err)
+
+		plainText, err := c.Decrypt(cipherText, aad, nonce, kh)
+		require.NoError(t, err)
+		require.Equal(t, msg, plainText)
+
+		// decrypt with bad key handle - should fail
+		_, err = c.Decrypt(cipherText, aad, nonce, badKH)
+		require.Error(t, err)
+
+		// decrypt with another bad key handle - should fail
+		_, err = c.Decrypt(cipherText, aad, nonce, badKH2)
+		require.Error(t, err)
+
+		// decrypt with bad nonce - should fail
+		plainText, err = c.Decrypt(cipherText, aad, []byte("bad nonce"), kh)
+		require.Error(t, err)
+		require.Empty(t, plainText)
+
+		// decrypt with bad cipher - should fail
+		plainText, err = c.Decrypt([]byte("bad cipher"), aad, nonce, kh)
+		require.Error(t, err)
+		require.Empty(t, plainText)
+	})
+
+	t.Run("test AES256GCM encryption", func(t *testing.T) {
+		kh, err := keyset.NewHandle(aead.AES256GCMKeyTemplate())
+		require.NoError(t, err)
+
+		c := tinkcrypto.Crypto{}
+		msg := []byte(testMessage)
+		aad := []byte("some additional data")
+		cipherText, nonce, err := c.Encrypt(msg, aad, kh)
+		require.NoError(t, err)
+		require.NotEmpty(t, nonce)
+		require.Equal(t, aeadsubtle.AESGCMIVSize, len(nonce))
+
+		// encrypt with nil key handle - should fail
+		_, _, err = c.Encrypt(msg, aad, nil)
+		require.Error(t, err)
+		require.Equal(t, errBadKeyHandleFormat, err)
+
+		plainText, err := c.Decrypt(cipherText, aad, nonce, kh)
+		require.NoError(t, err)
+		require.Equal(t, msg, plainText)
+
+		// decrypt with bad nonce - should fail
+		plainText, err = c.Decrypt(cipherText, aad, []byte("bad nonce"), kh)
+		require.Error(t, err)
+		require.Empty(t, plainText)
+
+		// decrypt with bad cipher - should fail
+		plainText, err = c.Decrypt([]byte("bad cipher"), aad, nonce, kh)
+		require.Error(t, err)
+		require.Empty(t, plainText)
+
+		// decrypt with nil key handle - should fail
+		_, err = c.Decrypt(cipherText, aad, nonce, nil)
+		require.Error(t, err)
+		require.Equal(t, errBadKeyHandleFormat, err)
+	})
+}
+
+func TestCrypto_SignVerify(t *testing.T) {
+	t.Run("test with Ed25519 signature", func(t *testing.T) {
+		kh, err := keyset.NewHandle(signature.ED25519KeyTemplate())
+		require.NoError(t, err)
+
+		badKH, err := keyset.NewHandle(aead.KMSEnvelopeAEADKeyTemplate("babdUrl", nil))
+		require.NoError(t, err)
+
+		c := tinkcrypto.Crypto{}
+		msg := []byte(testMessage)
+		s, err := c.Sign(msg, kh)
+		require.NoError(t, err)
+
+		// sign with nil key handle - should fail
+		_, err = c.Sign(msg, nil)
+		require.Error(t, err)
+		require.Equal(t, errBadKeyHandleFormat, err)
+
+		// sign with bad key handle - should fail
+		_, err = c.Sign(msg, badKH)
+		require.Error(t, err)
+
+		// get corresponding public key handle to verify
+		pubKH, err := kh.Public()
+		require.NoError(t, err)
+
+		err = c.Verify(s, msg, pubKH)
+		require.NoError(t, err)
+	})
+
+	t.Run("test with P-256 signature", func(t *testing.T) {
+		kh, err := keyset.NewHandle(signature.ECDSAP256KeyTemplate())
+		require.NoError(t, err)
+
+		badKH, err := keyset.NewHandle(aead.KMSEnvelopeAEADKeyTemplate("babdUrl", nil))
+		require.NoError(t, err)
+
+		c := tinkcrypto.Crypto{}
+		msg := []byte(testMessage)
+		s, err := c.Sign(msg, kh)
+		require.NoError(t, err)
+
+		// get corresponding public key handle to verify
+		pubKH, err := kh.Public()
+		require.NoError(t, err)
+
+		err = c.Verify(s, msg, pubKH)
+		require.NoError(t, err)
+
+		// verify with nil key handle - should fail
+		err = c.Verify(s, msg, nil)
+		require.Error(t, err)
+		require.Equal(t, errBadKeyHandleFormat, err)
+
+		// verify with bad key handle - should fail
+		err = c.Verify(s, msg, badKH)
+		require.Error(t, err)
+	})
+}
+
 
 // Package Aries tinkcrypto includes the default implementation of pkg/crypto. It uses Tink for executing crypto primitives
 // New creates a new Crypto instance.
@@ -103,85 +263,83 @@ func Test_PackMessage(t *testing.T) {
 }
 */
 
-func Test_UnpackMessage(t *testing.T) {
-	// UnpackMessage
+
+/* From package common_go_proto
+
+type EllipticCurveType int32
+
+const (
+	EllipticCurveType_UNKNOWN_CURVE EllipticCurveType = 0
+	EllipticCurveType_NIST_P256     EllipticCurveType = 2
+	EllipticCurveType_NIST_P384     EllipticCurveType = 3
+	EllipticCurveType_NIST_P521     EllipticCurveType = 4
+	EllipticCurveType_CURVE25519    EllipticCurveType = 5
+)
+
+var EllipticCurveType_name = map[int32]string{
+	0: "UNKNOWN_CURVE",
+	2: "NIST_P256",
+	3: "NIST_P384",
+	4: "NIST_P521",
+	5: "CURVE25519",
 }
 
-// Aries RFC 0334: JWE envelope 1.0: https://github.com/hyperledger/aries-rfcs/blob/master/features/0334-jwe-envelope/README.md#authcrypt-using-ecdh-1pu-key-wrapping-mode
-// Authcrypt: ECDH-1PU key wrapping mode to encrypt for a given list of recipients keys
-func Test_ECDH1PU(t *testing.T) {
-	var keyManager KeyPairManager
-	// It creates a new sender
-	senderPublicKH, err := keyManager.CreateAuthcryptKeysetHandle()
-	require.NoError(t, err)
-
-	// It creates a new recipient
-	// recipientCompositePublicKeys, recKHs := createECDHEntities(t, 2, false)
-	recipientPublicKH, err := keyManager.CreateAuthcryptKeysetHandle()
-	require.NoError(t, err)
-	recipientCompositePublicKey, err := keyManager.GetCompositePublicKeyByKeyset(recipientPublicKH)
-	require.NoError(t, err)
-
-	// It creates an array of publicKeys of recipients to encrypt for
-	var recipientCompositePublicKeys []*composite.PublicKey
-	recipientCompositePublicKeys = append(recipientCompositePublicKeys, recipientCompositePublicKey)
-
-	// It creates an array of Handlers only for testing an array of recipients
-	var recipientsPublicKeyHandlers []*keyset.Handle
-	recipientsPublicKeyHandlers = append(recipientsPublicKeyHandlers, recipientPublicKH)
-
-	// It creates the JWE message
-	mockSenderID := "1234"
-	jweEnc, err := ariesjose.NewJWEEncrypt(ariesjose.A256GCM, composite.DIDCommEncType, mockSenderID, senderPublicKH, recipientCompositePublicKeys)
-	require.NoError(t, err)
-	require.NotEmpty(t, jweEnc)
-
-	// It encrypts the JWE message: ECDH1PU / authcrypt
-	pt := []byte("plaintext payload")
-	jwEncrypted, err := jweEnc.Encrypt(pt)
-	require.NoError(t, err)
-
-	// It serializes the encrypted JWE message to be sent
-	var serializedJWE string
-	if len(recipientCompositePublicKeys) == 1 {
-		serializedJWE, err = jwEncrypted.CompactSerialize(json.Marshal)
-	} else {
-		serializedJWE, err = jwEncrypted.FullSerialize(json.Marshal)
-	}
-	require.NoError(t, err)
-	require.NotEmpty(t, serializedJWE)
-	fmt.Printf("Serialized JWE = %v \n", serializedJWE)
-
-	// Now it deserializes the received message
-	jweReceived, err := ariesjose.Deserialize(serializedJWE)
-	require.NoError(t, err)
-	fmt.Printf("Deserialized JWE = %v \n", jweReceived)
-
-
-	/* TODO: test Unpack ECDH-1PU
-	// Test ECDH-1PU decrypt for every recipient
-	for i, recKH := range recipientsPublicKeyHandlers {
-		recipientKH := recKH
-
-		t.Run(fmt.Sprintf("%d: Decrypting JWE message test success", i), func(t *testing.T) {
-			jd := ariesjose.NewJWEDecrypt(nil, recipientKH)
-			require.NotEmpty(t, jd)
-
-			var msg []byte
-
-			msg, err = jd.Decrypt(jweReceived)
-			require.NoError(t, err)
-			require.EqualValues(t, pt, msg) // jwedecrypt: failed to add sender key: unable to decrypt JWE with 'skid' header, third party key store is nil
-
-		})
-	}
-
-	 */
+var EllipticCurveType_value = map[string]int32{
+	"UNKNOWN_CURVE": 0,
+	"NIST_P256":     2,
+	"NIST_P384":     3,
+	"NIST_P521":     4,
+	"CURVE25519":    5,
 }
+ */
 
+/* Aries RFC 0334: JWE envelope 1.0: https://github.com/hyperledger/aries-rfcs/blob/master/features/0334-jwe-envelope/README.md#authcrypt-using-ecdh-1pu-key-wrapping-mode
+	Authcrypt Key Encryption: ECDH-1PU + AES key wrap
+	Authcrypt Encryption algorithm identifier: ECDH-1PU+A256KW
+	The following curves are supported:
+	- Curve Name: X25519 (aka Curve25519) - Curve identifier: X25519 (default)
+	- Curve Name: NIST P256 (aka SECG secp256r1 and ANSI X9.62 prime256v1, ref here) - Curve identifier: P-256
+
+ECDH uses a curve; most software use the standard NIST curve P-256.
+Curve25519 is another curve, whose "sales pitch" is that it is faster, not stronger, than P-256.
+Signature algorithm based on elliptic curves: ECDSA or Ed25519; that's ECDSA for P-256, Ed25519 for Curve25519.
+Using P-256 should yield better interoperability right now, because Ed25519 is much newer and not as widespread.
+According to DJB's safecurves.cr.yp.to website, the NIST curve may not be as safe or foolproof as the Curve25519.
+
+Authcrypt using ECDH-1PU key wrapping mode
+
+{
+    "protected": base64url({
+        "typ": "didcomm-envelope-enc",
+        "enc": "A256GCM", // or "XC20P"
+        "skid": base64url(sender KID),
+    }),
+    "recipients": [
+        {
+            "encrypted_key": "base64url(encrypted CEK)",
+            "header": {
+                "kid": base64url(recipient KID),
+                "alg": "ECDH-1PU+A256KW",
+                "enc": "A256GCM",
+                "apu": base64url(senderID),
+                "apv": base64url(recipientID),
+                "epk": {
+                  "kty": "OKP",
+                  "crv": "X25519",
+                  "x": "aOH-76BRwkHf0nbGokaBsO6shW9McEs6jqVXaF0GNn4"
+                },
+            }
+        },
+       ...
+    ],
+    "aad": "base64url(sha256(concat('.',sort([recipients[0].kid, ..., recipients[n].kid])))))",
+    "iv": "base64url(content encryption IV)",
+    "ciphertext": "base64url(XC20P(DIDComm payload, base64Url(json($protected)+'.'+$aad), content encryption IV, CEK))"
+    "tag": "base64url(AEAD Authentication Tag)"
+*/
 
 // ----------- from Aries 0.1.4 -------------
-
+/*
 func TestJWEEncryptRoundTrip(t *testing.T) {
 	_, err := ariesjose.NewJWEEncrypt("", "", "", nil, nil)
 	require.EqualError(t, err, "empty recipientsPubKeys list",
@@ -234,7 +392,7 @@ func TestJWEEncryptRoundTrip(t *testing.T) {
 func TestJWEEncryptRoundTripWithSingleRecipient(t *testing.T) {
 	recECKeys, recKHs := createRecipients(t, 1)
 
-	jweEncrypter, err := ariesjose.NewJWEEncrypt(ariesjose.A256GCM, composite.DIDCommEncType, "", nil, recECKeys)
+	jweEncrypter, err := ariesjose.NewJWEEncrypt(ariesjose.A256GCM, cryptoapi.DIDCommEncType, "", nil, recECKeys)
 	require.NoError(t, err, "NewJWEEncrypt should not fail with non empty recipientPubKeys")
 
 	pt := []byte("some msg")
@@ -337,60 +495,7 @@ func TestInteropWithGoJoseEncryptAndLocalJoseDecrypt(t *testing.T) {
 	}
 }
 
-// createRecipients and return their public key and keyset.Handle.
-func createRecipients(t *testing.T, numberOfEntities int) ([]*composite.PublicKey, []*keyset.Handle) {
-	return createECDHEntities(t, numberOfEntities, true)
-}
-
-func createECDHEntities(t *testing.T, numberOfEntities int, isECDHES bool) ([]*composite.PublicKey, []*keyset.Handle) {
-	t.Helper()
-
-	var (
-		r   []*composite.PublicKey
-		rKH []*keyset.Handle	// keyset.Handle from github.com/google/tink/go/keyset
-	)
-
-	for i := 0; i < numberOfEntities; i++ {
-		mrKey, kh := createAndMarshalEntityKey(t, isECDHES)	// keyset.Handle from github.com/google/tink/go/keyset
-		ecPubKey := new(composite.PublicKey)
-		err := json.Unmarshal(mrKey, ecPubKey)
-		require.NoError(t, err)
-
-		r = append(r, ecPubKey)
-		rKH = append(rKH, kh)
-	}
-
-	return r, rKH
-}
-
-// createAndMarshalEntityKey creates a new recipient keyset.Handle (github.com/google/tink/go/keyset),
-// extracts public key, marshals it and returns both marshalled public key and original recipient keyset.Handle.
-func createAndMarshalEntityKey(t *testing.T, isECDHES bool) ([]byte, *keyset.Handle) { // keyset.Handle from github.com/google/tink/go/keyset
-	t.Helper()
-
-	tmpl := ecdhes.ECDHES256KWAES256GCMKeyTemplate()	// Anonymcrypt (no ECDH1PU)
-
-	if !isECDHES {
-		tmpl = ecdh1pu.ECDH1PU256KWAES256GCMKeyTemplate()	// Authcrypt (ECDH1PU)
-	}
-
-	kh, err := keyset.NewHandle(tmpl)
-	require.NoError(t, err)
-
-	pubKH, err := kh.Public()
-	require.NoError(t, err)
-
-	buf := new(bytes.Buffer)
-	pubKeyWriter := keyio.NewWriter(buf)
-	require.NotEmpty(t, pubKeyWriter)
-
-	err = pubKH.WriteWithNoSecrets(pubKeyWriter)
-	require.NoError(t, err)
-
-	return buf.Bytes(), kh
-}
-
-func convertToGoJoseRecipients(t *testing.T, keys []*composite.PublicKey) []jose.Recipient {
+func convertToGoJoseRecipients(t *testing.T, keys []*cryptoapi.PublicKey) []jose.Recipient {
 	t.Helper()
 
 	var joseRecipients []jose.Recipient
@@ -411,8 +516,8 @@ func convertToGoJoseRecipients(t *testing.T, keys []*composite.PublicKey) []jose
 
 	return joseRecipients
 }
-
-func TestCrypto_SignVerify(t *testing.T) {
+*/
+func TestCrypto_SignVerify_014(t *testing.T) {
 	t.Run("test with Ed25519 signature", func(t *testing.T) {
 		kh, err := keyset.NewHandle(signature.ED25519KeyTemplate())
 		require.NoError(t, err)
@@ -470,39 +575,6 @@ func TestCrypto_SignVerify(t *testing.T) {
 // Anoncrypt: ECDH-ES key wrapping mode and A256GCM content encryption
 // "Key Agreement with Elliptic Curve Diffie-Hellman Ephemeral Static" (ECDH-ES) X25519
 // The sender computes the shared key using it as a direct encryption AES256-GCM key
-
-func TestCrypto_ECDHES_Wrap_Unwrap_Key(t *testing.T) {}	// its for Aries 0.1.5
-
-func TestCrypto_ECDH1PU_Wrap_Unwrap_Key(t *testing.T) {} // its for Aries 0.1.5
-
-func TestCrypto_ECDH1PU_Wrap_Unwrap_Key_Using_CryptoPubKey_as_SenderKey(t *testing.T) {} // its for Aries 0.1.5
-
-func Test_EncryptionAES256GCM(t *testing.T) {
-	kh, err := keyset.NewHandle(aead.AES256GCMKeyTemplate())
-	require.NoError(t, err)
-
-	c := tinkcrypto.Crypto{}
-	msg := []byte("testMessage")
-	aad := []byte("some additional data")
-	cipherText, nonce, err := c.Encrypt(msg, aad, kh)
-	require.NoError(t, err)
-	require.NotEmpty(t, nonce)
-	require.Equal(t, aeadsubtle.AESGCMIVSize, len(nonce))
-
-	plainText, err := c.Decrypt(cipherText, aad, nonce, kh)
-	require.NoError(t, err)
-	require.Equal(t, msg, plainText)
-
-	// decrypt with bad nonce - should fail
-	plainText, err = c.Decrypt(cipherText, aad, []byte("bad nonce"), kh)
-	require.Error(t, err)
-	require.Empty(t, plainText)
-
-	// decrypt with bad cipher - should fail
-	plainText, err = c.Decrypt([]byte("bad cipher"), aad, nonce, kh)
-	require.Error(t, err)
-	require.Empty(t, plainText)
-}
 
 /* some notes
 Encrypt a JWE token::

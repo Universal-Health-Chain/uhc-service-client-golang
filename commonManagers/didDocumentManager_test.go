@@ -3,15 +3,15 @@ package commonManagers
 
 import (
 	"encoding/json"
-	"fmt"
 	didDocument "github.com/hyperledger/aries-framework-go/pkg/doc/did"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite/ed25519signature2018"
 	signVerifier "github.com/hyperledger/aries-framework-go/pkg/doc/signature/verifier"
+	// "github.com/hyperledger/aries-framework-go/pkg/vdr/key"
 
-	vdriapi "github.com/hyperledger/aries-framework-go/pkg/framework/aries/api/vdri"
+	// vdriapi "github.com/hyperledger/aries-framework-go/pkg/framework/aries/api/vdri"
 	// "github.com/hyperledger/aries-framework-go/pkg/vdri"
-	"github.com/hyperledger/aries-framework-go/pkg/vdri/key"
+	// "github.com/hyperledger/aries-framework-go/pkg/vdri/key"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
@@ -93,7 +93,7 @@ func Test_ValidateDidSignedProof(t *testing.T) {
 	err = parsedDoc.VerifyProof(verifierSignatureSuites)
 	require.Nil(t, err)
 }
-
+/*
 func Test_CreateDidKeyDocumentNotUHC(t *testing.T) {
 	v := key.New()
 
@@ -107,7 +107,7 @@ func Test_CreateDidKeyDocumentNotUHC(t *testing.T) {
 	require.NotNil(t, doc)
 	fmt.Printf("DID document from key = %v \n", doc)
 }
-
+*/
 
 // DID Document capabilites, Verification method and KeyAgreement: https://whitepaper.fission.codes/identity/did-doc
 const DidDocSignedForTesting = `

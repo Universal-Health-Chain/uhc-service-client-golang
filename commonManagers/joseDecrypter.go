@@ -5,21 +5,23 @@ package commonManagers
 
    SPDX-License-Identifier: Apache-2.0
 */
-
+/*
 import (
 	"crypto/ecdsa"
 	"encoding/json"
 	"fmt"
+	cryptoapi "github.com/hyperledger/aries-framework-go/pkg/crypto"
 	"github.com/hyperledger/aries-framework-go/pkg/doc/jose"
 
 	"github.com/google/tink/go/keyset"
 
 	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite"
 	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/api"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh1pu"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdhes"
+	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
+	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
 	// disabled here "github.com/hyperledger/aries-framework-go/pkg/storage"
 )
+
 
 // Decrypter interface to deserialize JWE, to extract the corresponding recipient key, and to decrypt and return plaintext
 type Decrypter interface {
@@ -48,7 +50,7 @@ func getECDHESDecPrimitive(recipientKH *keyset.Handle) (api.CompositeDecrypt, er
 }
 
 func getECDH1PUDecPrimitive(recipientKH *keyset.Handle) (api.CompositeDecrypt, error) {
-	return ecdh1pu.NewECDH1PUDecrypt(recipientKH)
+	return ecdh.NewECDH1PUDecrypt(recipientKH)
 }
 
 // Decrypt a deserialized JWE, decrypts its protected content and returns plaintext.
@@ -100,7 +102,7 @@ func (jd *JWEDecrypt) Decrypt(jwe *jose.JSONWebEncryption) ([]byte, error) {
 // it gets the public key not from Aries store but from models.GetPublicEncryptionKeyByUserID()
 func (jd *JWEDecrypt) fetchSenderPubKey(publicSenderKeyB58 string) (*composite.PublicKey, error) {
 	var keyManager KeyPairManager	// It creates the required manager
-	return keyManager.FetchSenderCompositePublicKeyByBase58(&publicSenderKeyB58)
+	return keyManager.GetPublicCompositeKeyByBase58(&publicSenderKeyB58)
 }
 
 // management of user public keys does not use Aries store
@@ -150,7 +152,7 @@ func (jd *JWEDecrypt) validateAndExtractProtectedHeaders(jwe *jose.JSONWebEncryp
 }
 
 func buildEncryptedData(encAlg, encType string, jwe *jose.JSONWebEncryption) ([]byte, error) {
-	var recipients []*composite.RecipientWrappedKey
+	var recipients []*cryptoapi.RecipientWrappedKey
 
 	if len(jwe.Recipients) == 1 { // compact serialization: it has only 1 recipient with no headers
 		rHeaders, err := extractRecipientHeaders(jwe.ProtectedHeaders)
@@ -267,6 +269,6 @@ func convertMarshalledJWKToRecKey(marshalledJWK []byte) (*composite.RecipientWra
 		KID: jwk.KeyID,
 		EPK: epk,
 	}, nil
+
 }
-
-
+ */

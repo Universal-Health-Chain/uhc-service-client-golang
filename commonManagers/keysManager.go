@@ -6,11 +6,20 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
+	"github.com/btcsuite/btcutil/base58"
 	"github.com/google/tink/go/keyset"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh1pu"
+	commonpb "github.com/google/tink/go/proto/common_go_proto"
+	tinkpb "github.com/google/tink/go/proto/tink_go_proto"
+	cryptoapi "github.com/hyperledger/aries-framework-go/pkg/crypto"
+	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite"
+	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
+	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh1pu"
 	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
-	"github.com/mr-tron/base58"
+	"github.com/golang/protobuf/proto"
+	"github.com/google/tink/go/aead"
+
+	ecdhpb "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/proto/ecdh_aead_go_proto"
+
 )
 
 type KeyPairManager struct {
@@ -25,31 +34,40 @@ func (manager *KeyPairManager) CreateX25519EncryptKeyPair(walletId string, uhcOw
 }
 
 func (manager *KeyPairManager) CreateAuthcryptKeysetHandle() (*keyset.Handle, error) {
-	authcryptTemplate := ecdh1pu.ECDH1PU256KWAES256GCMKeyTemplate()
+	// authcryptTemplate := ecdh.ECDH256KWAES256GCMKeyTemplate()
+	authcryptTemplate := X25519XChachaECDHKeyTemplate()
 	// keyset.MemReaderWriter {Keyset: nil, EncryptedKeyset: nil}
 	return  keyset.NewHandle(authcryptTemplate)
 }
 
-func (manager *KeyPairManager) GetCompositePublicKeyByKeyset(keysetHandle *keyset.Handle) (*composite.PublicKey, error) {
-	publicKeysetHandle, err := keysetHandle.Public() // Public returns a Handle of the public keys if the managed keyset contains private keys.
-	// require.NoError(t, err)
+// X25519XChachaECDHKeyTemplate is a KeyTemplate that generates a key that accepts a CEK for XChacha20Poly1305 content
+// encryption. CEK wrapping is done outside of this Tink key (in the tinkcrypto service). It is used to represent a key
+// to execute the CompositeDecrypt primitive with the following parameters:
+//  - Content Encryption: XChaha20Poly1305
+// Keys from this template represent a valid recipient public/private key pairs and can be stored in the KMS.The
+// recipient key represented in this key template uses the following key wrapping curve:
+//  - Curve25519
 
-	publicKeyBuffer := new(bytes.Buffer)
-	pubKeyWriter := keyio.NewWriter(publicKeyBuffer)
-	err = publicKeysetHandle.WriteWithNoSecrets(pubKeyWriter) // writes public info in publicKeyBuffer
-	// require.NoError(t, err)
-	// return publicKeyBuffer.Bytes(), keysetHandle, err
+func X25519XChachaECDHKeyTemplate() *tinkpb.KeyTemplate {
+	return createKeyTemplate(false, false, commonpb.EllipticCurveType_CURVE25519, nil)
+}
 
-	// for each entity, for i := 0; i < numberOfEntities; i++ {
-	// mrKey, kh := createAndMarshalEntityKey(t, isECDHES)
-	compositePubKey := new(composite.PublicKey)
-	err = json.Unmarshal(publicKeyBuffer.Bytes(), compositePubKey)
+func (manager *KeyPairManager) GetPublicCompositeKeyByKeyset(keysetHandle *keyset.Handle) (*cryptoapi.PublicKey, error) {
+	publicKeyBytesByKeyset, err := manager.GetPublicKeyBytesByKeyset(keysetHandle)
+	if err != nil {
+		return nil, err
+	}
 
-	// require.NoError(t, err)
+	compositePubKey := new(cryptoapi.PublicKey)
+	err = json.Unmarshal(publicKeyBytesByKeyset, compositePubKey)
+	if err != nil {
+		return nil, err
+	}
+
 	return compositePubKey, err
 }
 
-func (manager *KeyPairManager) ExportKeysetHandlePubKeyBytes(keyHandle *keyset.Handle) ([]byte, error) {
+func (manager *KeyPairManager) GetPublicKeyBytesByKeyset(keyHandle *keyset.Handle) ([]byte, error) {
 	publicKeysetHandle, err := keyHandle.Public()
 	if err != nil {
 		return nil, err
@@ -67,28 +85,98 @@ func (manager *KeyPairManager) ExportKeysetHandlePubKeyBytes(keyHandle *keyset.H
 }
 
 // Methods to be used when receiving the public key of the sender to unpack JWE messages
-func (manager *KeyPairManager) FetchSenderPublicKeyBytesByBase58(senderPublicKeyBase58 *string) ([]byte, error) {
-	if senderPublicKeyBase58 == nil {
+
+// TODO: test if it works with public or private Ed25519 key bytes
+func (manager *KeyPairManager) GetPublicCompositeKeyByXXBytes(keyBytes []byte) (*cryptoapi.PublicKey, error) {
+	var publicCompositeKey *cryptoapi.PublicKey
+	err := json.Unmarshal(keyBytes, &publicCompositeKey)
+	if err != nil {
+		return nil, errors.New("Failed converting key bytes: " + err.Error())
+	}
+
+	return publicCompositeKey, nil
+}
+
+func (manager *KeyPairManager) GetPublicCompositeKeyByBase58(publicKeyBase58 *string) (*cryptoapi.PublicKey, error) {
+	publicKeyBytes,err := manager.GetPublicKeyBytesByBase58(publicKeyBase58)
+	if err != nil { return nil, err }
+
+	return manager.GetPublicCompositeKeyByXXBytes(publicKeyBytes)
+}
+
+func (manager *KeyPairManager) GetPublicKeyBytesByBase58(publicKeyBase58 *string) ([]byte, error) {
+	if publicKeyBase58 == nil {
 		return nil, errors.New("No sender public key received")
 	}
 
-	publicSenderKeyBytes, err := base58.Decode(*senderPublicKeyBase58)
-	if err != nil {
-		return nil, errors.New("Invalid public key Base58 format")
-	}
+	publicSenderKeyBytes := base58.Decode(*publicKeyBase58)
 	return publicSenderKeyBytes, nil
 }
 
-func (manager *KeyPairManager) FetchSenderCompositePublicKeyByBase58(senderPublicKeyBase58 *string) (*composite.PublicKey, error) {
-	publicSenderKeyBytes,err := manager.FetchSenderPublicKeyBytesByBase58(senderPublicKeyBase58)
-	if err != nil { return nil, err }
+// createKeyTemplate creates a new ECDH-AEAD key template with the set cek for primitive execution. Boolean flags used:
+//  - nistpKW flag to state if kw is either NIST P curves (true) or Curve25519 (false)
+//  - aesEnc flag to state if content encryption is either AES256-GCM (true) or XChacha20Poly1305 (false)
+func createKeyTemplate(nistpKW, aesEnc bool, c commonpb.EllipticCurveType, cek []byte) *tinkpb.KeyTemplate {
+	var encTemplate *tinkpb.KeyTemplate
 
-	var publicSenderCompositeKey *composite.PublicKey
-	err = json.Unmarshal(publicSenderKeyBytes, &publicSenderCompositeKey)
-	if err != nil {
-		return nil, errors.New("Failed converting sender key bytes")
+	typeURL, keyType := getTypeParams(nistpKW, aesEnc)
+
+	if aesEnc {
+		encTemplate = aead.AES256GCMKeyTemplate()
+	} else {
+		encTemplate = aead.XChaCha20Poly1305KeyTemplate()
 	}
 
-	return publicSenderCompositeKey, nil
+	format := &ecdhpb.EcdhAeadKeyFormat{
+		Params: &ecdhpb.EcdhAeadParams{
+			KwParams: &ecdhpb.EcdhKwParams{
+				CurveType: c,
+				KeyType:   keyType,
+			},
+			EncParams: &ecdhpb.EcdhAeadEncParams{
+				AeadEnc: encTemplate,
+				CEK:     cek,
+			},
+			EcPointFormat: commonpb.EcPointFormat_UNCOMPRESSED,
+		},
+	}
 
+	serializedFormat, err := proto.Marshal(format)
+	if err != nil {
+		panic("failed to marshal EcdhAeadKeyFormat proto")
+	}
+
+	return &tinkpb.KeyTemplate{
+		TypeUrl:          typeURL,
+		Value:            serializedFormat,
+		OutputPrefixType: tinkpb.OutputPrefixType_RAW,
+	}
+}
+
+const (
+	ecdhNISTPAESPrivateKeyVersion = 0
+	ecdhNISTPAESPrivateKeyTypeURL = "type.hyperledger.org/hyperledger.aries.crypto.tink.EcdhNistPKwAesAeadPrivateKey"
+	ecdhNISTPXChachaPrivateKeyVersion = 0
+	ecdhNISTPXChachaPrivateKeyTypeURL = "type.hyperledger.org/hyperledger.aries.crypto.tink.EcdhNistPKwXChachaAeadPrivateKey" // nolint:lll
+	ecdhX25519AESPrivateKeyVersion = 0
+	ecdhX25519AESPrivateKeyTypeURL = "type.hyperledger.org/hyperledger.aries.crypto.tink.EcdhX25519KwAesAeadPrivateKey"
+	ecdhX25519XChachaPrivateKeyVersion = 0
+	ecdhX25519XChachaPrivateKeyTypeURL = "type.hyperledger.org/hyperledger.aries.crypto.tink.EcdhX25519KwXChachaAeadPrivateKey" // nolint:lll
+
+	)
+
+func getTypeParams(nispKW, aesEnc bool) (string, ecdhpb.KeyType) {
+	if nispKW {
+		if aesEnc {
+			return ecdhNISTPAESPrivateKeyTypeURL, ecdhpb.KeyType_EC
+		}
+
+		return ecdhNISTPXChachaPrivateKeyTypeURL, ecdhpb.KeyType_EC
+	}
+
+	if aesEnc {
+		return ecdhX25519AESPrivateKeyTypeURL, ecdhpb.KeyType_OKP
+	}
+
+	return ecdhX25519XChachaPrivateKeyTypeURL, ecdhpb.KeyType_OKP
 }

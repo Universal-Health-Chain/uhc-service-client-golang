@@ -7,14 +7,14 @@ import (
 	"fmt"
 	"github.com/btcsuite/btcutil/base58"
 	"github.com/golang/protobuf/proto"
-	"github.com/google/tink/go/aead"
-	"github.com/google/tink/go/mac"
+	// "github.com/google/tink/go/aead"
+	// "github.com/google/tink/go/mac"
 	commonpb "github.com/google/tink/go/proto/common_go_proto"
 	ecdsapb "github.com/google/tink/go/proto/ecdsa_go_proto"
 	tinkpb "github.com/google/tink/go/proto/tink_go_proto"
-	"github.com/google/tink/go/signature"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh1pu"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdhes"
+	// "github.com/google/tink/go/signature"
+	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh1pu"
+	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdhes"
 	"github.com/hyperledger/aries-framework-go/pkg/didcomm/common/transport"
 	"github.com/hyperledger/aries-framework-go/pkg/didcomm/packer/authcrypt"
 	"strings"
@@ -79,7 +79,7 @@ func PackMessage(messageEnvelope *transport.Envelope) ([]byte, error) {
 	return bytes, nil
 }
 
-// didcomm packager UnpackMessage
+// DIDComm packager UnpackMessage
 func UnpackMessage(encMessage []byte) (*transport.Envelope, error) {
 	// encType, err := getEncodingType(encMessage)
 	// if err != nil { return nil, fmt.Errorf("getEncodingType: %w", err) }
@@ -204,7 +204,7 @@ func createECDSAIEEE1363KeyTemplate(hashType commonpb.HashType, curve commonpb.E
 		OutputPrefixType: tinkpb.OutputPrefixType_RAW,
 	}
 }
-
+/*
 // nolint:gocyclo,funlen
 func getKeyTemplate(keyType KeyType) (*tinkpb.KeyTemplate, error) {
 	switch keyType {
@@ -254,7 +254,7 @@ func getKeyTemplate(keyType KeyType) (*tinkpb.KeyTemplate, error) {
 		return nil, fmt.Errorf("getKeyTemplate: key type '%s' unrecognized", keyType)
 	}
 }
-
+*/
 const (
 	// AES128GCM key type value.
 	AES128GCM = "AES128GCM"
