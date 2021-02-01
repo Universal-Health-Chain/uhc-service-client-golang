@@ -17,13 +17,13 @@ import (
 	tinkpb "github.com/google/tink/go/proto/tink_go_proto"
 	"github.com/teserakt-io/golang-ed25519/extra25519"
 
-	"github.com/hyperledger/aries-framework-go/pkg/secretlock/noop"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/secretlock/noop"
 
 	"encoding/base64"
 	"fmt"
 	"strings"
 	"github.com/google/tink/go/tink"
-	"github.com/hyperledger/aries-framework-go/pkg/secretlock"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/secretlock"
 )
 
 /*

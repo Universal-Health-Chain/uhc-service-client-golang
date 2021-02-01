@@ -6,7 +6,7 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	"github.com/hyperledger/aries-framework-go/pkg/doc/util/signature"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/util/signature"
 	"github.com/stretchr/testify/require"
 	"testing"
 	"time"

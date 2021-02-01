@@ -5,24 +5,20 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/jose"
 	"github.com/btcsuite/btcutil/base58"
-	"github.com/golang/protobuf/proto"
-	// "github.com/google/tink/go/aead"
-	// "github.com/google/tink/go/mac"
-	commonpb "github.com/google/tink/go/proto/common_go_proto"
-	ecdsapb "github.com/google/tink/go/proto/ecdsa_go_proto"
-	tinkpb "github.com/google/tink/go/proto/tink_go_proto"
-	// "github.com/google/tink/go/signature"
-	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh1pu"
-	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdhes"
-	"github.com/hyperledger/aries-framework-go/pkg/didcomm/common/transport"
-	"github.com/hyperledger/aries-framework-go/pkg/didcomm/packer/authcrypt"
+	// commonpb "github.com/google/tink/go/proto/common_go_proto"
 	"strings"
-	// "github.com/hyperledger/aries-framework-go/pkg/common/log"
-	"github.com/hyperledger/aries-framework-go/pkg/doc/jose"
-	// "github.com/hyperledger/aries-framework-go/pkg/didcomm/packer"
-	// "github.com/hyperledger/aries-framework-go/pkg/kms"
-	// "github.com/hyperledger/aries-framework-go/pkg/storage"
+
+	// "github.com/google/tink/go/signature"
+	// "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh1pu"
+	// "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdhes"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/didcomm/common/transport"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/didcomm/packer/authcrypt"
+
+	// "github.com/Universal-Health-Chain/aries-framework-go/pkg/didcomm/packer"
+	// "github.com/Universal-Health-Chain/aries-framework-go/pkg/kms"
+	// "github.com/Universal-Health-Chain/aries-framework-go/pkg/storage"
 )
 
 /* TODO: clean tests */
@@ -79,6 +75,7 @@ func PackMessage(messageEnvelope *transport.Envelope) ([]byte, error) {
 	return bytes, nil
 }
 
+/* Fails envelope.FromKey
 // DIDComm packager UnpackMessage
 func UnpackMessage(encMessage []byte) (*transport.Envelope, error) {
 	// encType, err := getEncodingType(encMessage)
@@ -100,6 +97,7 @@ func UnpackMessage(encMessage []byte) (*transport.Envelope, error) {
 
 	return envelope, nil
 }
+*/
 
 // GetDID gets the DID stored under the given key.
 func GetDID(key string) (string, error) {
@@ -188,7 +186,7 @@ func getKID(i int, jwe *jose.JSONWebEncryption) (string, error) {
 
 
 //case ECDSAP521TypeDER:
-
+/*
 func createECDSAIEEE1363KeyTemplate(hashType commonpb.HashType, curve commonpb.EllipticCurveType) *tinkpb.KeyTemplate {
 	params := &ecdsapb.EcdsaParams{
 		HashType: hashType,
@@ -204,6 +202,8 @@ func createECDSAIEEE1363KeyTemplate(hashType commonpb.HashType, curve commonpb.E
 		OutputPrefixType: tinkpb.OutputPrefixType_RAW,
 	}
 }
+*/
+
 /*
 // nolint:gocyclo,funlen
 func getKeyTemplate(keyType KeyType) (*tinkpb.KeyTemplate, error) {

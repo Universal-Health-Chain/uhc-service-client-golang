@@ -4,12 +4,12 @@ package commonManagers
 import (
 	"errors"
 	"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
-	didDocument "github.com/hyperledger/aries-framework-go/pkg/doc/did"
-	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/jsonld"
-	documentSigner "github.com/hyperledger/aries-framework-go/pkg/doc/signature/signer"
-	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite"
-	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/suite/ed25519signature2018"
-	"github.com/hyperledger/aries-framework-go/pkg/doc/util/signature"
+	didDocument "github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/did"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/jsonld"
+	documentSigner "github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/signer"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/suite"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/suite/ed25519signature2018"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/util/signature"
 )
 
 const (

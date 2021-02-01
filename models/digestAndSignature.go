@@ -2,7 +2,7 @@
 package models
 
 import (
-	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/proof"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/proof"
 	"crypto/sha1"
 	"crypto/sha256"
 	"crypto/sha512"

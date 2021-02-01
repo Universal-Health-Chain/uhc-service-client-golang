@@ -12,14 +12,14 @@ import (
 	"fmt"
 
 	"github.com/google/tink/go/subtle"
-	cryptoapi "github.com/hyperledger/aries-framework-go/pkg/crypto"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto"
+	cryptoapi "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto"
 	"github.com/mr-tron/base58"
 	"github.com/stretchr/testify/require"
 	"math/big"
 	"testing"
 	gojosev3 "github.com/square/go-jose/v3"
-	ariesjose "github.com/hyperledger/aries-framework-go/pkg/doc/jose"
+	ariesjose "github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/jose"
 	/*
 		"github.com/Universal-Health-Chain/uhc-service-client-golang/models"
 		hybrid "github.com/google/tink/go/hybrid/subtle"
@@ -27,10 +27,10 @@ import (
 		"github.com/google/tink/go/keyset"
 		"crypto/ed25519"
 		"crypto/elliptic"
-		"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite"
-		"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/api"
-		"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
-		"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
+		"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite"
+		"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/api"
+		"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
+		"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
 	*/
 )
 

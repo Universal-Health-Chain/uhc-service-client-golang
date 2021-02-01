@@ -3,8 +3,8 @@ package models
 
 import (
 	fhir4 "github.com/samply/golang-fhir-models/fhir-models/fhir"
-	"github.com/hyperledger/aries-framework-go/pkg/doc/signature/proof"
-	"github.com/hyperledger/aries-framework-go/pkg/doc/verifiable"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/proof"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/verifiable"
 	"time"
 )
 

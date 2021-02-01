@@ -10,15 +10,15 @@ import (
 	"github.com/google/tink/go/keyset"
 	commonpb "github.com/google/tink/go/proto/common_go_proto"
 	tinkpb "github.com/google/tink/go/proto/tink_go_proto"
-	cryptoapi "github.com/hyperledger/aries-framework-go/pkg/crypto"
-	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite"
-	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
-	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh1pu"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
+	cryptoapi "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto"
+	// "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite"
+	// "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
+	// "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh1pu"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
 	"github.com/golang/protobuf/proto"
 	"github.com/google/tink/go/aead"
 
-	ecdhpb "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/proto/ecdh_aead_go_proto"
+	ecdhpb "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/proto/ecdh_aead_go_proto"
 
 )
 

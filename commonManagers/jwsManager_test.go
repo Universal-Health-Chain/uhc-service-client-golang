@@ -15,8 +15,8 @@ import (
 	"time"
 
 	jcsProof "github.com/Universal-Health-Chain/JcsEd25519Signature2020/signature-suite-impls/golang/proof"
-	"github.com/hyperledger/aries-framework-go/pkg/doc/jwt"
-	signVerifier "github.com/hyperledger/aries-framework-go/pkg/doc/signature/verifier"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/jwt"
+	signVerifier "github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/verifier"
 	josejwt "github.com/square/go-jose/v3/jwt"
 
 	"testing"

@@ -10,16 +10,16 @@ import (
 	"crypto/ecdsa"
 	"encoding/json"
 	"fmt"
-	cryptoapi "github.com/hyperledger/aries-framework-go/pkg/crypto"
-	"github.com/hyperledger/aries-framework-go/pkg/doc/jose"
+	cryptoapi "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/jose"
 
 	"github.com/google/tink/go/keyset"
 
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/api"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
-	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
-	// disabled here "github.com/hyperledger/aries-framework-go/pkg/storage"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/api"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
+	// "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
+	// disabled here "github.com/Universal-Health-Chain/aries-framework-go/pkg/storage"
 )
 
 

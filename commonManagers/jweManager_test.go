@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	// "github.com/google/tink/go/subtle"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto"
 
 	// "github.com/square/go-jose/v3"
 
@@ -19,9 +19,9 @@ import (
 	"github.com/stretchr/testify/require"
 	chacha "golang.org/x/crypto/chacha20poly1305"
 
-	"github.com/hyperledger/aries-framework-go/pkg/crypto"
-	"github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
-	// "github.com/hyperledger/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
+	// "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
 )
 var errBadKeyHandleFormat = errors.New("bad key handle format")
 const testMessage = "test message"
