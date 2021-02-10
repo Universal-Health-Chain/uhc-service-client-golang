@@ -9,18 +9,18 @@ const ReadStatus = "READ"
 const UnreadStatus = "UNREAD"
 
 type ConnectionUHC struct {
-	ID                        string                   `json:"id" bson:"id"`
-	InvitationUhcId           string                   `json:"invitationUhcId,omitempty" bson:"invitationUhcID,omitempty"`
-	InitiatorUserId           string                   `json:"initiatorUserId,omitempty" bson:"initiatorUserId,omitempty"`
-	InvitedUserId             string                   `json:"invitedUserId,omitempty" bson:"invitedUserId,omitempty"`
-	EncryptionRequirements    EncryptionRequirements   `json:"encryptionRequirements" bson:"encryptionRequirements"`
-	ActivePermissions         *[]PermissionsUHC        `json:"activePermissions" bson:"activePermissions"`
-	PendingPermissionsRequest *[]PermissionsRequestUHC `json:"requestedPendingPermissions" bson:"requestedPendingPermissions"`
-	CreatedAt                 *time.Time               `json:"createdAt" bson:"createdAt"`
-	UpdatedAt                 *time.Time               `json:"updatedAt" bson:"updatedAt"`
-	Status                    string                   `json:"status" bson:"status"`
+	ID                        string                     `json:"id" bson:"id"`
+	InvitationUhcId           string                     `json:"invitationUhcId,omitempty" bson:"invitationUhcID,omitempty"`
+	InitiatorUserId           string                     `json:"initiatorUserId,omitempty" bson:"initiatorUserId,omitempty"`
+	InvitedUserId             string                     `json:"invitedUserId,omitempty" bson:"invitedUserId,omitempty"`
+	EncryptionRequirements    EncryptionRequirements     `json:"encryptionRequirements" bson:"encryptionRequirements"`
+	ActivePermissions         *[]PermissionsUHC          `json:"activePermissions" bson:"activePermissions"`
+	PendingPermissionsRequest *[]PermissionsRequestUHC   `json:"requestedPendingPermissions" bson:"requestedPendingPermissions"`
+	CreatedAt                 *time.Time                 `json:"createdAt" bson:"createdAt"`
+	UpdatedAt                 *time.Time                 `json:"updatedAt" bson:"updatedAt"`
+	Status                    string                     `json:"status" bson:"status"`
 	ExternalInvitationDetails *ExternalInvitationDetails `json:"externalInvitationDetails,omitempty" bson:"externalInvitationDetails,omitempty"`
-	ReadStatus          	  string                     `json:"readStatus,omitempty" bson:"readStatus,omitempty"`
+	ReadStatus                string                     `json:"readStatus,omitempty" bson:"readStatus,omitempty"`
 }
 
 type EncryptionRequirements struct {
@@ -56,4 +56,16 @@ type ConnectionUHCResponse struct {
 	Message string          `bson:"message,omitempty" json:"message,omitempty"`
 	Data    []ConnectionUHC `bson:"data,omitempty" json:"data,omitempty"`
 	Token   Token           `bson:"token,omitempty" json:"token,omitempty"`
+}
+
+type ConnectionsWithInvitationsUHC struct {
+	Connections []ConnectionUHC `bson:"connections,omitempty" json:"connections,omitempty"`
+	Invitations []InvitationUHC `bson:"invitations,omitempty" json:"invitations,omitempty"`
+}
+
+type ConnectionsWithInvitationsUHCResponse struct {
+	Code    int                             `bson:"code,omitempty" json:"code,omitempty"`
+	Count   int64                           `bson:"count,omitempty" json:"count,omitempty"`
+	Message string                          `bson:"message,omitempty" json:"message,omitempty"`
+	Data    []ConnectionsWithInvitationsUHC `bson:"data,omitempty" json:"data,omitempty"`
 }
