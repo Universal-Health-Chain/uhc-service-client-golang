@@ -55,7 +55,7 @@ type InvitationAcceptationRequest struct {
 	InvitationUhcId       string  `json:"invitationUhcId" bson:"invitationUhcId"`
 	Password              string  `json:"password" bson:"password"`
 	InvitedPublicKey      string  `bson:"invitedPublicKey,omitempty" json:"invitedPublicKey,omitempty"`
-	InvitedEncyptionKeyId *string `json:"invitedEncyptionKeyId" bson:"invitedEncyptionKeyId"`
+	InvitedEncyptionKeyId *string `json:"invitedEncryptionKeyId" bson:"invitedEncryptionKeyId"`
 }
 
 type ConnectionCreationImplicitRequest struct {
