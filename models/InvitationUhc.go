@@ -52,10 +52,10 @@ type InvitationCreationRequest struct {
 }
 
 type InvitationAcceptationRequest struct {
-	InvitationUhcId       string  `json:"invitationUhcId" bson:"invitationUhcId"`
-	Password              string  `json:"password" bson:"password"`
-	InvitedPublicKey      string  `bson:"invitedPublicKey,omitempty" json:"invitedPublicKey,omitempty"`
-	InvitedEncyptionKeyId *string `json:"invitedEncryptionKeyId" bson:"invitedEncryptionKeyId"`
+	InvitationUhcId        string  `json:"invitationUhcId" bson:"invitationUhcId"`
+	Password               string  `json:"password" bson:"password"`
+	InvitedPublicKey       string  `bson:"invitedPublicKey,omitempty" json:"invitedPublicKey,omitempty"`
+	InvitedEncryptionKeyId *string `json:"invitedEncryptionKeyId" bson:"invitedEncryptionKeyId"`
 }
 
 type ConnectionCreationImplicitRequest struct {
