@@ -17,7 +17,7 @@ type OrganizationPublicUHCExtensions struct {
 	DescriptionI18n             *[]I18nText `bson:"description~i18n,omitempty" json:"description~i18n,omitempty"`
 	Tags                        *[]string   `bson:"tags,omitempty" json:"tags,omitempty"`
 	LogoUrl                     string      `bson:"logoUrl,omitempty" json:"logoUrl,omitempty"`
-	OrganizationImageDocumentId string      `bson:"organizationImageDocumentId,omitempty" json:"prganizationImageDocumentId,omitempty"`
+	OrganizationImageDocumentId string      `bson:"organizationImageDocumentId,omitempty" json:"organizationImageDocumentId,omitempty"`
 	OrganizationId              string      `bson:"organizationId,omitempty" json:"organizationId,omitempty"`
 	ActiveTermsAndConditionsId  string      `bson:"termsAndConditionsId,omitempty" json:"termsAndConditionsId,omitempty"`
 }
