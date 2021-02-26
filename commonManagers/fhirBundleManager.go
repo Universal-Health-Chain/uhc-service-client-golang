@@ -187,11 +187,11 @@ func (fhirManager *FhirBundleManager) createDefaultMessageHeaderFHIR(eventCodeUH
 		Source: 	fhir4.MessageHeaderSource{	// mandatory: Message source application
 			Name:		&messagingSystemName,
 			Software: 	&messagingSoftwareName,
-			Endpoint: 	*messageID, // mandatory: Actual message source address or id
+			Endpoint: 	*messageID, // mandatory: Actual message source Address or id
 		},
 		Destination: []fhir4.MessageHeaderDestination{
 			fhir4.MessageHeaderDestination{
-				Endpoint:	*receiverID,		// Mandatory: actual destination address or id
+				Endpoint:	*receiverID,		// Mandatory: actual destination Address or id
 				Target:		&fhir4.Reference{
 					Reference: targetDeviceID,	//Device reference: particular delivery destination within the destination
 				},

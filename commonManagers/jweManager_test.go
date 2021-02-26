@@ -2,8 +2,11 @@ package commonManagers
 
 import (
 	"crypto/ecdsa"
+	"crypto/ed25519"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/btcsuite/btcutil/base58"
 	"github.com/google/tink/go/subtle/random"
 	"math/big"
 	"testing"
@@ -11,7 +14,7 @@ import (
 	// "github.com/google/tink/go/subtle"
 	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto"
 
-	// "github.com/square/go-jose/v3"
+	gojose3 "github.com/square/go-jose/v3"
 
 	"github.com/google/tink/go/aead"
 	aeadsubtle "github.com/google/tink/go/aead/subtle"
@@ -23,10 +26,105 @@ import (
 	"github.com/stretchr/testify/require"
 	chacha "golang.org/x/crypto/chacha20poly1305"
 
+	gojose "github.com/square/go-jose/v3"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/jose"
+	sigverifier "github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/verifier"
+	signutil "github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/util/signature"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/verifier"
+	"github.com/Universal-Health-Chain/aries-framework-go/pkg/doc/signature/suite/jsonwebsignature2020"
+
 	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto"
 	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/ecdh"
 	"github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto/tinkcrypto/primitive/composite/keyio"
+
+	cryptoapi "github.com/Universal-Health-Chain/aries-framework-go/pkg/crypto"
+	kmsapi "github.com/Universal-Health-Chain/aries-framework-go/pkg/kms"
 )
+
+
+// Key management algorithms
+const (
+	ED25519            = gojose3.KeyAlgorithm("ED25519")
+	RSA1_5             = gojose3.KeyAlgorithm("RSA1_5")             // RSA-PKCS1v1.5
+	RSA_OAEP           = gojose3.KeyAlgorithm("RSA-OAEP")           // RSA-OAEP-SHA1
+	RSA_OAEP_256       = gojose3.KeyAlgorithm("RSA-OAEP-256")       // RSA-OAEP-SHA256
+	A128KW             = gojose3.KeyAlgorithm("A128KW")             // AES key wrap (128)
+	A192KW             = gojose3.KeyAlgorithm("A192KW")             // AES key wrap (192)
+	A256KW             = gojose3.KeyAlgorithm("A256KW")             // AES key wrap (256)
+	DIRECT             = gojose3.KeyAlgorithm("dir")                // Direct encryption
+	ECDH_ES            = gojose3.KeyAlgorithm("ECDH-ES")            // ECDH-ES
+	ECDH_ES_A128KW     = gojose3.KeyAlgorithm("ECDH-ES+A128KW")     // ECDH-ES + AES key wrap (128)
+	ECDH_ES_A192KW     = gojose3.KeyAlgorithm("ECDH-ES+A192KW")     // ECDH-ES + AES key wrap (192)
+	ECDH_ES_A256KW     = gojose3.KeyAlgorithm("ECDH-ES+A256KW")     // ECDH-ES + AES key wrap (256)
+	A128GCMKW          = gojose3.KeyAlgorithm("A128GCMKW")          // AES-GCM key wrap (128)
+	A192GCMKW          = gojose3.KeyAlgorithm("A192GCMKW")          // AES-GCM key wrap (192)
+	A256GCMKW          = gojose3.KeyAlgorithm("A256GCMKW")          // AES-GCM key wrap (256)
+	PBES2_HS256_A128KW = gojose3.KeyAlgorithm("PBES2-HS256+A128KW") // PBES2 + HMAC-SHA256 + AES key wrap (128)
+	PBES2_HS384_A192KW = gojose3.KeyAlgorithm("PBES2-HS384+A192KW") // PBES2 + HMAC-SHA384 + AES key wrap (192)
+	PBES2_HS512_A256KW = gojose3.KeyAlgorithm("PBES2-HS512+A256KW") // PBES2 + HMAC-SHA512 + AES key wrap (256)
+)
+
+// Signature algorithms
+const (
+	EdDSA = gojose3.SignatureAlgorithm("EdDSA")
+	HS256 = gojose3.SignatureAlgorithm("HS256") // HMAC using SHA-256
+	HS384 = gojose3.SignatureAlgorithm("HS384") // HMAC using SHA-384
+	HS512 = gojose3.SignatureAlgorithm("HS512") // HMAC using SHA-512
+	RS256 = gojose3.SignatureAlgorithm("RS256") // RSASSA-PKCS-v1.5 using SHA-256
+	RS384 = gojose3.SignatureAlgorithm("RS384") // RSASSA-PKCS-v1.5 using SHA-384
+	RS512 = gojose3.SignatureAlgorithm("RS512") // RSASSA-PKCS-v1.5 using SHA-512
+	ES256 = gojose3.SignatureAlgorithm("ES256") // ECDSA using P-256 and SHA-256
+	ES384 = gojose3.SignatureAlgorithm("ES384") // ECDSA using P-384 and SHA-384
+	ES512 = gojose3.SignatureAlgorithm("ES512") // ECDSA using P-521 and SHA-512
+	PS256 = gojose3.SignatureAlgorithm("PS256") // RSASSA-PSS using SHA256 and MGF1-SHA256
+	PS384 = gojose3.SignatureAlgorithm("PS384") // RSASSA-PSS using SHA384 and MGF1-SHA384
+	PS512 = gojose3.SignatureAlgorithm("PS512") // RSASSA-PSS using SHA512 and MGF1-SHA512
+)
+
+// Content encryption algorithms
+const (
+	A128CBC_HS256 = gojose3.ContentEncryption("A128CBC-HS256") // AES-CBC + HMAC-SHA256 (128)
+	A192CBC_HS384 = gojose3.ContentEncryption("A192CBC-HS384") // AES-CBC + HMAC-SHA384 (192)
+	A256CBC_HS512 = gojose3.ContentEncryption("A256CBC-HS512") // AES-CBC + HMAC-SHA512 (256)
+	A128GCM       = gojose3.ContentEncryption("A128GCM")       // AES-GCM (128)
+	A192GCM       = gojose3.ContentEncryption("A192GCM")       // AES-GCM (192)
+	A256GCM       = gojose3.ContentEncryption("A256GCM")       // AES-GCM (256)
+)
+
+// Compression algorithms
+const (
+	NONE    = gojose3.CompressionAlgorithm("")    // No compression
+	DEFLATE = gojose3.CompressionAlgorithm("DEF") // DEFLATE (RFC 1951)
+)
+
+// GetEd25519Signer returns Ed25519 Signer with predefined private and public keys.
+func GetEd25519Signer(privKey ed25519.PrivateKey, pubKey ed25519.PublicKey) *Ed25519Signer {
+	return &Ed25519Signer{privateKey: privKey, PubKey: pubKey}
+}
+
+// CryptoSigner defines signer based on crypto.
+type CryptoSigner struct {
+	PubKeyBytes []byte
+	PubKey      interface{}
+
+	crypto cryptoapi.Crypto
+	kh     interface{}
+}
+
+// Sign will sign document and return signature.
+func (s *CryptoSigner) Sign(msg []byte) ([]byte, error) {
+	return s.crypto.Sign(msg, s.kh)
+}
+
+// PublicKey returns a public key object (e.g. ed25519.VerificationMethod or *ecdsa.PublicKey).
+func (s *CryptoSigner) PublicKey() interface{} {
+	return s.PubKey
+}
+
+// PublicKeyBytes returns bytes of the public key.
+func (s *CryptoSigner) PublicKeyBytes() []byte {
+	return s.PubKeyBytes
+}
 
 /*
 	// if AES then NIST-P256
@@ -39,6 +137,18 @@ import (
 	}
  */
 
+const ephemeralSignPublicKeyBase64 =  "SZ99yFHAe4r7/ttirfBAlzRwjR3mjrRYDaxaPBC9rrs="
+const ephemeralSignPrivateKeyBase64 =  "7OqlhX+JykmPp1pVm0h0onKRbgEG5Bmxm6JRy1U9wmNJn33IUcB7ivv+22Kt8ECXNHCNHeaOtFgNrFo8EL2uuw=="
+const remoteSignPublicKeyBase64 =  "xjcNXoYkR+zEkKbRvXcflpUUOHsGSS5SwReqb+rskiM="
+const remoteSignPrivateKeyBase64 =  "QlsVUpkN+01J+jYGUFcB5qvWd5RZUBaC/PSmzoPjv1vGNw1ehiRH7MSQptG9dx+WlRQ4ewZJLlLBF6pv6uySIw=="
+const packedJWE = `{
+"ciphertext":"avHk500r0r8xoSCILgNf5eEZyvje73KIJ0DEbqLV-NvUwRGVF6BTa5KcfhfEaa4=",
+"iv":"5XDCxPD8xduJmEvfcNTjxF2TRQgqGBYA",
+"protected":"eyJhbGciOiJBdXRoY3J5cHQiLCJlbmMiOiJjaGFjaGEyMHBvbHkxMzA1X2lldGYiLCJyZWNpcGllbnRzIjpbeyJlbmNyeXB0ZWRfa2V5IjoiemtmbzNqbTdYd0pCUDlqMi1MSnQ5dGZLekRzQWRBVUZtZ1hzRnc1NUozbURicldoSE4yd1B2LXdDX0FSOE1tdyIsImhlYWRlciI6eyJpdiI6Imx6UkFvX1lHMzRPWjU2eU9nSmRJMGlYTDB4OVZXamJmIiwia2lkIjoiRUxrUXc0Wnp1WktXd2duZUdEM2RBc2FmN3l6bzI4dWdpWlp5WGl0enlLbXQiLCJzZW5kZXIiOiJKbi1LMWFJVTliWER2WDVvS2hORWVHdXd2N1IybHRXWGFCUzh2TTlCS0NQb3BTRHpYVURCSEVROXJpY3lZaEkzMVJ1WkplQlhVZEFzZ1ZfSTF4UGlSTUc4dXVFbHk0cEd3QUVGMGJZWFktSHZzdUZXWldMbE9BZFYxazg9In19XSwidHlwIjoiSldNLzEuMCJ9",
+"tag":"2zOmsWc24FxmQGFAP6hM_g=="
+}`
+
+
 var errBadKeyHandleFormat = errors.New("bad key handle format")
 const testMessage = "test message"
 
@@ -50,54 +160,94 @@ func TestNew(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func decryptWith_gojose(jweRaw string) (string, error) {
+	jwe, err1 := gojose3.ParseEncrypted(jweRaw)
+	if err1 != nil {
+		return "", err1
+	}
+	bytes, err2 := jwe.Decrypt(gojose3.JSONWebKey{Algorithm: "PBES2-HS256+A128KW", Use: "A128CBC-HS256", KeyID: kid, Key: k})
+	if err2 != nil {
+		return "", err2
+	}
+	return string(bytes), nil
+}
+
 func TestCrypto_EncryptDecrypt(t *testing.T) {
 	t.Run("test XChacha20Poly1305 encryption", func(t *testing.T) {
+		/*
+		signer := &CryptoSigner{
+			crypto:      crypto,
+			kh:          kh,
+			PubKey:      string("pubKey"),
+			PubKeyBytes: []byte(SignPairAPublicKeyB64ForTesting),
+		}
+		*/
+		var keyManager KeyPairManager
+		// It creates a new sender Keyset Handle (private + public key info) by a tink template
+		myKeysetHandle, err := keyManager.CreateAuthcryptKeysetHandle()
+		require.NoError(t, err)
+		myPublicKeyBytes, err := keyManager.GetPublicKeyBytesByKeyset(myKeysetHandle)
+		require.NoError(t, err)
+		myPublicKID := base58.Encode(myPublicKeyBytes)
+
+		// signer, err := newCryptoSigner(kmsapi.ED25519Type)
+		// require.NoError(t, err)
+
+		msg := []byte("test message")
+		msgSig, err := signer.Sign(msg)
+		require.NoError(t, err)
+
+		pubKey := &sigverifier.PublicKey{
+			Type: "JwsVerificationKey2020",
+			JWK: &jose.JWK{
+				JSONWebKey: gojose.JSONWebKey{Key: []byte(SignPairAPublicKeyB64ForTesting)},	// signer.PublicKey()},
+				Kty:        "OKP",
+				Crv:        "Ed25519",
+			},
+		}
+		v := jsonwebsignature2020.NewPublicKeyVerifier()
+
+		err = v.Verify(pubKey, msg, msgSig)
+		require.NoError(t, err)
+
 		kh, err := keyset.NewHandle(aead.XChaCha20Poly1305KeyTemplate())
 		require.NoError(t, err)
 
-		badKH, err := keyset.NewHandle(aead.KMSEnvelopeAEADKeyTemplate("babdUrl", nil))
-		require.NoError(t, err)
-
-		badKH2, err := keyset.NewHandle(signature.ECDSAP256KeyTemplate())
-		require.NoError(t, err)
-
+		// tinkCrypto := tinkcrypto.Crypto{}
 		c := tinkcrypto.Crypto{}
-		msg := []byte(testMessage)
+		// msg := []byte(testMessage)
 		aad := []byte("some additional data")
 		cipherText, nonce, err := c.Encrypt(msg, aad, kh)
 		require.NoError(t, err)
 		require.NotEmpty(t, nonce)
 		require.Equal(t, chacha.NonceSizeX, len(nonce))
 
-		// encrypt with bad key handle - should fail
-		_, _, err = c.Encrypt(msg, aad, badKH)
-		require.Error(t, err)
-
-		// encrypt with another bad key handle - should fail
-		_, _, err = c.Encrypt(msg, aad, badKH2)
-		require.Error(t, err)
-
+		// decrypt with tinkcrypto.Decrypt
 		plainText, err := c.Decrypt(cipherText, aad, nonce, kh)
 		require.NoError(t, err)
 		require.Equal(t, msg, plainText)
 
-		// decrypt with bad key handle - should fail
-		_, err = c.Decrypt(cipherText, aad, nonce, badKH)
-		require.Error(t, err)
+		// decrypt with gojose
+		jwe, err := gojose3.ParseEncrypted(packedJWE)
+		require.NoError(t, err)
 
-		// decrypt with another bad key handle - should fail
-		_, err = c.Decrypt(cipherText, aad, nonce, badKH2)
-		require.Error(t, err)
+		bytes, err := jwe.Decrypt(gojose3.JSONWebKey{
+			Algorithm: EdDSA,	// Key algorithm, parsed from `alg` header.
+			Use: "A128CBC-HS256",	// Key use, parsed from `use` header.
+			KeyID: myPublicKID,		// Key identifier, parsed from `kid` header
+			Key: myPublicKeyBytes,	// Cryptographic key, can be a symmetric or asymmetric key.
+		})
+		require.NoError(t, err)
 
-		// decrypt with bad nonce - should fail
-		plainText, err = c.Decrypt(cipherText, aad, []byte("bad nonce"), kh)
-		require.Error(t, err)
-		require.Empty(t, plainText)
-
-		// decrypt with bad cipher - should fail
-		plainText, err = c.Decrypt([]byte("bad cipher"), aad, nonce, kh)
-		require.Error(t, err)
-		require.Empty(t, plainText)
+		// json.Unmarshal(bytes, interface{})
+		/*
+		   let data = {
+			   alg: senderKeys ? 'Authcrypt' : 'Anoncrypt',
+			   enc: 'chacha20poly1305_ietf',
+			   recipients: recipentsPublicSignVks,
+			   typ: 'JWM/1.0',
+		   }
+		 */
 	})
 
 	t.Run("test AES256GCM encryption", func(t *testing.T) {

@@ -53,3 +53,32 @@ type CredentialVerifiableFHIR struct {
 }
 
 type CustomFields map[string]interface{} // CustomFields is a map of extra fields of struct build when unmarshalling JSON which are not mapped to the struct fields.
+
+type CredentialW3C struct {
+	Context 				[]string 				`json:"@context,omitempty" bson:"@context,omitempty"`
+	ID      				string   				`json:"id,omitempty" bson:"id,omitempty"`
+	CredentialSubject		interface{}				`json:"credentialSubject,omitempty" bson:"credentialSubject,omitempty"`
+	Types   				[]string 				`json:"type,omitempty" bson:"type,omitempty"`
+	Issuer					verifiable.Issuer		`json:"issuer,omitempty" bson:"issuer,omitempty"`
+	Issued  				string					`json:"issuanceDate,omitempty" bson:"issuanceDate,omitempty"`
+	Expired 				string					`json:"expirationDate,omitempty" bson:"expirationDate,omitempty"`
+	Proofs  				[]proof.Proof			`json:"proof,omitempty" bson:"proof,omitempty"`
+	Status      			*verifiable.TypedID		`json:"credentialStatus,omitempty" bson:"credentialStatus,omitempty"`
+	Schemas					[]verifiable.TypedID	`json:"credentialSchema,omitempty" bson:"credentialSchema,omitempty"`
+	Evidence       			verifiable.Evidence		`json:"evidence,omitempty" bson:"evidence,omitempty"`
+	TermsOfUse     			[]verifiable.TypedID	`json:"termsOfUse,omitempty" bson:"termsOfUse,omitempty"`
+	RefreshService			[]verifiable.TypedID	`json:"refreshService,omitempty" bson:"refreshService,omitempty"`
+	CustomFields 			CustomFields			`json:"-" bson:"customFields,omitempty"` // All unmapped fields are put here.
+}
+
+
+type PatientUHC struct {
+	UhcUserID		string	`json:"uhcUserId,omitempty" bson:"uhUserId,omitempty"`
+	PatientID		string	`json:"patientId,omitempty" bson:"patientId,omitempty"`
+	PatientClaim	*PatientAdministrativeIdentityClaim
+}
+
+type HealthcareServiceUHC struct {
+	ID				string   `json:"id,omitempty" bson:"id,omitempty"`
+	*CredentialW3C
+}

@@ -58,7 +58,7 @@ const (
 	FhirApiType            		= "type"				// Type for device, also for additional more precise type of document ...
 	FhirApiDeviceUdiCarrierHRF	= "udi-carrier"			// UDI Barcode (RFID or other technology) string in *HRF* format
 	FhirApiDeviceUdiDI			= "udi-di"				// The udi Device Identifier (DI)
-	FhirApiURL 					= "url"					// Network address to contact device
+	FhirApiURL 					= "url"					// Network Address to contact device
 
 	// Immunization
 	FhirApiLotNumber			= "lot-number"			// Vaccine lot number.
