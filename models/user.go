@@ -59,6 +59,7 @@ type UserRegisterV3ByUserRequest struct {
 	LastName		string `bson:"lastName,omitempty" json:"lastName,omitempty"`
 	Email			string `bson:"email,omitempty" json:"email,omitempty"`
 	AppId 			string `bson:"appId,omitempty" json:"appId,omitempty"`
+	LoginPassword	string `bson:"loginPassword,omitempty" json:"loginPassword,omitempty"`
 	RoleInOrg		string `bson:"roleInOrg,omitempty" json:"roleInOrg,omitempty"`
 }
 
